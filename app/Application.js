@@ -3,7 +3,6 @@ $ns("mx.app");
 mx.app.Application = function()
 {
     var me = $extend(mx.view.View);
-    me.isFullScreen = true;
     var base = {};
     
     me.$element = null;
@@ -33,6 +32,8 @@ mx.app.Application = function()
             width: me.$element.width(),
             height: me.$element.height()
         };
+
+        me.$element.addClass("mx-app");
         
         mx.app.Application.singleton = me;
     };
