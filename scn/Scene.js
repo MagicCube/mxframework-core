@@ -71,7 +71,7 @@ mx.scn.Scene = function()
     
     
     
-    me.activate = function(p_args)
+    me.activate = function(p_args, p_isBack)
     {
         if (me.container != null)
         {
@@ -107,7 +107,7 @@ mx.scn.Scene = function()
         me.setRightItem(me.rightItem);
         
         me.isActive = true;
-        me.trigger("activate", { args: p_args });
+        me.trigger("activate", { args: p_args, isBack: p_isBack ? true : false });
     };
     
     me.deactivate = function()
