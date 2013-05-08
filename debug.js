@@ -4,7 +4,11 @@ var scripts = document.getElementsByTagName("script");
 var src = scripts[scripts.length - 1].src;
 var srcPath = src.substr(0, src.lastIndexOf("/mx/") + 1);
 
-include("lib/jquery/jquery.js");
+if (typeof(jQuery) == "undefined")
+{
+    include("lib/jquery/jquery.js");
+}
+
 include("mx/javascript-extensions.js");
 include("mx/framework-base.js");
 include("mx/framework-core.js");
