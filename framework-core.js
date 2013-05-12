@@ -285,13 +285,13 @@ MX = function()
         }
         
         if ((me.loadingStyles.length == 0 && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0)
-        	    || (me.osType == "android" && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0))
+                || (me.osType == "android" && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0))
         {
             while (me._ready_callbacks.length > 0)
             {   
-            	
+                
                 if ((me.osType != "android" &&(me.loadingStyles.length > 0 || me.loadingScripts.length > 0))
-            	       || (me.osType == "android" && me.loadingScripts.length > 0))
+                       || (me.osType == "android" && me.loadingScripts.length > 0))
                 {
                     break;
                 }
@@ -414,7 +414,7 @@ MX = function()
             
             if (p_fullClassName.startsWith("lib."))
             {
-            	var path = me.getClassPath(p_fullClassName);
+                var path = me.getClassPath(p_fullClassName);
                 if (path != null)
                 {
                     me.include(path, p_callback);
@@ -462,12 +462,25 @@ MX = function()
             ext = "." + p_ext;
         }
         
+
+        
         var parts = p_fullClassName.split(".", 1);
         var path = null;
         if (parts.length == 1)
         {
-            var classPath = p_fullClassName.replace(/\./g, "/");
-            path = $mappath("$/" + classPath + ext);
+            if (!me.debugMode)
+            {
+                if (parts[0] != "lib" && ext == ".css")
+                {
+                    path = $mappath("$/" + parts[0] + "/res/min.css");
+                }
+            }
+            
+            if (path == null)
+            {
+                var classPath = p_fullClassName.replace(/\./g, "/");
+                path = $mappath("$/" + classPath + ext);
+            }
         }
         return path;
     };
