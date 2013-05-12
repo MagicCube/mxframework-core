@@ -46,7 +46,7 @@ MX = function()
         }
         else
         {
-            mxPath = "/min/mx/mx.min.js";
+            mxPath = "/mx/min.js";
             if (src.endsWith(mxPath))
             {
                 me.appContentPath = src.substr(0, src.length - mxPath.length);
@@ -414,11 +414,10 @@ MX = function()
             
             if (p_fullClassName.startsWith("lib."))
             {
-                var index = p_fullClassName.indexOf(".", 4);
-                if (index != -1)
+            	var path = me.getClassPath(p_fullClassName);
+                if (path != null)
                 {
-                    var moduleName = p_fullClassName.substring(4, index);
-                    me.include("$/min/lib." + moduleName + "/" + moduleName + ".min.js", p_callback);
+                    me.include(path, p_callback);
                 }
             }
             else
@@ -427,7 +426,7 @@ MX = function()
                 if (index != -1)
                 {
                     var moduleName = p_fullClassName.substr(0, index);
-                    me.include("$/min/" + moduleName + "/" + moduleName + ".min.js", p_callback);
+                    me.include("$/" + moduleName + "/min.js", p_callback);
                 }
             }
         }
