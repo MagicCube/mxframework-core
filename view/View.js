@@ -97,9 +97,17 @@ mx.view.View = function()
     me.addSubview = function(p_view, $p_element)
     {
     	if (typeof($p_element) == "undefined")
-		{
+	{
     		$p_element = me.$container;
-		}
+	}
+	
+	if (isFunction(p_view.placeAt))
+	{
+    		var $container = $("<div/>");
+    		p_view.placeAt($container);
+    		$p_element.append($container);
+    		return;
+	}
     	
         if ($instanceof(p_view, mx.view.View))
         {
