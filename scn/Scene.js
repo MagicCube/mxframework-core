@@ -7,13 +7,7 @@ mx.scn.Scene = function()
     var base = {};
     
     me.title = null;
-    me.subtitle = null;
-    me.leftItem = null;
-    me.rightItem = null;
-    
-    me.autoFillParent = false;
-    me.isPopup = false;
-    me.isSlide = false;
+    me.subtitle = null;    
     me.isActive = false;
     
     me.container = null;
@@ -32,40 +26,12 @@ mx.scn.Scene = function()
     
     me.setTitle = function(p_title)
     {
-    	me.title = p_title;
-    	if (me.container != null && me.container.navigationBarView != null)
-		{
-    		me.container.navigationBarView.setTitle(me.title);
-		}
+        me.title = p_title;
     };
     
     me.setSubtitle = function(p_subtitle)
     {
-    	me.subtitle = p_subtitle;
-    	if (me.container != null && me.container.navigationBarView != null)
-		{
-    		me.container.navigationBarView.setSubtitle(me.subtitle);
-		}
-    };
-    
-    me.setLeftItem = function(p_leftItem)
-    {
-    	me.leftItem = p_leftItem;
-    	if (me.container != null && me.container.navigationBarView != null)
-		{
-    		var item = me.container.navigationBarView.setLeftItem(p_leftItem);
-    		me.leftItem = item;
-		}
-    };
-    
-    me.setRightItem = function(p_rightItem)
-    {
-    	me.rightItem = p_rightItem;
-    	if (me.container != null && me.container.navigationBarView != null)
-		{
-    		var item = me.container.navigationBarView.setRightItem(p_rightItem);
-    		me.rightItem = item;
-		}
+        me.subtitle = p_subtitle;
     };
     
     
@@ -73,38 +39,7 @@ mx.scn.Scene = function()
     
     me.activate = function(p_args, p_isBack)
     {
-        if (me.container != null)
-        {
-            me.container.activeScene = me;
-            
-            if (me.autoFillParent)
-            {
-            	if (me.container.$content != null)
-        		{
-            		me.setFrame({ width: me.container.frame.width, height: me.container.$content.height() });
-        		}
-            	else
-        		{
-            		me.setFrame({ width: me.container.frame.width, height: me.container.frame.height });
-        		}
-            }
-            else
-        	{
-            	if (me.frame != null && me.frame.height != null)
-        		{
-            		me.setFrame({ width: me.container.frame.width, height: me.frame.height });
-        		}
-        	}
-        }
-        
-        
-        me.setTitle(me.title);
         me.setSubtitle(me.subtitle);
-        if (me.leftItem != null)
-    	{
-        	me.setLeftItem(me.leftItem);
-    	}
-        me.setRightItem(me.rightItem);
         
         me.isActive = true;
         me.trigger("activate", { args: p_args, isBack: p_isBack ? true : false });
@@ -114,27 +49,6 @@ mx.scn.Scene = function()
     {
         me.isActive = false;
         me.trigger("deactivate");
-    };
-    
-    base.hide = me.hide;
-    me.hide = function()
-    {
-        if (me.isPopup)
-        {
-            me.container.hidePopupScene(me);
-        }
-        else if (me.isSlide)
-        {
-            me.container.hideSlideScene(me);
-        }
-        else if (me.container.activeScene == me)
-        {
-            me.container.popScene(me);
-        }
-        else
-        {
-            base.hide();
-        }
     };
     
     me.toString = function()
