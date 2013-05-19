@@ -152,7 +152,10 @@ String.prototype.containsAsianCharacters = function()
     return (/.*[\u4e00-\u9fa5]+.*$/.test(this));
 };
 
-
+String.prototype.toUpperCamelCase = function()
+{
+    return this[0].toUpperCase() + this.substr(1);
+};
 
 
 //=====================================================================

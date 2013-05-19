@@ -43,6 +43,30 @@ MXObject = function()
     };
     
     
+    me.set = function(p_options)
+    {
+        if (isPlainObject(p_options))
+        {
+            for (var key in p_options)
+            {
+                me.set(key, p_options[key]);
+            }
+        }
+        else if (arguments.length == 2 && isString(arguments[0]))
+        {
+            var func = "set" + arguments[0].toUpperCamelCase();
+            if (isFunction(me[func]))
+            {
+                me[func](arguments[1]);
+            }
+            else
+            {
+                me[arguments[0]] = arguments[1];
+            }
+        }
+    };
+    
+    
     me.canConstruct = function()
     {
         return !me.constructed;
