@@ -43,16 +43,9 @@ MXObject = function()
     };
     
     
-    me.set = function(p_options)
+    me.set = function()
     {
-        if (isPlainObject(p_options))
-        {
-            for (var key in p_options)
-            {
-                me.set(key, p_options[key]);
-            }
-        }
-        else if (arguments.length == 2 && isString(arguments[0]))
+        if (arguments.length == 2 && isString(arguments[0]))
         {
             var func = "set" + arguments[0].toUpperCamelCase();
             if (isFunction(me[func]))
@@ -63,6 +56,21 @@ MXObject = function()
             {
                 me[arguments[0]] = arguments[1];
             }
+        }
+        else if (arguments.length == 1 && isPlainObject(arguments[0]))
+        {
+            var p_options = arguments[0];
+            for (var key in p_options)
+            {
+                me.set(key, p_options[key]);
+            }
+        }
+        else if (arguments.length == 2 && isPlainObject(arguments[0]) && isPlainObject(arguments[1]))
+        {
+            var p_options = arguments[0];
+            var p_defaultOptions = arguments[1];
+            var options = $.extend({}, p_defaultOptions, p_options);
+            me.set(options);
         }
     };
     
