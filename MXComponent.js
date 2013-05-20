@@ -33,13 +33,14 @@ MXComponent = function()
         var eventType = "on" + p_eventType;
         if (typeof(me[eventType]) == "undefined")
         {
-            return;
+            return me;
         }
         if (me[eventType] == null)
         {
             me[eventType] = new MXEvent();
         }
         me[eventType].addEventListener(p_function);
+        return me;
     };
     me.on = me.bind;
     
@@ -62,7 +63,7 @@ MXComponent = function()
             var eventType = "on" + p_eventType;
             if (typeof(me[eventType]) == "undefined")
             {
-                return
+                return me;
             }
             
             if (me[eventType] != null)
@@ -77,6 +78,7 @@ MXComponent = function()
                 }
             }
         }
+        return me;
     };
     me.off = me.unbind;
     
@@ -102,7 +104,7 @@ MXComponent = function()
         var eventType = "on" + p_eventType;
         if (typeof(me[eventType]) == "undefined")
         {
-            return;
+            return me;
         }
         if (me[eventType] != null)
         {
@@ -121,6 +123,7 @@ MXComponent = function()
             
             me[eventType].fire(e);
         }
+        return me;
     };
     
     

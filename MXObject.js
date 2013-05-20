@@ -72,6 +72,7 @@ MXObject = function()
             var options = $.extend({}, p_defaultOptions, p_options);
             me.set(options);
         }
+        return me;
     };
     
     
