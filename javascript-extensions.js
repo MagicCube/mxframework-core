@@ -237,6 +237,10 @@ Date.format = function(p_value, p_formatString)
             var result = null;
             var now = new Date();
             var deltaMin = Math.round((now.getTime() - p_value) / 1000 / 60);
+            if (deltamin <= 0)
+            {
+                result = "刚刚";
+            }
             if (deltaMin <= 1)
             {
                 result = Math.round((now.getTime() - p_value) / 1000) + " 秒种前";
