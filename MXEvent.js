@@ -32,9 +32,14 @@ MXEvent = function()
     
     me.fire = function(e)
     {
-        for (var i = 0; i < me.listeners.length; i++)
+        if (me.listeners != null && me.listeners.length > 0)
         {
-            me.listeners[i](e);
+            var listeners = me.listeners.clone();
+            for (var i = 0; i < listeners.length; i++)
+            {
+                listeners[i](e);
+            }
+            listeners = null;
         }
     };
     
