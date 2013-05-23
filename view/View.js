@@ -51,6 +51,10 @@ mx.view.View = function()
             me.id = String.newGuid();
         }
         me.$element.attr("id", me.id);
+        if (mx.debugMode)
+        {
+            me.$element.data("view", me);
+        }
         
         if (me.elementClass != null)
         {
@@ -69,23 +73,23 @@ mx.view.View = function()
     {
         if (p_frame != null)
         {
-        	if (me.frame != null)
-        	{
-        		me.frame = $.extend(me.frame, p_frame);
-        	}
-        	else
-        	{
-        		me.frame = p_frame;
-        	}
-        	
-        	if (p_animated)
-    		{
-        		me.$element.animate(me.frame, p_animated);
-    		}
-        	else
-    		{
-        		me.$element.css(me.frame);
-    		}
+            if (me.frame != null)
+            {
+                me.frame = $.extend(me.frame, p_frame);
+            }
+            else
+            {
+                me.frame = p_frame;
+            }
+            
+            if (p_animated)
+            {
+                me.$element.animate(me.frame, p_animated);
+            }
+            else
+            {
+                me.$element.css(me.frame);
+            }
             
             if (me.frame.left != null || me.frame.right != null || me.frame.top != null || me.frame.bottom != null)
             {
@@ -96,19 +100,19 @@ mx.view.View = function()
     
     me.addSubview = function(p_view, $p_element)
     {
-    	if (typeof($p_element) == "undefined")
-	{
-    		$p_element = me.$container;
-	}
-	
-	if (isFunction(p_view.placeAt))
-	{
-    		var $container = $("<div/>");
-    		p_view.placeAt($container);
-    		$p_element.append($container);
-    		return;
-	}
-    	
+        if (typeof($p_element) == "undefined")
+    {
+            $p_element = me.$container;
+    }
+    
+    if (isFunction(p_view.placeAt))
+    {
+            var $container = $("<div/>");
+            p_view.placeAt($container);
+            $p_element.append($container);
+            return;
+    }
+        
         if ($instanceof(p_view, mx.view.View))
         {
             if (p_view.parentView == me)
@@ -122,9 +126,9 @@ mx.view.View = function()
             }
             
             if ($p_element != null)
-        	{
-            	$p_element.append(p_view.$element);
-        	}
+            {
+                $p_element.append(p_view.$element);
+            }
             me.subviews.add(p_view);
             
             if (p_view.id != null)
@@ -191,4 +195,9 @@ mx.view.View = function()
     };
     
     return me.endOfClass(arguments);
+};
+
+$view = function(p_element)
+{
+    return $(p_element).data("view");
 };
