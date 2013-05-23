@@ -237,7 +237,7 @@ Date.format = function(p_value, p_formatString)
             var result = null;
             var now = new Date();
             var deltaMin = Math.round((now.getTime() - p_value) / 1000 / 60);
-            if (deltamin <= 0)
+            if (deltaMin <= 0)
             {
                 result = "刚刚";
             }
