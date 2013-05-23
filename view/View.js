@@ -199,5 +199,10 @@ mx.view.View = function()
 
 $view = function(p_element)
 {
-    return $(p_element).data("view");
+    var $e = $(p_element);
+    while ($e.length != 0 && $e.data("view") == null)
+    {
+        $e = $e.parent();
+    }
+    return $e.data("view");
 };
