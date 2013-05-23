@@ -241,7 +241,7 @@ Date.format = function(p_value, p_formatString)
             {
                 result = "刚刚";
             }
-            if (deltaMin <= 1)
+            else if (deltaMin <= 1)
             {
                 result = Math.round((now.getTime() - p_value) / 1000) + " 秒种前";
             }
