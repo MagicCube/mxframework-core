@@ -398,7 +398,26 @@ MX = function()
             var path = me.getClassPath(p_fullClassName);
             if (path != null)
             {
-                me.include(path, p_callback);
+                me.include(path, function()
+                {
+                    try
+                    {
+                        var cls = eval(p_fullClassName);
+                        if (typeof(cls) == "function")
+                        {
+                            cls.fullName = p_fullClassName;
+                        }
+                    }
+                    catch (e)
+                    {
+                        
+                    }
+                    
+                    if (typeof(p_callback) == "function")
+                    {
+                        p_callback();
+                    }
+                });
             }
         }
         else
