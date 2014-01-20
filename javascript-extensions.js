@@ -516,6 +516,17 @@ Array.prototype.add = function(p_item)
     return this[this.length] = p_item;
 };
 
+Array.prototype.addAll = function(p_items)
+{
+    if (isArray(p_items))
+    {
+        for (var i = 0; i < p_items.length; i++)
+        {
+            this.push(p_items[i]);
+        }
+    }
+};
+
 Array.prototype.insert = function(p_startIndex, p_item)
 {
     return this.splice(p_startIndex, 0, p_item);
