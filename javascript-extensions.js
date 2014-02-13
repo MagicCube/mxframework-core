@@ -520,10 +520,11 @@ Array.prototype.addAll = function(p_items)
 {
     if (isArray(p_items))
     {
-        for (var i = 0; i < p_items.length; i++)
+        var array = this;
+        p_items.forEach(function(p_item)
         {
-            this.push(p_items[i]);
-        }
+            array.push(p_item);
+        });
     }
 };
 
@@ -614,18 +615,6 @@ Array.prototype.swap = function(p_item1, p_item2)
     
     this[index1] = p_item2;
     this[index2] = p_item1;
-};
-
-Array.prototype.each = function(p_method, p_context)
-{
-    if (isFunction(p_method))
-    {
-        for (var i = 0; i < this.length; i++)
-        {
-            var item = this[i];
-            p_method(item, i, p_context);
-        }
-    }
 };
 
 Array.prototype.find = function(p_judgeFunction, p_context)
