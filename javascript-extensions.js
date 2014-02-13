@@ -628,65 +628,6 @@ Array.prototype.each = function(p_method, p_context)
     }
 };
 
-Array.prototype.map = function(p_function, p_context)
-{
-    if (isFunction(p_function))
-    {
-        var result = [];
-        for (var i = 0; i < this.length; i++)
-        {
-            var item = this[i];
-            var value = p_function(item, i, p_context);
-            result.add(value);
-        }
-        return result;
-    }
-    else
-    {
-        return this.clone();
-    }
-};
-
-Array.prototype.reduce = function(p_function, p_memo, p_context)
-{
-    if (isFunction(p_function))
-    {
-        var memo = p_memo;
-        for (var i = 0; i < this.length; i++)
-        {
-            var item = this[i];
-            memo = p_function(memo, item, i, p_context);
-        }
-        return memo;
-    }
-    else
-    {
-        return p_memo;
-    }
-};
-
-Array.prototype.filter = function(p_judgeFunction, p_context)
-{
-    if (isFunction(p_judgeFunction))
-    {
-        var result = [];
-        for (var i = 0; i < this.length; i++)
-        {
-            var item = this[i];
-            var value = p_judgeFunction(item, i, p_context);
-            if (value)
-            {
-                result.add(item);
-            }
-        }
-        return result;
-    }
-    else
-    {
-        return this.clone();
-    }
-};
-
 Array.prototype.find = function(p_judgeFunction, p_context)
 {
     if (isFunction(p_judgeFunction))
