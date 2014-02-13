@@ -29,9 +29,12 @@ mx.util.ObjectPool = function()
         if (me.stack.length == 0)
         {
             var obj = me.createObject();
-            me.stack.push(obj);
+            return obj;
         }
-        return me.stack.pop();
+        else
+        {
+            return me.stack.pop();
+        }
     };
     
     me.returnObject = function(p_object)
