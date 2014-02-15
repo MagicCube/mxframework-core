@@ -1,4 +1,14 @@
 (function(){
+ 
+var lang = null;
+if (typeof($mx_language) == "undefined")
+{
+    lang = (navigator.language  ||  navigator.userLanguage).toString().toLowerCase();
+}
+else
+{
+    lang = $mx_locale;
+}
     
 var scripts = document.getElementsByTagName("script");
 var src = scripts[scripts.length - 1].src;
@@ -12,6 +22,7 @@ if (typeof(jQuery) == "undefined")
 include("mx/javascript-extensions.js");
 include("mx/framework-base.js");
 include("mx/framework-core.js");
+include("mx/res/locales/" + lang + "/language.js");
 
 function include(p_src)
 {

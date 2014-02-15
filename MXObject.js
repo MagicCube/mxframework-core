@@ -42,6 +42,54 @@ MXObject = function()
         return me.__class__;
     };
     
+    me.getClassName = function()
+    {
+        var cls = me.getClass();
+        if (cls != null)
+        {
+            return cls.className;
+        }
+        return null;
+    };
+    
+    me.getNamespace = function()
+    {
+        var clsName = me.getClassName();
+        if (clsName != null)
+        {
+            var parts = clsName.split(".");
+            if (parts.length > 1)
+            {
+                parts = parts.slice(0, parts.length - 1);
+                return parts.join(".");
+            }
+        }
+        return null;
+    };
+    
+    me.getModuleName = function()
+    {
+        var ns = me.getNamespace();
+        if (ns != null)
+        {
+            var parts = ns.split(".");
+            if (parts > 0)
+            {
+                return parts[0];
+            }
+            else
+            {
+                return ns;
+            }
+        }
+        return null;
+    };
+    
+    me.getResourcePath = function(p_name, p_ext, p_auto2x)
+    {
+        var path = me.getPackageName() + ".res." + p_name;
+        return mx.getResourcePath(path, p_ext, p_auto2x);
+    };
     
     me.set = function()
     {

@@ -16,12 +16,25 @@ MX = function()
     me.runAt = "desktop";
     me.osType = null;
     
+    me.language = null;
+    me.locales = [];
+    
     me.debugMode = false;
     me.webContentPath = null;
     me.appContentPath = null;
     
     me.init = function()
     {
+        if (typeof($mx_language) == "undefined")
+        {
+            me.language = (navigator.language  ||  navigator.userLanguage).toString().toLowerCase();
+        }
+        else
+        {
+            me.language = $mx_locale;
+        }
+        
+        
         var userAgent = window.navigator.userAgent;
         if (userAgent.contains("iPad") || userAgent.contains("iPhone") || userAgent.contains("iPod"))
         {
@@ -66,6 +79,10 @@ MX = function()
         if (typeof (p_url) != "string") return null;
         
         var url = p_url;
+        if (url.indexOf("$language"))
+        {
+            url = url.replace(/\$language/g, mx.language);
+        }
         if (url.indexOf("~/") == 0)
         {
             url = mx.webContentPath + url.substr(1);
@@ -78,6 +95,35 @@ MX = function()
     };
     $mappath = me.mappath;
     
+    
+    me.getMessage = function(p_context, p_key, p_params)
+    {
+        var module = null;
+        if (typeof(p_context) == "string")
+        {
+            module = p_context;
+        }
+        else if (isFunction(p_context.getModuleName))
+        {
+            module = p_context.getModuleName();
+        }
+        
+        if (module != null)
+        {
+            var locale = me.locales[module];
+            if (locale != null && locale[p_key] != null)
+            {
+                var text = locale[p_key];
+                if (p_params != null && typeof(p_params) == "object")
+                {
+                    text = $format(text, p_params);
+                }
+                return text;
+            }
+        }
+        return null;
+    };
+    $msg = me.getMessage;
     
     
     
@@ -451,6 +497,12 @@ MX = function()
         }
     };
     $import = me.importClass;
+    
+    me.importLanguage = function(p_moduleName, p_callback)
+    {
+        me.include("$/" + p_moduleName + "/res/locales/$language/language.js", p_callback);
+    };
+    $importlanguage = me.importLanguage;
     
     me.getClassPath = function(p_fullClassName)
     {
