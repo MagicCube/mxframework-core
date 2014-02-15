@@ -45,5 +45,6 @@ mx.app.Application = function()
     
     return me.endOfClass(arguments);
 };
+mx.app.Application.className = "mx.app.Application";
 
 mx.app.Application.singleton = null;

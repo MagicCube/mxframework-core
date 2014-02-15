@@ -118,3 +118,4 @@ MXObject = function()
     
     return me.endOfClass(arguments);
 };
+MXObject.className = "MXObject";

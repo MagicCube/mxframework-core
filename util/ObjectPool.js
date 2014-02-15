@@ -73,3 +73,4 @@ mx.util.ObjectPool = function()
 
     return me.endOfClass(arguments);
 };
+mx.util.ObjectPool.className = "mx.util.ObjectPool";

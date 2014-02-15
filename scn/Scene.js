@@ -58,3 +58,4 @@ mx.scn.Scene = function()
     
     return me.endOfClass(arguments);
 };
+mx.scn.Scene.className = "mx.scn.Scene";

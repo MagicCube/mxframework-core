@@ -45,3 +45,4 @@ MXEvent = function()
     
     return me;
 };
+MXEvent.className = "MXEvent";

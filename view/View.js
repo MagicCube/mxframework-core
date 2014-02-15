@@ -196,6 +196,7 @@ mx.view.View = function()
     
     return me.endOfClass(arguments);
 };
+mx.view.View.className = "mx.view.View";
 
 $view = function(p_element)
 {

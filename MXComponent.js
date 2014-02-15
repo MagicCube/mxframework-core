@@ -148,3 +148,4 @@ MXComponent = function()
     
     return me.endOfClass(arguments);
 };
+MXComponent.className = "MXComponent";
