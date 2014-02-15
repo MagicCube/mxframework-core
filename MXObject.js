@@ -73,7 +73,7 @@ MXObject = function()
         if (ns != null)
         {
             var parts = ns.split(".");
-            if (parts > 0)
+            if (parts.length > 0)
             {
                 return parts[0];
             }
@@ -87,7 +87,7 @@ MXObject = function()
     
     me.getResourcePath = function(p_name, p_ext, p_auto2x)
     {
-        var path = me.getPackageName() + ".res." + p_name;
+        var path = me.getModuleName() + ".res." + p_name;
         return mx.getResourcePath(path, p_ext, p_auto2x);
     };
     
