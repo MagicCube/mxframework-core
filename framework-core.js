@@ -592,6 +592,7 @@ mx.init();
 
 
 
+$importlanguage("mx");
 $import("mx.MXObject");
 $import("mx.MXEvent");
 $import("mx.MXComponent");

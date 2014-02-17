@@ -22,7 +22,6 @@ if (typeof(jQuery) == "undefined")
 include("mx/javascript-extensions.js");
 include("mx/framework-base.js");
 include("mx/framework-core.js");
-include("mx/res/locales/" + lang + "/language.js");
 
 function include(p_src)
 {
