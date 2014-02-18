@@ -7,7 +7,7 @@ if (typeof($mx_language) == "undefined")
 }
 else
 {
-    lang = $mx_locale;
+    lang = $mx_language;
 }
     
 var scripts = document.getElementsByTagName("script");
