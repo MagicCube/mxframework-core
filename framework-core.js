@@ -23,15 +23,33 @@ MX = function()
     me.webContentPath = null;
     me.appContentPath = null;
     
+    me.urlParams = null;
+    
     me.init = function()
     {
-        if (typeof($mx_language) == "undefined")
+        var search = location.search.substring(1);
+        me.urlParams = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}',
+                         function(key, value) { return key===""?value:decodeURIComponent(value); }) : {};
+        
+        if (me.urlParams.lang != null)
+        {
+            me.language = me.urlParams.lang.replace("/", "");
+        }
+        else if (me.urlParams.language != null)
+        {
+            me.language = me.urlParams.language.replace("/", "");
+        }
+        else if (typeof($mx_language) == "undefined")
         {
             me.language = (navigator.language  ||  navigator.userLanguage).toString().toLowerCase();
+            if (me.language.startsWith("en-"))
+            {
+                me.language = "en";
+            }
         }
         else
         {
-            me.language = $mx_locale;
+            me.language = $mx_language;
         }
         
         
