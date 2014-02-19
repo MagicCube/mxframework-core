@@ -67,6 +67,13 @@ mx.view.View = function()
         }
         
         me.setFrame(me.frame);
+        
+        if (me.subviews.length > 0)
+        {
+            var subviews = me.subviews.clone();
+            me.subviews.clear();
+            me.addSubviews(subviews);
+        }
     };
     
     me.setFrame = function(p_frame, p_animated)
@@ -136,6 +143,17 @@ mx.view.View = function()
                 me.subviews[p_view.id] = p_view;
             }
             p_view.parentView = me;
+        }
+    };
+    
+    me.addSubviews = function(p_views, $p_element)
+    {
+        if (isArray(p_views))
+        {
+            p_views.forEach(function(p_view)
+            {
+                me.addSubview(p_view, $p_element);
+            });
         }
     };
     
