@@ -17,7 +17,7 @@ MX = function()
     me.osType = null;
     
     me.language = null;
-    me.locales = [];
+    me.locales = {};
     
     me.debugMode = false;
     me.webContentPath = null;
