@@ -1,11 +1,11 @@
 /*!
  * MXFramework v6.0
- * - A WebApp-Oriented AJAX Framework
+ * - A lightweight Object-Oriented JavaScript Framework
  *
  * Copyright 2005-2013. All rights reserved.
  *
  * Create Date: 2012-09-23 20:46
- * First Created by Henry Li (henry.li03@sap.com, henry1943@163.com).
+ * First Created by Henry Li (henry1943@163.com).
  */
 
 
@@ -21,7 +21,8 @@ MX = function()
     
     me.debugMode = false;
     me.webContentPath = null;
-    me.appContentPath = null;
+    me.scriptPath = null;
+    me.libraryPath = null;
     
     me.urlParams = null;
     
@@ -64,30 +65,82 @@ MX = function()
             me.runAt = "mobile";
             me.osType = "android";
         }
-        
+                
         var scripts = document.getElementsByTagName("script");
         var src = scripts[scripts.length - 1].src;
         var mxPath = "/mx/framework-core.js";
         if (src.endsWith(mxPath))
         {
-            me.appContentPath = src.substr(0, src.length - mxPath.length);
-            var pos = me.appContentPath.lastIndexOf("/");
-            me.webContentPath = me.appContentPath.substr(0, pos);
             me.debugMode = true;
+            if (typeof($mx_script_path) == "undefined")
+            {
+                me.scriptPath = src.substr(0, src.length - mxPath.length);
+            }
+            else
+            {
+                me.scriptPath = $mx_script_path;
+            }
+            
+            if (typeof($mx_web_content_path) == "undefined")
+            {
+                var pos = me.scriptPath.lastIndexOf("/");
+                me.webContentPath = me.scriptPath.substr(0, pos);
+            }
+            else
+            {
+                me.webContentPath = $mx_web_content_path;
+            }
+            
+            if (me.scriptPath.startsWith("~/"))
+            {
+                me.scriptPath = $mappath(me.scriptPath);
+            }
         }
         else
         {
+            me.debugMode = false;
             mxPath = "/mx/min.js";
             if (src.endsWith(mxPath))
             {
-                me.appContentPath = src.substr(0, src.length - mxPath.length);
-                var pos = me.appContentPath.lastIndexOf("/");
-                me.webContentPath = me.appContentPath.substr(0, pos);
-                me.debugMode = false;
+                if (typeof($mx_script_path) == "undefined")
+                {
+                    me.scriptPath = src.substr(0, src.length - mxPath.length);
+                }
+                else
+                {
+                    me.scriptPath = $mx_script_path;
+                }
+                
+                if (typeof($mx_web_content_path) == "undefined")
+                {
+                    var pos = me.scriptPath.lastIndexOf("/");
+                    me.webContentPath = me.scriptPath.substr(0, pos);
+                }
+                else
+                {
+                    me.webContentPath = $mx_web_content_path;
+                }
             }
             else
             {
                 throw new Error("MXFramework is not well configured.");
+            }
+        }
+        
+
+        if (typeof($mx_library_path) == "undefined")
+        {
+            me.libraryPath = me.scriptPath + "/lib";
+        }
+        else
+        {
+            if ($mx_library_path.startsWith("~/"))
+            {
+                me.libraryPath = $mappath($mx_library_path);
+            }
+            else
+            {
+                me.libraryPath = $mx_library_path;
             }
         }
     };
@@ -103,11 +156,15 @@ MX = function()
         }
         if (url.indexOf("~/") == 0)
         {
-            url = mx.webContentPath + url.substr(1);
+            url = me.webContentPath + url.substr(1);
         }
         else if (url.indexOf("$/") == 0)
         {
-            url = mx.appContentPath + url.substr(1);
+            url = me.scriptPath + url.substr(1);
+        }
+        else if (url.indexOf("$lib/") == 0)
+        {
+            url = me.libraryPath + url.substr(4);
         }
         return url;
     };
@@ -151,7 +208,7 @@ MX = function()
     me.loadedStyles = [];
     me.include = function(p_path, p_callback)
     {
-        var path = me.mappath(p_path);
+        var path = $mappath(p_path);
         
         var ingList = null;
         var edList = null;
@@ -568,7 +625,18 @@ MX = function()
             if (path == null)
             {
                 var classPath = p_fullClassName.replace(/\./g, "/");
-                path = $mappath("$/" + classPath + ext);
+                if (eval("typeof($mx_" + parts[0] + "_path)") != "undefined")
+                {
+                    path = $mappath(eval("$mx_" + parts[0] + "_path") + classPath.substr(parts[0].length) + ext);
+                }
+                else if (classPath.startsWith("lib/"))
+                {
+                    path = $mappath("$lib/" + classPath.substr(4) + ext);
+                }
+                else
+                {
+                    path = $mappath("$/" + classPath + ext);
+                }
             }
         }
         return path;
