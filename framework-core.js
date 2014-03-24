@@ -579,7 +579,7 @@ MX = function()
     };
     $importlanguage = me.importLanguage;
     
-    me.importMessageBundle = function(p_moduleName)
+    me.importMessageBundle = function(p_namespace)
     {
         var lan = me.language.replace("-", "_");
         if (lan == "zh_cn")
@@ -590,16 +590,16 @@ MX = function()
         {
             lan = "zh_TW";
         }
-        var path = $mappath("$/" + p_moduleName + "/messagebundle_" + lan + ".properties");
+        var path = me.getResourcePath(p_namespace + ".messagebundle_" + lan, "properties");
         $.ajax({
             url: path,
             async: false
         }).done(function(p_result)
         {
             var lines = p_result.split("\n");
-            if (me.locales[p_moduleName] == null)
+            if (me.locales[p_namespace] == null)
             {
-                me.locales[p_moduleName] = {};
+                me.locales[p_namespace] = {};
             }
             lines.forEach(function(p_line)
             {
@@ -614,7 +614,7 @@ MX = function()
                 {
                     var key = line.substr(0, pos);
                     var value = line.substr(pos + 1);
-                    me.locales[p_moduleName][key] = value;
+                    me.locales[p_namespace][key] = value;
                 }
             });
         });
