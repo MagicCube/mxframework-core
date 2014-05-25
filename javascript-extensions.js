@@ -172,10 +172,15 @@ Number.format = function(p_value, p_formatString)
     {
         return p_value + "";
     }
-    if (typeof(p_formatString) == "number")
+    
+    var percentage = "";
+    if (p_formatString.endsWith("%") && p_formatString.length > 1)
     {
-        return p_value + "";
+        percentage = "%";
+        p_value = p_value * 100;
+        p_formatString = p_formatString.substr(0, p_formatString.length - 1);
     }
+    
     var string = p_value + "";
     if (p_formatString != null && p_formatString != "")
     {
@@ -190,13 +195,13 @@ Number.format = function(p_value, p_formatString)
         }
         if (formatParts.length == 1)
         {
-            return stringParts[0];
+            return stringParts[0] + percentage;
         }
         else
         {
             var fl = parseFloat("0." + stringParts[1]);
             fl = fl.toFixed(formatParts[1].length);
-            return stringParts[0] + "." + fl.substr(2);
+            return stringParts[0] + "." + fl.substr(2) + percentage;
         }
     }
     else
