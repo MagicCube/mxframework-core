@@ -172,6 +172,10 @@ Number.format = function(p_value, p_formatString)
     {
         return p_value + "";
     }
+    if (!isNumber(p_value))
+    {
+        p_value = 0;
+    }
     
     var percentage = "";
     if (p_formatString.endsWith("%") && p_formatString.length > 1)
