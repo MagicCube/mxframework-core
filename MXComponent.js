@@ -28,7 +28,7 @@ MXComponent = function()
     };
     
     
-    me.bind = function(p_eventType, p_function)
+    me.bind = function(p_eventType, p_function, p_once)
     {
         var eventType = "on" + p_eventType;
         if (typeof(me[eventType]) == "undefined")
@@ -39,10 +39,17 @@ MXComponent = function()
         {
             me[eventType] = new MXEvent();
         }
-        me[eventType].addEventListener(p_function);
+        me[eventType].addEventListener(p_function, p_once);
         return me;
     };
     me.on = me.bind;
+    
+    me.bindOnce = function(p_eventType, p_function)
+    {
+    	me.bind(p_eventType, p_function, true);
+    	return me;
+    };
+    me.once = me.bindOnce;
     
     
     me.unbind = function(p_eventType, p_function)
