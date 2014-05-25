@@ -187,12 +187,18 @@ Number.format = function(p_value, p_formatString)
         var stringParts = string.split('.');
         var formatParts = p_formatString.split('.');
 
-        if (stringParts[0].length < formatParts[0].length)
+        if (!formatParts[0].endsWith(",000") && stringParts[0].length < formatParts[0].length)
         {
             stringParts[0] =
                 formatParts[0].substring(0, formatParts[0].length - stringParts[0].length) +
                 stringParts[0];
         }
+        
+        if (formatParts[0].endsWith(",000"))
+        {
+            stringParts[0] = stringParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
         if (formatParts.length == 1)
         {
             return stringParts[0] + percentage;
