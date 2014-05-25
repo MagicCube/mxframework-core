@@ -1,8 +1,7 @@
 MXComponent = function()
 {
     var me = $extend(MXObject);
-    var base =
-    {};
+    var base = {};
 
     me.autoInit = true;
     me.initialized = false;
