@@ -194,18 +194,9 @@ Number.format = function(p_value, p_formatString)
         }
         else
         {
-            if (stringParts.length > 1)
-            {
-                while (stringParts[1].length < formatParts[1].length)
-                {
-                    stringParts[1] += "0";
-                }
-            }
-            else
-            {
-                stringParts[1] = formatParts[1];
-            }
-            return stringParts[0] + "." + stringParts[1];
+            var fl = parseFloat("0." + stringParts[1]);
+            fl = fl.toFixed(formatParts[1].length);
+            return stringParts[0] + "." + fl.substr(2);
         }
     }
     else
