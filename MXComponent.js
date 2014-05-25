@@ -1,13 +1,12 @@
 MXComponent = function()
 {
     var me = $extend(MXObject);
-    var base = {};
-    
-    
+    var base =
+    {};
+
     me.autoInit = true;
     me.initialized = false;
-    
-    
+
     base._ = me._;
     me._ = function(p_options)
     {
@@ -20,18 +19,16 @@ MXComponent = function()
             }
         }
     };
-    
-    
+
     me.init = function(p_options)
     {
         me.initialized = true;
     };
-    
-    
+
     me.bind = function(p_eventType, p_function, p_once)
     {
         var eventType = "on" + p_eventType;
-        if (typeof(me[eventType]) == "undefined")
+        if (typeof (me[eventType]) == "undefined")
         {
             return me;
         }
@@ -43,20 +40,19 @@ MXComponent = function()
         return me;
     };
     me.on = me.bind;
-    
+
     me.bindOnce = function(p_eventType, p_function)
     {
-    	me.bind(p_eventType, p_function, true);
-    	return me;
+        me.bind(p_eventType, p_function, true);
+        return me;
     };
     me.once = me.bindOnce;
-    
-    
+
     me.unbind = function(p_eventType, p_function)
     {
         if (p_eventType == null && p_function == null)
         {
-            for (var name in me)
+            for ( var name in me)
             {
                 if (me[name] != null && me[name].constructor == MXEvent)
                 {
@@ -68,11 +64,11 @@ MXComponent = function()
         else
         {
             var eventType = "on" + p_eventType;
-            if (typeof(me[eventType]) == "undefined")
+            if (typeof (me[eventType]) == "undefined")
             {
                 return me;
             }
-            
+
             if (me[eventType] != null)
             {
                 if (p_function != null)
@@ -88,11 +84,11 @@ MXComponent = function()
         return me;
     };
     me.off = me.unbind;
-    
+
     me.hasBound = function(p_eventType)
     {
         var eventType = "on" + p_eventType;
-        if (typeof(me[eventType]) == "undefined")
+        if (typeof (me[eventType]) == "undefined")
         {
             return false;
         }
@@ -105,11 +101,11 @@ MXComponent = function()
             return false;
         }
     };
-    
+
     me.trigger = function(p_eventType, p_args)
     {
         var eventType = "on" + p_eventType;
-        if (typeof(me[eventType]) == "undefined")
+        if (typeof (me[eventType]) == "undefined")
         {
             return me;
         }
@@ -122,18 +118,18 @@ MXComponent = function()
             }
             else
             {
-                e = {};
+                e =
+                {};
             }
             e.target = me;
-            
+
             e.type = p_eventType;
-            
+
             me[eventType].fire(e);
         }
         return me;
     };
-    
-    
+
     base.instanceOf = me.instanceOf;
     me.instanceOf = function(p_class)
     {
@@ -143,16 +139,14 @@ MXComponent = function()
         }
         return base.instanceOf(p_class);
     };
-    
-    
-    
+
     base.dispose = me.dispose;
     me.dispose = function()
     {
         me.unbind();
         base.dispose();
     };
-    
+
     return me.endOfClass(arguments);
 };
 MXComponent.className = "MXComponent";
