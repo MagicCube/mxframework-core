@@ -39,11 +39,40 @@ String.format = function(p_string, p_args)
     var result = p_string;
     if (p_string.indexOf("{") != -1 && p_string.indexOf("}") != -1)
     {
-        if (isArray(p_args) || isPlainObject(p_args))
+        if (isObject(p_args) && !isArray(p_args))
         {
-            for (var i in p_args)
+            var groups = p_string.match(/(\{[a-z][a-z$_0-9]*\})/gi);
+            if (groups != null)
             {
-                result = result.replace("{" + i + "}", p_args[i]);
+                for (var i = 0; i < groups.length; i++)
+                {
+                    var key = groups[i].substr(1);
+                    key = key.substr(0, key.length - 1);
+                    var value = p_args[key];
+                    if (value == null)
+                    {
+                        value = "";
+                    }
+                    result = result.replace("{" + key + "}", value);
+                }
+            }
+        }
+        else if (isArray(p_args))
+        {
+            var groups = p_string.match(/(\{[0-9]+\})/gi);
+            if (groups != null)
+            {
+                for (var i = 0; i < groups.length; i++)
+                {
+                    var index = groups[i].substr(1);
+                    index = index.substr(0, index.length - 1);
+                    var value = p_args[parseInt(index)];
+                    if (value == null)
+                    {
+                        value = "";
+                    }
+                    result = result.replace("{" + index + "}", value);
+                }
             }
         }
     }
