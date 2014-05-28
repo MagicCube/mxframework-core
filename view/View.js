@@ -11,6 +11,7 @@ mx.view.View = function()
     me.elementTag = "div";
     me.elementClass = null;
     me.elementStyle = null;
+    me.elementPositionMode = "relative";
     
     me.frame = null;
     
@@ -55,6 +56,8 @@ mx.view.View = function()
         {
             me.$element.data("view", me);
         }
+        
+        me.$element.css({ "position": me.elementPositionMode });
         
         if (me.elementClass != null)
         {
