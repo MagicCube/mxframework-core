@@ -713,16 +713,22 @@ MX = function()
     
     function _checkAllLoadingStatus()
     {
-        if ((me.loadingStyles.length == 0 && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0)
-                || (me.osType == "android" && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0))
+        if (me._ready_callbacks.length == 0) return;
+        
+        var loaded = (me.loadingStyles.length == 0 && me.loadingScripts.length == 0);
+        var androidLoaded = (me.osType == "android" && me.loadingScripts.length == 0);
+        if (loaded || androidLoaded)
         {
             var readyFunc = null;
             while (me._ready_callbacks.length > 0)
             {   
-                if ((me.osType != "android" &&(me.loadingStyles.length > 0 || me.loadingScripts.length > 0))
-                       || (me.osType == "android" && me.loadingScripts.length > 0))
+                if (me.loadingScripts.length > 0)
                 {
-                    break;
+                    if ((me.osType != "android" && me.loadingStyles.length > 0)
+                     || (me.osType == "android"))
+                    {
+                        break;
+                    }
                 }
                 readyFunc = me._ready_callbacks.pop();
                 readyFunc();
