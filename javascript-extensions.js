@@ -373,6 +373,7 @@ Date.getDaysInMonth = function(p_year, p_month)
             {
                 return 28;
             }
+            break;
         case 1: case 3: case 5:
         case 7: case 8: case 10: case 12:
             return 31;
