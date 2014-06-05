@@ -548,7 +548,8 @@ Array.prototype.contains = function(p_item)
 
 Array.prototype.add = function(p_item)
 {
-    return this[this.length] = p_item;
+    this[this.length] = p_item
+    return p_item;
 };
 
 Array.prototype.addAll = function(p_items)
