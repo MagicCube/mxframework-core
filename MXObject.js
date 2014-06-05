@@ -17,17 +17,20 @@ MXObject = function()
                 var isEventDispatcher = typeof(me.on) == "function";
                 for (var key in p_options)
                 {
-                    var option = p_options[key];
-                    if (isEventDispatcher && typeof(me[key] == "object") && typeof(option) == "function" && key.startsWith("on"))
+                    if (p_options.hasOwnProperty(key))
                     {
-                        me.on(key.substr(2), option);
+                        var option = p_options[key];
+                        if (isEventDispatcher && typeof(me[key] == "object") && typeof(option) == "function" && key.startsWith("on"))
+                        {
+                            me.on(key.substr(2), option);
+                        }
+                        else 
+                        {
+                            me[key] = option;
+                        }
+        
+                        option = null;
                     }
-                    else 
-                    {
-                        me[key] = option;
-                    }
-    
-                    option = null;
                 }
             }
             me.constructed = true;
@@ -111,7 +114,10 @@ MXObject = function()
             p_options = arguments[0];
             for (var key in p_options)
             {
-                me.set(key, p_options[key]);
+                if (p_options.hasOwnProperty(key))
+                {
+                    me.set(key, p_options[key]);
+                }
             }
         }
         else if (arguments.length == 2 && isPlainObject(arguments[0]) && isPlainObject(arguments[1]))

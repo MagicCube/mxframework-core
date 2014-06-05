@@ -336,6 +336,8 @@ function $getclass(p_inst)
             {
                 return Object;
             }
+        default:
+            return null;
     }
 }
 
@@ -380,6 +382,8 @@ function $instanceof(p_inst, p_class)
             {
                 return true;
             }
+        default:
+            return false;
     }
 }
 
