@@ -28,126 +28,19 @@ MX = function()
     
     me.init = function()
     {
-        var search = location.search.substring(1);
-        me.urlParams = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}',
-                         function(key, value) { return key===""?value:decodeURIComponent(value); }) : {};
-        
-        if (me.urlParams.lang != null)
-        {
-            me.language = me.urlParams.lang.replace("/", "");
-        }
-        else if (me.urlParams.language != null)
-        {
-            me.language = me.urlParams.language.replace("/", "");
-        }
-        else if (typeof($mx_language) == "undefined")
-        {
-            me.language = (navigator.language  ||  navigator.userLanguage).toString().toLowerCase();
-            if (me.language.startsWith("en-"))
-            {
-                me.language = "en";
-            }
-        }
-        else
-        {
-            me.language = $mx_language;
-        }
-        
-        
-        var userAgent = window.navigator.userAgent;
-        if (userAgent.contains("iPad") || userAgent.contains("iPhone") || userAgent.contains("iPod"))
-        {
-            me.runAt = "mobile";
-            me.osType = "ios";
-        }
-        else if (userAgent.contains("Android"))
-        {
-            me.runAt = "mobile";
-            me.osType = "android";
-        }
-                
-        var scripts = document.getElementsByTagName("script");
-        var src = scripts[scripts.length - 1].src;
-        var mxPath = "/mx/framework-core.js";
-        if (src.endsWith(mxPath))
-        {
-            me.debugMode = true;
-            if (typeof($mx_script_path) == "undefined")
-            {
-                me.scriptPath = src.substr(0, src.length - mxPath.length);
-            }
-            else
-            {
-                me.scriptPath = $mx_script_path;
-            }
-            
-            if (typeof($mx_web_content_path) == "undefined")
-            {
-                var pos = me.scriptPath.lastIndexOf("/");
-                me.webContentPath = me.scriptPath.substr(0, pos);
-            }
-            else
-            {
-                me.webContentPath = $mx_web_content_path;
-            }
-            
-            if (me.scriptPath.startsWith("~/"))
-            {
-                me.scriptPath = $mappath(me.scriptPath);
-            }
-        }
-        else
-        {
-            me.debugMode = false;
-            mxPath = "/mx/min.js";
-            if (src.endsWith(mxPath))
-            {
-                if (typeof($mx_script_path) == "undefined")
-                {
-                    me.scriptPath = src.substr(0, src.length - mxPath.length);
-                }
-                else
-                {
-                    me.scriptPath = $mx_script_path;
-                }
-                
-                if (typeof($mx_web_content_path) == "undefined")
-                {
-                    var pos = me.scriptPath.lastIndexOf("/");
-                    me.webContentPath = me.scriptPath.substr(0, pos);
-                }
-                else
-                {
-                    me.webContentPath = $mx_web_content_path;
-                }
-            }
-            else
-            {
-                throw new Error("MXFramework is not well configured.");
-            }
-        }
-        
-
-        if (typeof($mx_library_path) == "undefined")
-        {
-            me.libraryPath = me.scriptPath + "/lib";
-        }
-        else
-        {
-            if ($mx_library_path.startsWith("~/"))
-            {
-                me.libraryPath = $mappath($mx_library_path);
-            }
-            else
-            {
-                me.libraryPath = $mx_library_path;
-            }
-        }
+        _resolveUrlParams();
+        _resolveLangauge();
+        _resolveUserAgent();
+        _resolveScriptPath();
+        _resolveLibraryPath();
     };
     
     me.mappath = function(p_url)
     {
-        if (typeof (p_url) != "string") return null;
+        if (typeof (p_url) != "string")
+        {
+            return null;
+        }
         
         var url = p_url;
         if (url.indexOf("$language"))
@@ -317,112 +210,13 @@ MX = function()
                 element.times = 1;
                 return;
             }
-            
-            
         }
         
-        element.onload = null;
-        element.onerror = null;
-        if (element.readyState)
-        {
-            element.onreadystatechange = null;
-        }
-        
-        var path = null;
-        var callbacks = [];
-        if (element.tagName == "SCRIPT")
-        {
-            path = element.src;
-            if (me.debugMode)
-            {
-                path = path.substring(0, path.lastIndexOf("?"));
-            }
-            if (e.type != "error")
-            {
-                _add(me.loadedScripts, path, path);
-                callbacks = me.loadingScripts[path];
-                _remove(me.loadingScripts, path);
-            }
-            else
-            {
-                mx.error("Fail to load '" + path + "'.");
-            }
-
-        }
-        else if (element.tagName == "LINK")
-        {
-            path = element.href;
-            if (me.debugMode)
-            {
-                path = path.substring(0, path.lastIndexOf("?"));
-            }
-            if (e.type != "error")
-            {
-                _add(me.loadedStyles, path, path);
-                callbacks = me.loadingStyles[path];
-                _remove(me.loadingStyles, path);
-            }
-            else
-            {
-                mx.error("Fail to load '" + path + "'.");
-            }
-        }
-        
-        
-        while (callbacks.length > 0)
-        {
-            var func = callbacks.pop();
-            func(path);
-            func = null;
-        }
-        callbacks = null;
-        
-        if (me.loadingStyles.length == 0 && me._styleReady_callbacks.length > 0)
-        {
-            while (me._styleReady_callbacks.length > 0)
-            {        
-                if (me.loadingStyles.length > 0)
-                {
-                    break;
-                }
-                var readyFunc = me._styleReady_callbacks.pop();
-                readyFunc();
-                readyFunc = null;
-            }
-        }
-        
-        if (me.loadingScripts.length == 0 && me._scriptReady_callbacks.length > 0)
-        {
-            while (me._scriptReady_callbacks.length > 0)
-            {    
-                if (me.loadingScripts.length > 0)
-                {
-                    break;
-                }
-                var readyFunc = me._scriptReady_callbacks.pop();
-                readyFunc();
-                readyFunc = null;
-            }
-        }
-        
-        if ((me.loadingStyles.length == 0 && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0)
-                || (me.osType == "android" && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0))
-        {
-            while (me._ready_callbacks.length > 0)
-            {   
-                
-                if ((me.osType != "android" &&(me.loadingStyles.length > 0 || me.loadingScripts.length > 0))
-                       || (me.osType == "android" && me.loadingScripts.length > 0))
-                {
-                    break;
-                }
-                var readyFunc = me._ready_callbacks.pop();
-                readyFunc();
-                readyFunc = null;
-            }
-        }
+        _updateCallbacks(element);
+        _checkStylesLoadingStatus();
+        _checkScriptLoadingStatus();
+        _checkAllLoadingStatus();
     };
-    
     
     
     
@@ -488,23 +282,7 @@ MX = function()
     
     
     
-    function _add(p_collection, p_key, p_value)
-    {
-        p_collection[p_key] = p_value;
-        p_collection.push(p_key);
-    }
     
-    function _remove(p_collection, p_key)
-    {
-        for (var i = 0; i < p_collection.length; i++)
-        {
-            if (p_collection[i] == p_key)
-            {
-                p_collection.splice(i, 1);
-                break;
-            }
-        }
-    }
     
     
     
@@ -710,6 +488,273 @@ MX = function()
             console.error("[MX] " + p_message);
         }
     };
+    
+    
+    
+    function _resolveUrlParams()
+    {
+        var search = location.search.substring(1);
+        me.urlParams = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+                         function(key, value) { return key === "" ? value:decodeURIComponent(value); }) : {};
+    }
+    
+    function _resolveLangauge()
+    {
+        if (me.urlParams.lang != null)
+        {
+            me.language = me.urlParams.lang.replace("/", "");
+        }
+        else if (me.urlParams.language != null)
+        {
+            me.language = me.urlParams.language.replace("/", "");
+        }
+        else if (typeof($mx_language) == "undefined")
+        {
+            me.language = (navigator.language  ||  navigator.userLanguage).toString().toLowerCase();
+            if (me.language.startsWith("en-"))
+            {
+                me.language = "en";
+            }
+        }
+        else
+        {
+            me.language = $mx_language;
+        }
+    }
+    
+    function _resolveUserAgent()
+    {
+        var userAgent = window.navigator.userAgent;
+        if (userAgent.contains("iPad") || userAgent.contains("iPhone") || userAgent.contains("iPod"))
+        {
+            me.runAt = "mobile";
+            me.osType = "ios";
+        }
+        else if (userAgent.contains("Android"))
+        {
+            me.runAt = "mobile";
+            me.osType = "android";
+        }
+    }
+    
+    function _resolveScriptPath()
+    {
+        var scripts = document.getElementsByTagName("script");
+        var src = scripts[scripts.length - 1].src;
+        var mxPath = "/mx/framework-core.js";
+        if (src.endsWith(mxPath))
+        {
+            me.debugMode = true;
+            if (typeof($mx_script_path) == "undefined")
+            {
+                me.scriptPath = src.substr(0, src.length - mxPath.length);
+            }
+            else
+            {
+                me.scriptPath = $mx_script_path;
+            }
+            
+            if (typeof($mx_web_content_path) == "undefined")
+            {
+                var pos = me.scriptPath.lastIndexOf("/");
+                me.webContentPath = me.scriptPath.substr(0, pos);
+            }
+            else
+            {
+                me.webContentPath = $mx_web_content_path;
+            }
+            
+            if (me.scriptPath.startsWith("~/"))
+            {
+                me.scriptPath = $mappath(me.scriptPath);
+            }
+        }
+        else
+        {
+            me.debugMode = false;
+            mxPath = "/mx/min.js";
+            if (src.endsWith(mxPath))
+            {
+                if (typeof($mx_script_path) == "undefined")
+                {
+                    me.scriptPath = src.substr(0, src.length - mxPath.length);
+                }
+                else
+                {
+                    me.scriptPath = $mx_script_path;
+                }
+                
+                if (typeof($mx_web_content_path) == "undefined")
+                {
+                    var pos = me.scriptPath.lastIndexOf("/");
+                    me.webContentPath = me.scriptPath.substr(0, pos);
+                }
+                else
+                {
+                    me.webContentPath = $mx_web_content_path;
+                }
+            }
+            else
+            {
+                throw new Error("MXFramework is not well configured.");
+            }
+        }
+    }
+    
+    function _resolveLibraryPath()
+    {
+        if (typeof($mx_library_path) == "undefined")
+        {
+            me.libraryPath = me.scriptPath + "/lib";
+        }
+        else
+        {
+            if ($mx_library_path.startsWith("~/"))
+            {
+                me.libraryPath = $mappath($mx_library_path);
+            }
+            else
+            {
+                me.libraryPath = $mx_library_path;
+            }
+        }
+    }
+    
+    
+    
+    
+    function _updateCallback(p_element)
+    {
+        p_element.onload = null;
+        p_element.onerror = null;
+        if (p_element.readyState)
+        {
+            p_element.onreadystatechange = null;
+        }
+        
+        var path = null;
+        var callbacks = [];
+        if (p_element.tagName == "SCRIPT")
+        {
+            path = p_element.src;
+            if (me.debugMode)
+            {
+                path = path.substring(0, path.lastIndexOf("?"));
+            }
+            if (e.type != "error")
+            {
+                _add(me.loadedScripts, path, path);
+                callbacks = me.loadingScripts[path];
+                _remove(me.loadingScripts, path);
+            }
+            else
+            {
+                mx.error("Fail to load '" + path + "'.");
+            }
+
+        }
+        else if (p_element.tagName == "LINK")
+        {
+            path = p_element.href;
+            if (me.debugMode)
+            {
+                path = path.substring(0, path.lastIndexOf("?"));
+            }
+            if (e.type != "error")
+            {
+                _add(me.loadedStyles, path, path);
+                callbacks = me.loadingStyles[path];
+                _remove(me.loadingStyles, path);
+            }
+            else
+            {
+                mx.error("Fail to load '" + path + "'.");
+            }
+        }
+        
+        while (callbacks.length > 0)
+        {
+            var func = callbacks.pop();
+            func(path);
+            func = null;
+        }
+        callbacks = null;
+    }
+    
+    function _checkStylesLoadingStatus()
+    {
+        if (me.loadingStyles.length == 0 && me._styleReady_callbacks.length > 0)
+        {
+            while (me._styleReady_callbacks.length > 0)
+            {        
+                if (me.loadingStyles.length > 0)
+                {
+                    break;
+                }
+                var readyFunc = me._styleReady_callbacks.pop();
+                readyFunc();
+                readyFunc = null;
+            }
+        }
+    }
+    
+    function _checkScriptLoadingStatus()
+    {
+        if (me.loadingScripts.length == 0 && me._scriptReady_callbacks.length > 0)
+        {
+            while (me._scriptReady_callbacks.length > 0)
+            {    
+                if (me.loadingScripts.length > 0)
+                {
+                    break;
+                }
+                var readyFunc = me._scriptReady_callbacks.pop();
+                readyFunc();
+                readyFunc = null;
+            }
+        }
+    }
+    
+    function _checkAllLoadingStatus()
+    {
+        if ((me.loadingStyles.length == 0 && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0)
+                || (me.osType == "android" && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0))
+        {
+            while (me._ready_callbacks.length > 0)
+            {   
+                
+                if ((me.osType != "android" &&(me.loadingStyles.length > 0 || me.loadingScripts.length > 0))
+                       || (me.osType == "android" && me.loadingScripts.length > 0))
+                {
+                    break;
+                }
+                var readyFunc = me._ready_callbacks.pop();
+                readyFunc();
+                readyFunc = null;
+            }
+        }
+    }
+    
+    
+    
+    
+    function _add(p_collection, p_key, p_value)
+    {
+        p_collection[p_key] = p_value;
+        p_collection.push(p_key);
+    }
+    
+    function _remove(p_collection, p_key)
+    {
+        for (var i = 0; i < p_collection.length; i++)
+        {
+            if (p_collection[i] == p_key)
+            {
+                p_collection.splice(i, 1);
+                break;
+            }
+        }
+    }
     
     return me;
 };

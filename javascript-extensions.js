@@ -484,7 +484,9 @@ Array.prototype.enqueue = function(item)
 Array.prototype.dequeue = function()
 {
     if (this.length == 0)
+    {
         return undefined;
+    }
 
     var item = this[0];
     this.removeAt(0);
@@ -510,7 +512,10 @@ Array.prototype.indexOf = function(p_item)
 
 Array.prototype.first = function(i)
 {
-    if (this.length == 0) return undefined;
+    if (this.length == 0)
+    {
+        return undefined;
+    }
     
     if (typeof(i) != "number")
     {
@@ -525,7 +530,10 @@ Array.prototype.first = function(i)
 
 Array.prototype.last = function(i)
 {
-    if (this.length == 0) return undefined;
+    if (this.length == 0) 
+    {
+        return undefined;
+    }
     
     if (typeof(i) != "number")
     {
@@ -620,7 +628,10 @@ Array.prototype.removeAt = function(p_index)
 
 Array.prototype.removeLast = function(p_index)
 {
-    if (this.length == 0) return;
+    if (this.length == 0)
+    {
+        return;
+    }
     
     if (typeof(p_index) != "number")
     {
