@@ -408,12 +408,9 @@ MX = function()
         var path = null;
         if (parts.length == 1)
         {
-            if (!me.debugMode)
+            if (!me.debugMode && (parts[0] != "lib" && ext == ".css"))
             {
-                if (parts[0] != "lib" && ext == ".css")
-                {
-                    path = $mappath("$/" + parts[0] + "/res/min.css");
-                }
+                path = $mappath("$/" + parts[0] + "/res/min.css");
             }
             
             if (path == null)
@@ -610,13 +607,10 @@ MX = function()
             element = e.target;
         }
         
-        if (element.readyState != null)
-        {                        
-            if (typeof(element.times) == "undefined" && element.readyState != "complete")
-            {
-                element.times = 1;
-                return;
-            }
+        if (element.readyState != null && (typeof(element.times) == "undefined" && element.readyState != "complete"))
+        {
+            element.times = 1;
+            return;
         }
         
         element.onload = null;
