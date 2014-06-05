@@ -582,7 +582,7 @@ Array.prototype.insertBefore = function(p_item, p_beforeItem)
 
 Array.prototype.insertAfter = function(p_item, p_afterItem)
 {
-    var index = this.indexOf(p_beforeItem);
+    var index = this.indexOf(p_afterItem);
     if (index == -1)
     {
         return false;
