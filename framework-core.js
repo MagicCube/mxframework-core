@@ -193,26 +193,7 @@ MX = function()
     me._include_onload = function(e)
     {
         e = (e != null ? e : event);
-        var element = null;
-        if (e.srcElement != null)
-        {
-            element = e.srcElement;
-        }
-        else
-        {
-            element = e.target;
-        }
-        
-        if (element.readyState != null)
-        {                        
-            if (typeof(element.times) == "undefined" && element.readyState != "complete")
-            {
-                element.times = 1;
-                return;
-            }
-        }
-        
-        _updateCallbacks(element);
+        _element_onload(e);
         _checkStylesLoadingStatus();
         _checkScriptLoadingStatus();
         _checkAllLoadingStatus();
@@ -391,8 +372,13 @@ MX = function()
                 if (pos > 0)
                 {
                     var key = line.substr(0, pos);
-                    var value = line.substr(pos + 1);
-                    me.locales[p_namespace][key] = value;
+                    var value = line.substr(pos + 1);                    
+                    var r = /\\u([\d\w]{4})/gi;
+                    value = value.replace(r, function(match, grp)
+                    {
+                        return String.fromCharCode(parseInt(grp, 16));
+                    });
+                    me.locales[p_namespace][key] = decodeURIComponent(value);
                 }
             });
         });
@@ -623,20 +609,39 @@ MX = function()
     
     
     
-    function _updateCallback(p_element)
+    function _element_onload(e)
     {
-        p_element.onload = null;
-        p_element.onerror = null;
-        if (p_element.readyState)
+        var element = null;
+        if (e.srcElement != null)
         {
-            p_element.onreadystatechange = null;
+            element = e.srcElement;
+        }
+        else
+        {
+            element = e.target;
+        }
+        
+        if (element.readyState != null)
+        {                        
+            if (typeof(element.times) == "undefined" && element.readyState != "complete")
+            {
+                element.times = 1;
+                return;
+            }
+        }
+        
+        element.onload = null;
+        element.onerror = null;
+        if (element.readyState)
+        {
+            element.onreadystatechange = null;
         }
         
         var path = null;
         var callbacks = [];
-        if (p_element.tagName == "SCRIPT")
+        if (element.tagName == "SCRIPT")
         {
-            path = p_element.src;
+            path = element.src;
             if (me.debugMode)
             {
                 path = path.substring(0, path.lastIndexOf("?"));
@@ -651,11 +656,10 @@ MX = function()
             {
                 mx.error("Fail to load '" + path + "'.");
             }
-
         }
-        else if (p_element.tagName == "LINK")
+        else if (element.tagName == "LINK")
         {
-            path = p_element.href;
+            path = element.href;
             if (me.debugMode)
             {
                 path = path.substring(0, path.lastIndexOf("?"));

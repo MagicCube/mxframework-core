@@ -68,10 +68,6 @@ function parseBoolean(p_text)
     return (t == "true") || (t == "t");
 }
 
-var __regex_yyyyM = /^(\S*)-(\S*)$/;
-var __regex_yyyyMD = /^(\S*)-(\S*)-(\S*)$/;
-var __regex_Hms = /^(\S*):(\S*):(\S*)$/;
-var __regex_Hm = /^(\S*):(\S*)$/;
 function parseDate(p_text)
 {
     if (p_text == null || (typeof(p_text) == "string" && p_text.trim() == ""))
@@ -82,13 +78,6 @@ function parseDate(p_text)
     {
        return p_text;
     }
-    
-    var y = 1900;
-    var M = 1;
-    var d = 1;
-    var H = 0;
-    var m = 0;
-    var s = 0;
     
     var parts = null;
     var datePart = null;
@@ -125,100 +114,130 @@ function parseDate(p_text)
         timePart = parts[1];
     }
     
+    
+    var dateValue = { year: 1900, month: 0, date: 1 };
     if (datePart != null)
     {
-        var matches = datePart.match(__regex_yyyyMD);
+        dateValue = parseDateString(datePart);
+    }
+    
+    var timeValue = { hours: 0, minutes: 0, seconds: 0 };
+    if (timePart != null)
+    {
+        timeValue = parseTimeString(timePart);
+    }
+    
+    return new Date(dateValue.year, dateValue.month, dateValue.date, timeValue.hours, timeValue.minutes, timeValue.seconds);
+}
+
+
+
+var __regex_Hms = /^(\S*):(\S*):(\S*)$/;
+var __regex_Hm = /^(\S*):(\S*)$/;
+function parseTimeString(p_timeString)
+{
+    var value  = {
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    };
+    
+    var matches = p_timeString.match(__regex_Hms);
+    if (matches == null)
+    {
+        matches = p_timeString.match(__regex_Hm);
         if (matches == null)
         {
-            matches = datePart.match(__regex_yyyyM);
-            if (matches != null)
-            {
-               timePart = null;
-            }
-            else
-            {
-                matches = [datePart, datePart];
-            }
-        }
-        if (matches != null)
-        {
-            if (matches.length >= 2)
-            {
-                y = parseInt(matches[1], 10);
-                if (isNaN(y))
-                {
-                    y = 1900;
-                }
-            }
-            
-            if (matches.length >= 3)
-            {
-                M = parseInt(matches[2], 10);
-                if (isNaN(M) || M > 12 || M <= 0)
-                {
-                    M = 1;
-                }
-            }
-            
-            if (matches.length >= 4)
-            {
-                var d_max = Date.getDaysInMonth(y, M - 1);
-                d = parseInt(matches[3], 10);
-                if (isNaN(d) || d <= 0)
-                {
-                    d = 1;
-                }
-                else if (d > d_max)
-                {
-                    d = d_max;
-                }
-            }
+            matches = [p_timeString, p_timeString];
         }
     }
     
-    if (timePart != null)
+    if (matches.length >= 2)
     {
-        var matches = timePart.match(__regex_Hms);
+        value.hours = parseInt(matches[1], 10);
+        if (isNaN(value.hours) || value.hours > 23 || value.hours < 0)
+        {
+            value.hours = 0;
+        }
+    }
+    
+    if (matches.length >= 3)
+    {
+        value.minutes = parseInt(matches[2], 10);
+        if (isNaN(value.minutes) || value.minutes > 60 || value.minutes < 0)
+        {
+            value.minutes = 0;
+        }
+    }
+    
+    if (matches.length >= 4)
+    {
+        value.seconds = parseInt(matches[3], 10);
+        if (isNaN(value.seconds) || value.seconds > 60 || value.seconds < 0)
+        {
+            value.seconds = 0;
+        }
+    }
+    
+    return value;
+}
+
+var __regex_yyyyM = /^(\S*)-(\S*)$/;
+var __regex_yyyyMD = /^(\S*)-(\S*)-(\S*)$/;
+function parseDateString(p_dateString)
+{
+    var value = {
+        year: 1900,
+        month: 1,
+        date: 1
+    };
+    
+    var matches = p_dateString.match(__regex_yyyyMD);
+    if (matches == null)
+    {
+        matches = p_dateString.match(__regex_yyyyM);
         if (matches == null)
         {
-            matches = timePart.match(__regex_Hm);
-            if (matches == null)
-            {
-                matches = [timePart, timePart];
-            }
+            matches = [p_dateString, p_dateString];
         }
-        
+    }
+    if (matches != null)
+    {
         if (matches.length >= 2)
         {
-            H = parseInt(matches[1], 10);
-            if (isNaN(H) || H > 23 || H < 0)
+            value.year = parseInt(matches[1], 10);
+            if (isNaN(value.year))
             {
-                H = 0;
+                value.year = 1900;
             }
         }
         
         if (matches.length >= 3)
         {
-            m = parseInt(matches[2], 10);
-            if (isNaN(m) || m > 60 || m < 0)
+            value.month = parseInt(matches[2], 10);
+            if (isNaN(value.month) || value.month > 12 || value.month <= 0)
             {
-                m = 0;
+                value.month = 1;
             }
         }
         
         if (matches.length >= 4)
         {
-            s = parseInt(matches[3], 10);
-            if (isNaN(s) || s > 60 || s < 0)
+            var d_max = Date.getDaysInMonth(value.year, value.month - 1);
+            value.date = parseInt(matches[3], 10);
+            if (isNaN(value.date) || value.date <= 0)
             {
-                s = 0;
+                value.date = 1;
+            }
+            else if (value.date > d_max)
+            {
+                value.date = d_max;
             }
         }
     }
-    
-    return new Date(y, M - 1, d, H, m, s);
-};
-
+    value.month -= 1;
+    return value;
+}
 
 
 // 命名空间
