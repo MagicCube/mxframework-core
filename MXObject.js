@@ -93,6 +93,7 @@ MXObject = function()
     
     me.set = function()
     {
+        var p_options = null;
         if (arguments.length == 2 && isString(arguments[0]))
         {
             var func = "set" + arguments[0].toUpperCamelCase();
@@ -107,7 +108,7 @@ MXObject = function()
         }
         else if (arguments.length == 1 && isPlainObject(arguments[0]))
         {
-            var p_options = arguments[0];
+            p_options = arguments[0];
             for (var key in p_options)
             {
                 me.set(key, p_options[key]);
@@ -115,7 +116,7 @@ MXObject = function()
         }
         else if (arguments.length == 2 && isPlainObject(arguments[0]) && isPlainObject(arguments[1]))
         {
-            var p_options = arguments[0];
+            p_options = arguments[0];
             var p_defaultOptions = arguments[1];
             var options = $.extend({}, p_defaultOptions, p_options);
             me.set(options);

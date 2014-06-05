@@ -26,9 +26,12 @@ String.format = function(p_string, p_args)
         return p_string;
     }
     
+    var result = null;
+    var key = null;
+    var value = null;
     if (typeof(p_args) == "number")
     {
-        var result = new Array(p_args);
+        result = new Array(p_args);
         for (var i = 0; i < result.length; i++)
         {
             result[i] = p_string;
@@ -36,7 +39,7 @@ String.format = function(p_string, p_args)
         return result.join("");
     }
     
-    var result = p_string;
+    result = p_string;
     if (p_string.indexOf("{") != -1 && p_string.indexOf("}") != -1)
     {
         if (isObject(p_args) && !isArray(p_args))
@@ -46,9 +49,9 @@ String.format = function(p_string, p_args)
             {
                 for (var i = 0; i < groups.length; i++)
                 {
-                    var key = groups[i].substr(1);
+                    key = groups[i].substr(1);
                     key = key.substr(0, key.length - 1);
-                    var value = p_args[key];
+                    value = p_args[key];
                     if (value == null)
                     {
                         value = "";
@@ -66,7 +69,7 @@ String.format = function(p_string, p_args)
                 {
                     var index = groups[i].substr(1);
                     index = index.substr(0, index.length - 1);
-                    var value = p_args[parseInt(index)];
+                    value = p_args[parseInt(index)];
                     if (value == null)
                     {
                         value = "";

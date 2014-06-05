@@ -71,7 +71,7 @@ MX = function()
         {
             module = p_context;
         }
-        else if (isFunction(p_context.getModuleName))
+        else if (typeof(p_context.getModuleName) == "function")
         {
             module = p_context.getModuleName();
         }
@@ -273,26 +273,14 @@ MX = function()
 
     me.importClass = function(p_fullClassName, p_callback)
     {
+        var path = null;
         if (me.debugMode)
         {
-            var path = me.getClassPath(p_fullClassName);
+            path = me.getClassPath(p_fullClassName);
             if (path != null)
             {
                 me.include(path, function()
                 {
-                    try
-                    {
-                        var cls = eval(p_fullClassName);
-                        if (typeof(cls) == "function")
-                        {
-                            cls.fullName = p_fullClassName;
-                        }
-                    }
-                    catch (e)
-                    {
-                        
-                    }
-                    
                     if (typeof(p_callback) == "function")
                     {
                         p_callback();
@@ -304,7 +292,7 @@ MX = function()
         {
             if (p_fullClassName.startsWith("mx."))
             {
-                if (isFunction(p_callback))
+                if (typeof(p_callback) == "function")
                 {
                     p_callback();
                 }
@@ -313,7 +301,7 @@ MX = function()
             
             if (p_fullClassName.startsWith("lib."))
             {
-                var path = me.getClassPath(p_fullClassName);
+                path = me.getClassPath(p_fullClassName);
                 if (path != null)
                 {
                     me.include(path, p_callback);
@@ -528,6 +516,7 @@ MX = function()
         var scripts = document.getElementsByTagName("script");
         var src = scripts[scripts.length - 1].src;
         var mxPath = "/mx/framework-core.js";
+        var pos = 0;
         if (src.endsWith(mxPath))
         {
             me.debugMode = true;
@@ -542,7 +531,7 @@ MX = function()
             
             if (typeof($mx_web_content_path) == "undefined")
             {
-                var pos = me.scriptPath.lastIndexOf("/");
+                pos = me.scriptPath.lastIndexOf("/");
                 me.webContentPath = me.scriptPath.substr(0, pos);
             }
             else
@@ -572,7 +561,7 @@ MX = function()
                 
                 if (typeof($mx_web_content_path) == "undefined")
                 {
-                    var pos = me.scriptPath.lastIndexOf("/");
+                    pos = me.scriptPath.lastIndexOf("/");
                     me.webContentPath = me.scriptPath.substr(0, pos);
                 }
                 else
@@ -676,9 +665,10 @@ MX = function()
             }
         }
         
+        var func = null;
         while (callbacks.length > 0)
         {
-            var func = callbacks.pop();
+            func = callbacks.pop();
             func(path);
             func = null;
         }
@@ -689,13 +679,14 @@ MX = function()
     {
         if (me.loadingStyles.length == 0 && me._styleReady_callbacks.length > 0)
         {
+            var readyFunc = null;
             while (me._styleReady_callbacks.length > 0)
             {        
                 if (me.loadingStyles.length > 0)
                 {
                     break;
                 }
-                var readyFunc = me._styleReady_callbacks.pop();
+                readyFunc = me._styleReady_callbacks.pop();
                 readyFunc();
                 readyFunc = null;
             }
@@ -706,13 +697,14 @@ MX = function()
     {
         if (me.loadingScripts.length == 0 && me._scriptReady_callbacks.length > 0)
         {
+            var readyFunc = null;
             while (me._scriptReady_callbacks.length > 0)
             {    
                 if (me.loadingScripts.length > 0)
                 {
                     break;
                 }
-                var readyFunc = me._scriptReady_callbacks.pop();
+                readyFunc = me._scriptReady_callbacks.pop();
                 readyFunc();
                 readyFunc = null;
             }
@@ -724,15 +716,15 @@ MX = function()
         if ((me.loadingStyles.length == 0 && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0)
                 || (me.osType == "android" && me.loadingScripts.length == 0 && me._ready_callbacks.length > 0))
         {
+            var readyFunc = null;
             while (me._ready_callbacks.length > 0)
             {   
-                
                 if ((me.osType != "android" &&(me.loadingStyles.length > 0 || me.loadingScripts.length > 0))
                        || (me.osType == "android" && me.loadingScripts.length > 0))
                 {
                     break;
                 }
-                var readyFunc = me._ready_callbacks.pop();
+                readyFunc = me._ready_callbacks.pop();
                 readyFunc();
                 readyFunc = null;
             }
