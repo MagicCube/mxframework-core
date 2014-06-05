@@ -54,5 +54,5 @@ mx.locales["mx"] = {
     "ok": "OK",
     "cancel": "Cancel",
     "yes": "Yes",
-    "no": "No",
+    "no": "No"
 };
