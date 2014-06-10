@@ -1,11 +1,10 @@
 $ns("mx.util");
 
-
 mx.util.ObjectPool = function()
 {
     var me = $extend(MXComponent);
     var base = {};
-    
+
     me.initialSize = 0;
     me.maxSize = 0;
     me.stack = [];
@@ -36,7 +35,7 @@ mx.util.ObjectPool = function()
             return me.stack.pop();
         }
     };
-    
+
     me.returnObject = function(p_object)
     {
         if (p_object != null)
@@ -47,25 +46,22 @@ mx.util.ObjectPool = function()
             }
         }
     };
-    
-    
+
     me.addObject = function(p_object)
     {
         me.stack.push(p_object);
     };
-    
+
     me.removeObject = function(p_object)
     {
         me.stack.remove(p_object);
     };
-    
-    
+
     me.createObject = function()
     {
         throw new Error("Must implement 'createObject()' function of the ObjectPool.");
     };
-    
-    
+
     me.clear = function()
     {
         me.stack.clear();

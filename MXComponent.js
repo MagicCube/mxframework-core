@@ -117,8 +117,7 @@ MXComponent = function()
             }
             else
             {
-                e =
-                {};
+                e = {};
             }
             e.target = me;
 

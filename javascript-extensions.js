@@ -2,11 +2,6 @@
 //Boolean
 //=====================================================================
 
-
-
-
-
-
 //=====================================================================
 //String
 //=====================================================================
@@ -17,7 +12,7 @@ String.format = function(p_string, p_args)
     {
         return "";
     }
-    if (typeof(p_string) != "string")
+    if (typeof (p_string) != "string")
     {
         p_string = p_string.toString();
     }
@@ -25,11 +20,11 @@ String.format = function(p_string, p_args)
     {
         return p_string;
     }
-    
+
     var result = null;
     var key = null;
     var value = null;
-    if (typeof(p_args) == "number")
+    if (typeof (p_args) == "number")
     {
         result = new Array(p_args);
         for (var i = 0; i < result.length; i++)
@@ -38,7 +33,7 @@ String.format = function(p_string, p_args)
         }
         return result.join("");
     }
-    
+
     result = p_string;
     if (p_string.indexOf("{") != -1 && p_string.indexOf("}") != -1)
     {
@@ -100,7 +95,7 @@ String.newGuid = function(p_toLowerCase, p_length)
         var n = Math.floor(Math.random() * 16.0);
         if (n < 10)
         {
-            result += n;            
+            result += n;
         }
         else if (n == 10)
         {
@@ -131,7 +126,7 @@ String.newGuid = function(p_toLowerCase, p_length)
             result += "-";
         }
     }
-    
+
     if (toLowerCase)
     {
         result = result.toLowerCase();
@@ -173,9 +168,9 @@ String.prototype.trim = function()
     return this.trimRight().trimLeft();
 };
 
-String.prototype.getByteCount=function()
+String.prototype.getByteCount = function()
 {
-    var text=this.replace(/[^\x00-\xff]/g,"**");
+    var text = this.replace(/[^\x00-\xff]/g, "**");
     return text.length;
 };
 
@@ -189,10 +184,9 @@ String.prototype.toUpperCamelCase = function()
     return this[0].toUpperCase() + this.substr(1);
 };
 
-
-//=====================================================================
-//Number
-//=====================================================================
+// =====================================================================
+// Number
+// =====================================================================
 
 Number.format = function(p_value, p_formatString)
 {
@@ -200,7 +194,7 @@ Number.format = function(p_value, p_formatString)
     {
         return "";
     }
-    if (typeof(p_formatString) == "undefiend")
+    if (typeof (p_formatString) == "undefiend")
     {
         return p_value + "";
     }
@@ -208,7 +202,7 @@ Number.format = function(p_value, p_formatString)
     {
         p_value = 0;
     }
-    
+
     var percentage = "";
     if (p_formatString.endsWith("%") && p_formatString.length > 1)
     {
@@ -216,7 +210,7 @@ Number.format = function(p_value, p_formatString)
         p_value = p_value * 100;
         p_formatString = p_formatString.substr(0, p_formatString.length - 1);
     }
-    
+
     var string = p_value + "";
     if (p_formatString != null && p_formatString != "")
     {
@@ -225,16 +219,14 @@ Number.format = function(p_value, p_formatString)
 
         if (!formatParts[0].endsWith(",000") && stringParts[0].length < formatParts[0].length)
         {
-            stringParts[0] =
-                formatParts[0].substring(0, formatParts[0].length - stringParts[0].length) +
-                stringParts[0];
+            stringParts[0] = formatParts[0].substring(0, formatParts[0].length - stringParts[0].length) + stringParts[0];
         }
-        
+
         if (formatParts[0].endsWith(",000"))
         {
             stringParts[0] = stringParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-        
+
         if (formatParts.length == 1)
         {
             return stringParts[0] + percentage;
@@ -252,12 +244,9 @@ Number.format = function(p_value, p_formatString)
     }
 };
 
-
-
-
-//=====================================================================
-//Date
-//=====================================================================
+// =====================================================================
+// Date
+// =====================================================================
 
 Date.today = new Date();
 Date.today = new Date(Date.today.getFullYear(), Date.today.getMonth(), Date.today.getDate());
@@ -324,7 +313,7 @@ Date.format = function(p_value, p_formatString)
         {
             text = p_formatString;
         }
-        
+
         var yy = p_value.getYear();
         var M = p_value.getMonth() + 1;
         var d = p_value.getDate();
@@ -336,7 +325,7 @@ Date.format = function(p_value, p_formatString)
         var H = p_value.getHours();
         var m = p_value.getMinutes();
         var s = p_value.getSeconds();
-    
+
         var yyyy = p_value.getFullYear();
         var MM = Number.format(M, "00");
         var dd = Number.format(d, "00");
@@ -344,14 +333,12 @@ Date.format = function(p_value, p_formatString)
         var HH = Number.format(H, "00");
         var mm = Number.format(m, "00");
         var ss = Number.format(s, "00");
-        
-        
+
         text = text.replace("yyyy", yyyy).replace("MM", MM).replace("dd", dd);
         text = text.replace("HH", HH).replace("hh", hh).replace("mm", mm).replace("ss", ss);
         text = text.replace("yy", yy).replace("M", M).replace("d", d);
         text = text.replace("H", H).replace("h", h).replace("m", m).replace("s", s);
-        
-        
+
         return text;
     }
     else
@@ -365,7 +352,7 @@ Date.getDaysInMonth = function(p_year, p_month)
     switch (p_month + 1)
     {
         case 2:
-            if ( (p_year % 400 == 0) || (p_year % 4 == 0) && (p_year % 100 != 0))
+            if ((p_year % 400 == 0) || (p_year % 4 == 0) && (p_year % 100 != 0))
             {
                 return 29;
             }
@@ -374,8 +361,13 @@ Date.getDaysInMonth = function(p_year, p_month)
                 return 28;
             }
             break;
-        case 1: case 3: case 5:
-        case 7: case 8: case 10: case 12:
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
             return 31;
         default:
             return 30;
@@ -420,24 +412,24 @@ Date.prototype.addMonths = function(p_months)
 {
     var copy = new Date(this * 1);
     var months = copy.getMonth() + 1 + p_months;
-    
+
     var years = Math.floor(months / 12);
-    
+
     var year = copy.getFullYear() + years;
     var month = Math.abs(years * 12 - months) % 12;
     var date = copy.getDate();
     var daysInMonth = Date.getDaysInMonth(year, month - 1);
-    
+
     if (date > daysInMonth)
     {
         date = daysInMonth;
     }
-    
+
     copy.setDate(1);
     copy.setFullYear(year);
     copy.setMonth(month - 1);
     copy.setDate(date);
-    
+
     return copy;
 };
 
@@ -458,12 +450,12 @@ Date.prototype.compare = function(p_date)
     {
         return -1;
     }
-    
+
     if (p_date.constructor != Date)
     {
         return -1;
     }
-    
+
     return p_date * 1 - this * 1;
 };
 
@@ -473,12 +465,9 @@ Date.prototype.clone = function()
     return date;
 };
 
-
-
-
-//=====================================================================
-//Array
-//=====================================================================
+// =====================================================================
+// Array
+// =====================================================================
 
 Array.prototype.enqueue = function(item)
 {
@@ -520,8 +509,8 @@ Array.prototype.first = function(i)
     {
         return undefined;
     }
-    
-    if (typeof(i) != "number")
+
+    if (typeof (i) != "number")
     {
         i = 0;
     }
@@ -534,12 +523,12 @@ Array.prototype.first = function(i)
 
 Array.prototype.last = function(i)
 {
-    if (this.length == 0) 
+    if (this.length == 0)
     {
         return undefined;
     }
-    
-    if (typeof(i) != "number")
+
+    if (typeof (i) != "number")
     {
         i = 0;
     }
@@ -560,7 +549,7 @@ Array.prototype.contains = function(p_item)
 
 Array.prototype.add = function(p_item)
 {
-    this[this.length] = p_item
+    this[this.length] = p_item;
     return p_item;
 };
 
@@ -588,7 +577,7 @@ Array.prototype.insertBefore = function(p_item, p_beforeItem)
     {
         return false;
     }
-    
+
     this.insert(index, p_item);
     return true;
 };
@@ -636,12 +625,12 @@ Array.prototype.removeLast = function(p_index)
     {
         return;
     }
-    
-    if (typeof(p_index) != "number")
+
+    if (typeof (p_index) != "number")
     {
         p_index = 0;
     }
-    
+
     var i = this.length - p_index - 1;
     this.removeAt(i);
 };
@@ -662,8 +651,8 @@ Array.prototype.clone = function()
 Array.prototype.swap = function(p_item1, p_item2)
 {
     var index1 = this.indexOf(p_item1);
-    var index2 = this.indexOf(p_item2);   
-    
+    var index2 = this.indexOf(p_item2);
+
     this[index1] = p_item2;
     this[index2] = p_item1;
 };
@@ -724,7 +713,7 @@ Array.prototype.min = function(p_iterator, p_context)
         {
             value = this[i];
         }
-        
+
         if (min === undefined)
         {
             min = value;
@@ -754,7 +743,7 @@ Array.prototype.max = function(p_iterator, p_context)
         {
             value = this[i];
         }
-        
+
         if (max === undefined)
         {
             max = value;
@@ -770,15 +759,11 @@ Array.prototype.max = function(p_iterator, p_context)
     return max;
 };
 
+// =====================================================================
+// Object
+// =====================================================================
 
-//=====================================================================
-//Object
-//=====================================================================
-
-
-
-
-//=====================================================================
-//Function
-//=====================================================================
+// =====================================================================
+// Function
+// =====================================================================
 

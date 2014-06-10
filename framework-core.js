@@ -8,24 +8,23 @@
  * First Created by Henry Li (henry1943@163.com).
  */
 
-
 MX = function()
 {
     var me = this;
-    
+
     me.runAt = "desktop";
     me.osType = null;
-    
+
     me.language = null;
     me.locales = {};
-    
+
     me.debugMode = false;
     me.webContentPath = null;
     me.scriptPath = null;
     me.libraryPath = null;
-    
+
     me.urlParams = null;
-    
+
     me.init = function()
     {
         _resolveUrlParams();
@@ -34,14 +33,14 @@ MX = function()
         _resolveScriptPath();
         _resolveLibraryPath();
     };
-    
+
     me.mappath = function(p_url)
     {
         if (typeof (p_url) != "string")
         {
             return null;
         }
-        
+
         var url = p_url;
         if (url.indexOf("$language"))
         {
@@ -62,27 +61,26 @@ MX = function()
         return url;
     };
     $mappath = me.mappath;
-    
-    
+
     me.getMessage = function(p_context, p_key, p_params)
     {
         var module = null;
-        if (typeof(p_context) == "string")
+        if (typeof (p_context) == "string")
         {
             module = p_context;
         }
-        else if (typeof(p_context.getModuleName) == "function")
+        else if (typeof (p_context.getModuleName) == "function")
         {
             module = p_context.getModuleName();
         }
-        
+
         if (module != null)
         {
             var locale = me.locales[module];
             if (locale != null && locale[p_key] != null)
             {
                 var text = locale[p_key];
-                if (p_params != null && typeof(p_params) == "object")
+                if (p_params != null && typeof (p_params) == "object")
                 {
                     text = $format(text, p_params);
                 }
@@ -92,17 +90,15 @@ MX = function()
         return null;
     };
     $msg = me.getMessage;
-    
-    
-    
+
     me.loadingScripts = [];
-    me.loadedScripts = [];    
+    me.loadedScripts = [];
     me.loadingStyles = [];
     me.loadedStyles = [];
     me.include = function(p_path, p_callback)
     {
         var path = $mappath(p_path);
-        
+
         var ingList = null;
         var edList = null;
         var type = null;
@@ -122,24 +118,24 @@ MX = function()
             edList = me.loadedStyles;
             type = "css";
         }
-        
+
         if (ingList[path] != null)
         {
-            if (typeof(p_callback) == "function")
+            if (typeof (p_callback) == "function")
             {
                 ingList[path].push(p_callback);
             }
         }
         else if (edList[path] != null)
         {
-            if (typeof(p_callback) == "function")
+            if (typeof (p_callback) == "function")
             {
                 p_callback();
-            }            
+            }
         }
         else
         {
-            _add(ingList, path, ((typeof(p_callback) == "function") ? [ p_callback ] : []));
+            _add(ingList, path, ((typeof (p_callback) == "function") ? [p_callback] : []));
             if (document.body != null)
             {
                 var element = null;
@@ -152,7 +148,6 @@ MX = function()
                     element = document.createElement("link");
                     element.rel = "stylesheet";
                 }
-                
 
                 element.onload = me._include_onload;
                 element.onerror = me._include_onload;
@@ -160,10 +155,10 @@ MX = function()
                 {
                     element.onreadystatechange = me._include_onload;
                 }
-                
+
                 element.dynamic = true;
                 document.body.appendChild(element);
-                
+
                 if (type == "js")
                 {
                     element.src = path + (me.debugMode ? ("?nocache=" + Math.random()) : "");
@@ -189,7 +184,7 @@ MX = function()
         }
     };
     $include = me.include;
-    
+
     me._include_onload = function(e)
     {
         e = (e != null ? e : event);
@@ -198,18 +193,17 @@ MX = function()
         _checkScriptLoadingStatus();
         _checkAllLoadingStatus();
     };
-    
-    
-    
+
     me._ready_callbacks = [];
     me.whenReady = function(p_callback)
     {
-        setTimeout(function(){
-            if (typeof(p_callback) != "function")
+        setTimeout(function()
+        {
+            if (typeof (p_callback) != "function")
             {
                 return;
             }
-            
+
             if (me.loadingStyles.length == 0 && me.loadingScripts.length == 0)
             {
                 p_callback();
@@ -220,56 +214,48 @@ MX = function()
             }
         }, 0);
     };
-    
+
     me._styleReady_callbacks = [];
     me.whenStyleReady = function(p_callback)
     {
-        setTimeout(function(){
-            if (typeof(p_callback) != "function")
+        setTimeout(function()
+        {
+            if (typeof (p_callback) != "function")
             {
                 return;
             }
-            
+
             if (me.loadingStyles.length == 0)
             {
                 p_callback();
             }
             else
             {
-                me._styleReady_callbacks.push(p_callback); 
+                me._styleReady_callbacks.push(p_callback);
             }
         }, 0);
     };
-    
+
     me._scriptReady_callbacks = [];
     me.whenScriptReady = function(p_callback)
     {
-        setTimeout(function(){
-            if (typeof(p_callback) != "function")
+        setTimeout(function()
+        {
+            if (typeof (p_callback) != "function")
             {
                 return;
             }
-            
+
             if (me.loadingScripts.length == 0)
             {
                 p_callback();
             }
             else
             {
-                me._scriptReady_callbacks.push(p_callback); 
+                me._scriptReady_callbacks.push(p_callback);
             }
         }, 0);
     };
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
     me.importClass = function(p_fullClassName, p_callback)
     {
@@ -281,7 +267,7 @@ MX = function()
             {
                 me.include(path, function()
                 {
-                    if (typeof(p_callback) == "function")
+                    if (typeof (p_callback) == "function")
                     {
                         p_callback();
                     }
@@ -292,13 +278,13 @@ MX = function()
         {
             if (p_fullClassName.startsWith("mx."))
             {
-                if (typeof(p_callback) == "function")
+                if (typeof (p_callback) == "function")
                 {
                     p_callback();
                 }
                 return;
             }
-            
+
             if (p_fullClassName.startsWith("lib."))
             {
                 path = me.getClassPath(p_fullClassName);
@@ -319,13 +305,13 @@ MX = function()
         }
     };
     $import = me.importClass;
-    
+
     me.importLanguage = function(p_moduleName, p_callback)
     {
         me.include("$/" + p_moduleName + "/res/locales/$language/language.js", p_callback);
     };
     $importlanguage = me.importLanguage;
-    
+
     me.importMessageBundle = function(p_namespace)
     {
         var lan = me.language.replace("-", "_");
@@ -339,8 +325,8 @@ MX = function()
         }
         var path = me.getResourcePath(p_namespace + ".messagebundle_" + lan, "properties");
         $.ajax({
-            url: path,
-            async: false
+            url : path,
+            async : false
         }).done(function(p_result)
         {
             var lines = p_result.split("\n");
@@ -355,12 +341,12 @@ MX = function()
                 {
                     return;
                 }
-                
+
                 var pos = line.indexOf("=");
                 if (pos > 0)
                 {
                     var key = line.substr(0, pos);
-                    var value = line.substr(pos + 1);                    
+                    var value = line.substr(pos + 1);
                     var r = /\\u([\d\w]{4})/gi;
                     value = value.replace(r, function(match, grp)
                     {
@@ -372,19 +358,19 @@ MX = function()
         });
     };
     $importmessagebundle = me.importMessageBundle;
-    
+
     me.getClassPath = function(p_fullClassName)
     {
         return me.getResourcePath(p_fullClassName, "js");
     };
-    
+
     me.getResourcePath = function(p_fullClassName, p_ext, p_auto2x)
     {
         if (isEmpty(p_ext))
         {
             p_ext = "png";
         }
-        
+
         var ext = null;
         if (p_auto2x == true && (p_ext == "png" || p_ext == "jpg"))
         {
@@ -401,9 +387,7 @@ MX = function()
         {
             ext = "." + p_ext;
         }
-        
 
-        
         var parts = p_fullClassName.split(".", 1);
         var path = null;
         if (parts.length == 1)
@@ -412,7 +396,7 @@ MX = function()
             {
                 path = $mappath("$/" + parts[0] + "/res/min.css");
             }
-            
+
             if (path == null)
             {
                 var classPath = p_fullClassName.replace(/\./g, "/");
@@ -432,43 +416,40 @@ MX = function()
         }
         return path;
     };
-    
-    
-    
-    
+
     me.log = function(p_message)
     {
-        if (typeof(console) != "undefined")
+        if (typeof (console) != "undefined")
         {
             console.log("[MX] " + p_message);
         }
     };
-    
+
     me.warn = function(p_message)
     {
-        if (typeof(console) != "undefined")
+        if (typeof (console) != "undefined")
         {
             console.warn("[MX] " + p_message);
         }
     };
-    
+
     me.error = function(p_message)
     {
-        if (typeof(console) != "undefined")
+        if (typeof (console) != "undefined")
         {
             console.error("[MX] " + p_message);
         }
     };
-    
-    
-    
+
     function _resolveUrlParams()
     {
         var search = location.search.substring(1);
-        me.urlParams = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
-                         function(key, value) { return key === "" ? value:decodeURIComponent(value); }) : {};
+        me.urlParams = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function(key, value)
+        {
+            return key === "" ? value : decodeURIComponent(value);
+        }) : {};
     }
-    
+
     function _resolveLangauge()
     {
         if (me.urlParams.lang != null)
@@ -479,9 +460,9 @@ MX = function()
         {
             me.language = me.urlParams.language.replace("/", "");
         }
-        else if (typeof($mx_language) == "undefined")
+        else if (typeof ($mx_language) == "undefined")
         {
-            me.language = (navigator.language  ||  navigator.userLanguage).toString().toLowerCase();
+            me.language = (navigator.language || navigator.userLanguage).toString().toLowerCase();
             if (me.language.startsWith("en-"))
             {
                 me.language = "en";
@@ -492,7 +473,7 @@ MX = function()
             me.language = $mx_language;
         }
     }
-    
+
     function _resolveUserAgent()
     {
         var userAgent = window.navigator.userAgent;
@@ -507,7 +488,7 @@ MX = function()
             me.osType = "android";
         }
     }
-    
+
     function _resolveScriptPath()
     {
         var scripts = document.getElementsByTagName("script");
@@ -517,7 +498,7 @@ MX = function()
         if (src.endsWith(mxPath))
         {
             me.debugMode = true;
-            if (typeof($mx_script_path) == "undefined")
+            if (typeof ($mx_script_path) == "undefined")
             {
                 me.scriptPath = src.substr(0, src.length - mxPath.length);
             }
@@ -525,8 +506,8 @@ MX = function()
             {
                 me.scriptPath = $mx_script_path;
             }
-            
-            if (typeof($mx_web_content_path) == "undefined")
+
+            if (typeof ($mx_web_content_path) == "undefined")
             {
                 pos = me.scriptPath.lastIndexOf("/");
                 me.webContentPath = me.scriptPath.substr(0, pos);
@@ -535,7 +516,7 @@ MX = function()
             {
                 me.webContentPath = $mx_web_content_path;
             }
-            
+
             if (me.scriptPath.startsWith("~/"))
             {
                 me.scriptPath = $mappath(me.scriptPath);
@@ -547,7 +528,7 @@ MX = function()
             mxPath = "/mx/min.js";
             if (src.endsWith(mxPath))
             {
-                if (typeof($mx_script_path) == "undefined")
+                if (typeof ($mx_script_path) == "undefined")
                 {
                     me.scriptPath = src.substr(0, src.length - mxPath.length);
                 }
@@ -555,8 +536,8 @@ MX = function()
                 {
                     me.scriptPath = $mx_script_path;
                 }
-                
-                if (typeof($mx_web_content_path) == "undefined")
+
+                if (typeof ($mx_web_content_path) == "undefined")
                 {
                     pos = me.scriptPath.lastIndexOf("/");
                     me.webContentPath = me.scriptPath.substr(0, pos);
@@ -572,10 +553,10 @@ MX = function()
             }
         }
     }
-    
+
     function _resolveLibraryPath()
     {
-        if (typeof($mx_library_path) == "undefined")
+        if (typeof ($mx_library_path) == "undefined")
         {
             me.libraryPath = me.scriptPath + "/lib";
         }
@@ -591,10 +572,7 @@ MX = function()
             }
         }
     }
-    
-    
-    
-    
+
     function _element_onload(e)
     {
         var element = null;
@@ -606,20 +584,20 @@ MX = function()
         {
             element = e.target;
         }
-        
-        if (element.readyState != null && (typeof(element.times) == "undefined" && element.readyState != "complete"))
+
+        if (element.readyState != null && (typeof (element.times) == "undefined" && element.readyState != "complete"))
         {
             element.times = 1;
             return;
         }
-        
+
         element.onload = null;
         element.onerror = null;
         if (element.readyState)
         {
             element.onreadystatechange = null;
         }
-        
+
         var path = null;
         var callbacks = [];
         if (element.tagName == "SCRIPT")
@@ -658,7 +636,7 @@ MX = function()
                 mx.error("Fail to load '" + path + "'.");
             }
         }
-        
+
         var func = null;
         while (callbacks.length > 0)
         {
@@ -668,14 +646,14 @@ MX = function()
         }
         callbacks = null;
     }
-    
+
     function _checkStylesLoadingStatus()
     {
         if (me.loadingStyles.length == 0 && me._styleReady_callbacks.length > 0)
         {
             var readyFunc = null;
             while (me._styleReady_callbacks.length > 0)
-            {        
+            {
                 if (me.loadingStyles.length > 0)
                 {
                     break;
@@ -686,14 +664,14 @@ MX = function()
             }
         }
     }
-    
+
     function _checkScriptLoadingStatus()
     {
         if (me.loadingScripts.length == 0 && me._scriptReady_callbacks.length > 0)
         {
             var readyFunc = null;
             while (me._scriptReady_callbacks.length > 0)
-            {    
+            {
                 if (me.loadingScripts.length > 0)
                 {
                     break;
@@ -704,22 +682,23 @@ MX = function()
             }
         }
     }
-    
+
     function _checkAllLoadingStatus()
     {
-        if (me._ready_callbacks.length == 0) return;
-        
+        if (me._ready_callbacks.length == 0)
+        {
+            return;
+        }
         var loaded = (me.loadingStyles.length == 0 && me.loadingScripts.length == 0);
         var androidLoaded = (me.osType == "android" && me.loadingScripts.length == 0);
         if (loaded || androidLoaded)
         {
             var readyFunc = null;
             while (me._ready_callbacks.length > 0)
-            {   
+            {
                 if (me.loadingScripts.length > 0)
                 {
-                    if ((me.osType != "android" && me.loadingStyles.length > 0)
-                     || (me.osType == "android"))
+                    if ((me.osType != "android" && me.loadingStyles.length > 0) || (me.osType == "android"))
                     {
                         break;
                     }
@@ -730,16 +709,13 @@ MX = function()
             }
         }
     }
-    
-    
-    
-    
+
     function _add(p_collection, p_key, p_value)
     {
         p_collection[p_key] = p_value;
         p_collection.push(p_key);
     }
-    
+
     function _remove(p_collection, p_key)
     {
         for (var i = 0; i < p_collection.length; i++)
@@ -751,15 +727,12 @@ MX = function()
             }
         }
     }
-    
+
     return me;
 };
 
-
 mx = new MX();
 mx.init();
-
-
 
 $importlanguage("mx");
 $import("mx.MXObject");

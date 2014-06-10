@@ -1,17 +1,17 @@
 // 判断类型
 function isBoolean(p_value)
 {
-    return typeof(p_value) == "boolean";
+    return typeof (p_value) == "boolean";
 }
 
 function isString(p_value)
 {
-    return typeof(p_value) == "string";
+    return typeof (p_value) == "string";
 }
 
 function isNumber(p_value)
 {
-    return typeof(p_value) == "number";
+    return typeof (p_value) == "number";
 }
 
 function isDate(p_value)
@@ -21,12 +21,12 @@ function isDate(p_value)
 
 function isArray(p_value)
 {
-    return p_value != null && (typeof(p_value) == "object" && typeof(p_value.length) == "number" && typeof(p_value.swap) == "function");
+    return p_value != null && (typeof (p_value) == "object" && typeof (p_value.length) == "number" && typeof (p_value.swap) == "function");
 }
 
 function isObject(p_value)
 {
-    return p_value != null && typeof(p_value) == "object";
+    return p_value != null && typeof (p_value) == "object";
 }
 
 function isPlainObject(p_value)
@@ -36,17 +36,17 @@ function isPlainObject(p_value)
 
 function isFunction(p_value)
 {
-    return typeof(p_value) == "function";
+    return typeof (p_value) == "function";
 }
 
 function isClass(p_value)
 {
-    return typeof(p_value) == "function";
+    return typeof (p_value) == "function";
 }
 
 function isEmpty(p_value)
 {
-    return p_value == null || (typeof(p_value) == "string" && p_value.trim() == "");
+    return p_value == null || (typeof (p_value) == "string" && p_value.trim() == "");
 }
 
 function notEmpty(p_value)
@@ -54,13 +54,10 @@ function notEmpty(p_value)
     return !isEmpty(p_value);
 }
 
-
-
-
 // 类型转换
 function parseBoolean(p_text)
 {
-    if (typeof(p_text) == "boolean")
+    if (typeof (p_text) == "boolean")
     {
         return p_text;
     }
@@ -70,15 +67,15 @@ function parseBoolean(p_text)
 
 function parseDate(p_text)
 {
-    if (p_text == null || (typeof(p_text) == "string" && p_text.trim() == ""))
+    if (p_text == null || (typeof (p_text) == "string" && p_text.trim() == ""))
     {
         return null;
     }
     if (isDate(p_text))
     {
-       return p_text;
+        return p_text;
     }
-    
+
     var parts = null;
     var datePart = null;
     var timePart = null;
@@ -91,12 +88,12 @@ function parseDate(p_text)
     {
         parts = p_text.split("T");
     }
-    
+
     if (parts == null)
     {
         parts = [p_text];
     }
-    
+
     if (parts.length == 1)
     {
         if (parts[0].indexOf(":") != -1)
@@ -113,35 +110,40 @@ function parseDate(p_text)
         datePart = parts[0];
         timePart = parts[1];
     }
-    
-    
-    var dateValue = { year: 1900, month: 0, date: 1 };
+
+    var dateValue = {
+        year : 1900,
+        month : 0,
+        date : 1
+    };
     if (datePart != null)
     {
         dateValue = parseDateString(datePart);
     }
-    
-    var timeValue = { hours: 0, minutes: 0, seconds: 0 };
+
+    var timeValue = {
+        hours : 0,
+        minutes : 0,
+        seconds : 0
+    };
     if (timePart != null)
     {
         timeValue = parseTimeString(timePart);
     }
-    
+
     return new Date(dateValue.year, dateValue.month, dateValue.date, timeValue.hours, timeValue.minutes, timeValue.seconds);
 }
-
-
 
 var __regex_Hms = /^(\S*):(\S*):(\S*)$/;
 var __regex_Hm = /^(\S*):(\S*)$/;
 function parseTimeString(p_timeString)
 {
-    var value  = {
-        hours: 0,
-        minutes: 0,
-        seconds: 0
+    var value = {
+        hours : 0,
+        minutes : 0,
+        seconds : 0
     };
-    
+
     var matches = p_timeString.match(__regex_Hms);
     if (matches == null)
     {
@@ -151,7 +153,7 @@ function parseTimeString(p_timeString)
             matches = [p_timeString, p_timeString];
         }
     }
-    
+
     if (matches.length >= 2)
     {
         value.hours = parseInt(matches[1], 10);
@@ -160,7 +162,7 @@ function parseTimeString(p_timeString)
             value.hours = 0;
         }
     }
-    
+
     if (matches.length >= 3)
     {
         value.minutes = parseInt(matches[2], 10);
@@ -169,7 +171,7 @@ function parseTimeString(p_timeString)
             value.minutes = 0;
         }
     }
-    
+
     if (matches.length >= 4)
     {
         value.seconds = parseInt(matches[3], 10);
@@ -178,7 +180,7 @@ function parseTimeString(p_timeString)
             value.seconds = 0;
         }
     }
-    
+
     return value;
 }
 
@@ -187,11 +189,11 @@ var __regex_yyyyMD = /^(\S*)-(\S*)-(\S*)$/;
 function parseDateString(p_dateString)
 {
     var value = {
-        year: 1900,
-        month: 1,
-        date: 1
+        year : 1900,
+        month : 1,
+        date : 1
     };
-    
+
     var matches = p_dateString.match(__regex_yyyyMD);
     if (matches == null)
     {
@@ -211,7 +213,7 @@ function parseDateString(p_dateString)
                 value.year = 1900;
             }
         }
-        
+
         if (matches.length >= 3)
         {
             value.month = parseInt(matches[2], 10);
@@ -220,7 +222,7 @@ function parseDateString(p_dateString)
                 value.month = 1;
             }
         }
-        
+
         if (matches.length >= 4)
         {
             var d_max = Date.getDaysInMonth(value.year, value.month - 1);
@@ -239,7 +241,6 @@ function parseDateString(p_dateString)
     return value;
 }
 
-
 // 命名空间
 function $namespace(p_namespace)
 {
@@ -248,7 +249,7 @@ function $namespace(p_namespace)
     {
         return null;
     }
-    
+
     var space = null;
     for (var i = 0; i < parts.length; i++)
     {
@@ -277,13 +278,10 @@ function $namespace(p_namespace)
 }
 $ns = $namespace;
 
-
-
-
 // 继承
 function $extend(p_baseClass)
 {
-    if (typeof(p_baseClass) == "function")
+    if (typeof (p_baseClass) == "function")
     {
         var inst = new p_baseClass();
         inst.__class__ = $extend.caller;
@@ -295,9 +293,6 @@ function $extend(p_baseClass)
     }
 }
 
-
-
-
 // 获取实例的类型。
 function $getclass(p_inst)
 {
@@ -305,22 +300,22 @@ function $getclass(p_inst)
     {
         return null;
     }
-    switch (typeof(p_inst))
+    switch (typeof (p_inst))
     {
         case "boolean":
             return Boolean;
-            
+
         case "number":
             return Number;
 
         case "string":
             return String;
-            
+
         case "function":
             return Function;
-            
+
         case "object":
-            if (typeof(p_inst.getClass) == "function")
+            if (typeof (p_inst.getClass) == "function")
             {
                 return p_inst.getClass();
             }
@@ -341,9 +336,6 @@ function $getclass(p_inst)
     }
 }
 
-
-
-
 // 判断 p_inst 是否是 p_class 的实例。
 function $instanceof(p_inst, p_class)
 {
@@ -351,22 +343,22 @@ function $instanceof(p_inst, p_class)
     {
         return false;
     }
-    switch (typeof(p_inst))
+    switch (typeof (p_inst))
     {
         case "boolean":
             return p_class == Boolean;
-            
+
         case "number":
             return p_class == Number;
 
         case "string":
             return p_class == String;
-            
+
         case "function":
             return p_class == Function;
-            
+
         case "object":
-            if (typeof(p_inst.instanceOf) == "function")
+            if (typeof (p_inst.instanceOf) == "function")
             {
                 return p_inst.instanceOf(p_class);
             }
@@ -386,9 +378,6 @@ function $instanceof(p_inst, p_class)
             return false;
     }
 }
-
-
-
 
 // 格式化
 function $format(p_value, p_format)

@@ -1,50 +1,49 @@
 MXObject = function()
 {
     var me = this;
-    
+
     me.__class__ = MXObject;
     me.__superClasses__ = [];
 
     me.constructed = false;
     me.disposed = false;
-    
+
     me._ = function(p_options)
     {
         if (me.canConstruct())
         {
             if (isPlainObject(p_options))
             {
-                var isEventDispatcher = typeof(me.on) == "function";
-                for (var key in p_options)
+                var isEventDispatcher = typeof (me.on) == "function";
+                for ( var key in p_options)
                 {
                     if (p_options.hasOwnProperty(key))
                     {
                         var option = p_options[key];
-                        if (isEventDispatcher && typeof(me[key] == "object") && typeof(option) == "function" && key.startsWith("on"))
+                        if (isEventDispatcher && typeof (me[key] == "object") && typeof (option) == "function" && key.startsWith("on"))
                         {
                             me.on(key.substr(2), option);
                         }
-                        else 
+                        else
                         {
                             me[key] = option;
                         }
-        
+
                         option = null;
                     }
                 }
             }
             me.constructed = true;
-            
+
             p_options = null;
         }
     };
-    
-    
+
     me.getClass = function()
     {
         return me.__class__;
     };
-    
+
     me.getClassName = function()
     {
         var cls = me.getClass();
@@ -54,7 +53,7 @@ MXObject = function()
         }
         return null;
     };
-    
+
     me.getNamespace = function()
     {
         var clsName = me.getClassName();
@@ -69,7 +68,7 @@ MXObject = function()
         }
         return null;
     };
-    
+
     me.getModuleName = function()
     {
         var ns = me.getNamespace();
@@ -87,13 +86,13 @@ MXObject = function()
         }
         return null;
     };
-    
+
     me.getResourcePath = function(p_name, p_ext, p_auto2x)
     {
         var path = me.getModuleName() + ".res." + p_name;
         return mx.getResourcePath(path, p_ext, p_auto2x);
     };
-    
+
     me.set = function()
     {
         var p_options = null;
@@ -112,7 +111,7 @@ MXObject = function()
         else if (arguments.length == 1 && isPlainObject(arguments[0]))
         {
             p_options = arguments[0];
-            for (var key in p_options)
+            for ( var key in p_options)
             {
                 if (p_options.hasOwnProperty(key))
                 {
@@ -129,8 +128,7 @@ MXObject = function()
         }
         return me;
     };
-    
-    
+
     me.canConstruct = function()
     {
         return !me.constructed;
@@ -151,7 +149,7 @@ MXObject = function()
             return me.__superClasses__.indexOf(p_class) != -1;
         }
     };
-    
+
     me.endOfClass = function(p_arguments)
     {
         if (me.__class__.caller != $extend)
@@ -160,17 +158,12 @@ MXObject = function()
         }
         return me;
     };
-    
-    
-    
 
     me.dispose = function()
     {
         me.disposed = true;
     };
-    
-    
-    
+
     return me.endOfClass(arguments);
 };
 MXObject.className = "MXObject";
