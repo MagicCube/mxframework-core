@@ -137,7 +137,7 @@ mx.view.View = function()
                 p_view.parentView.removeSubview(p_view);
             }
 
-            if (notEmpt($p_element))
+            if (notEmpty($p_element))
             {
                 $p_element.append(p_view.$element);
             }
