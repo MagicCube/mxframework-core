@@ -6,11 +6,12 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>com.eclipsesource.jshint.ui.builder</name>
+			<name>com.googlecode.jslint4java.eclipse.jsLintBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>com.googlecode.jslint4java.eclipse.jsLintNature</nature>
 	</natures>
 </projectDescription>
