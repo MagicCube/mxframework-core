@@ -14,13 +14,13 @@ MXObject = function()
         {
             if (isPlainObject(p_options))
             {
-                var isEventDispatcher = typeof (me.on) == "function";
+                var isEventDispatcher = typeof (me.on) === "function";
                 for ( var key in p_options)
                 {
                     if (p_options.hasOwnProperty(key))
                     {
                         var option = p_options[key];
-                        if (isEventDispatcher && typeof (me[key] == "object") && typeof (option) == "function" && key.startsWith("on"))
+                        if (isEventDispatcher && typeof (me[key] === "object") && typeof (option) === "function" && key.startsWith("on"))
                         {
                             me.on(key.substr(2), option);
                         }
@@ -47,7 +47,7 @@ MXObject = function()
     me.getClassName = function()
     {
         var cls = me.getClass();
-        if (cls != null)
+        if (notEmpty(cls))
         {
             return cls.className;
         }
@@ -57,7 +57,7 @@ MXObject = function()
     me.getNamespace = function()
     {
         var clsName = me.getClassName();
-        if (clsName != null)
+        if (notEmpty(clsName))
         {
             var parts = clsName.split(".");
             if (parts.length > 1)
@@ -72,7 +72,7 @@ MXObject = function()
     me.getModuleName = function()
     {
         var ns = me.getNamespace();
-        if (ns != null)
+        if (notEmpty(ns))
         {
             var parts = ns.split(".");
             if (parts.length > 0)
@@ -96,7 +96,7 @@ MXObject = function()
     me.set = function()
     {
         var p_options = null;
-        if (arguments.length == 2 && isString(arguments[0]))
+        if (arguments.length === 2 && isString(arguments[0]))
         {
             var func = "set" + arguments[0].toUpperCamelCase();
             if (isFunction(me[func]))
@@ -108,7 +108,7 @@ MXObject = function()
                 me[arguments[0]] = arguments[1];
             }
         }
-        else if (arguments.length == 1 && isPlainObject(arguments[0]))
+        else if (arguments.length === 1 && isPlainObject(arguments[0]))
         {
             p_options = arguments[0];
             for ( var key in p_options)
@@ -119,7 +119,7 @@ MXObject = function()
                 }
             }
         }
-        else if (arguments.length == 2 && isPlainObject(arguments[0]) && isPlainObject(arguments[1]))
+        else if (arguments.length === 2 && isPlainObject(arguments[0]) && isPlainObject(arguments[1]))
         {
             p_options = arguments[0];
             var p_defaultOptions = arguments[1];
@@ -136,23 +136,23 @@ MXObject = function()
 
     me.instanceOf = function(p_class)
     {
-        if (p_class == me.__class__)
+        if (p_class === me.__class__)
         {
             return true;
         }
-        else if (p_class == Object || p_class == MXObject)
+        else if (p_class === Object || p_class === MXObject)
         {
             return true;
         }
         else
         {
-            return me.__superClasses__.indexOf(p_class) != -1;
+            return me.__superClasses__.indexOf(p_class) !== -1;
         }
     };
 
     me.endOfClass = function(p_arguments)
     {
-        if (me.__class__.caller != $extend)
+        if (me.__class__.caller !== $extend)
         {
             me._(p_arguments[0]);
         }

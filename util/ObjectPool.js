@@ -25,7 +25,7 @@ mx.util.ObjectPool = function()
 
     me.borrowObject = function()
     {
-        if (me.stack.length == 0)
+        if (me.stack.length === 0)
         {
             var obj = me.createObject();
             return obj;
@@ -38,9 +38,9 @@ mx.util.ObjectPool = function()
 
     me.returnObject = function(p_object)
     {
-        if (p_object != null)
+        if (notEmpty(p_object))
         {
-            if (me.maxSize == 0 || me.stack.length < me.maxSize)
+            if (me.maxSize === 0 || me.stack.length < me.maxSize)
             {
                 me.addObject(p_object);
             }

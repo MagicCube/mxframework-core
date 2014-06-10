@@ -21,7 +21,7 @@ mx.view.View = function()
     base._ = me._;
     me._ = function(p_options)
     {
-        if (me.frame != null && p_options != null && p_options.frame != null)
+        if (notEmpty(me.frame) && notEmpty(p_options) && notEmpty(p_options.frame))
         {
             p_options.frame = $.extend(me.frame, p_options.frame);
         }
@@ -33,11 +33,11 @@ mx.view.View = function()
     {
         base.init(p_options);
 
-        if (me.$element == null)
+        if (isEmpty(me.$element))
         {
             me.$element = $("<" + me.elementTag + "/>");
         }
-        if (me.$container == null)
+        if (isEmpty(me.$container))
         {
             me.$container = me.$element;
         }
@@ -61,7 +61,7 @@ mx.view.View = function()
             "position" : me.elementPositionMode
         });
 
-        if (me.elementClass != null)
+        if (notEmpty(me.elementClass))
         {
             me.$element.addClass(me.elementClass);
         }
@@ -83,9 +83,9 @@ mx.view.View = function()
 
     me.setFrame = function(p_frame, p_animated)
     {
-        if (p_frame != null)
+        if (notEmpty(p_frame))
         {
-            if (me.frame != null)
+            if (notEmpty(me.frame))
             {
                 me.frame = $.extend(me.frame, p_frame);
             }
@@ -103,7 +103,7 @@ mx.view.View = function()
                 me.$element.css(me.frame);
             }
 
-            if (me.frame.left != null || me.frame.right != null || me.frame.top != null || me.frame.bottom != null)
+            if (notEmpty(me.frame.left) || notEmpty(me.frame.right) || notEmpty(me.frame.top) || notEmpty(me.frame.bottom))
             {
                 me.$element.css("position", "absolute");
             }
@@ -112,7 +112,7 @@ mx.view.View = function()
 
     me.addSubview = function(p_view, $p_element)
     {
-        if (typeof ($p_element) == "undefined")
+        if (typeof ($p_element) === "undefined")
         {
             $p_element = me.$container;
         }
@@ -127,23 +127,23 @@ mx.view.View = function()
 
         if ($instanceof(p_view, mx.view.View))
         {
-            if (p_view.parentView == me)
+            if (p_view.parentView === me)
             {
                 return;
             }
 
-            if (p_view.parentView != null)
+            if (notEmpty(p_view.parentView))
             {
                 p_view.parentView.removeSubview(p_view);
             }
 
-            if ($p_element != null)
+            if (notEmpt($p_element))
             {
                 $p_element.append(p_view.$element);
             }
             me.subviews.add(p_view);
 
-            if (p_view.id != null)
+            if (notEmpty(p_view.id))
             {
                 me.subviews[p_view.id] = p_view;
             }
@@ -168,7 +168,7 @@ mx.view.View = function()
         {
             p_view.$element.detach();
             me.subviews.remove(p_view);
-            if (p_view.id != null)
+            if (notEmpty(p_view.id))
             {
                 me.subviews[p_view.id] = null;
                 delete me.subviews[p_view.id];
@@ -188,7 +188,7 @@ mx.view.View = function()
 
     me.css = function(p_attrName, p_attrValue)
     {
-        if (arguments.length == 1)
+        if (arguments.length === 1)
         {
             return me.$element.css(p_attrName);
         }
@@ -220,7 +220,7 @@ mx.view.View.className = "mx.view.View";
 $view = function(p_element)
 {
     var $e = $(p_element);
-    while ($e.length != 0 && $e.data("view") == null)
+    while ($e.length !== 0 && isEmpty($e.data("view")))
     {
         $e = $e.parent();
     }

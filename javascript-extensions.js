@@ -1,3 +1,13 @@
+function isEmpty(p_value)
+{
+    return p_value === undefined || p_value === null;
+}
+
+function notEmpty(p_value)
+{
+    return !isEmpty(p_value);
+}
+
 //=====================================================================
 //Boolean
 //=====================================================================
@@ -8,15 +18,15 @@
 
 String.format = function(p_string, p_args)
 {
-    if (p_string == null)
+    if (isEmpty(p_string))
     {
         return "";
     }
-    if (typeof (p_string) != "string")
+    if (typeof (p_string) !== "string")
     {
         p_string = p_string.toString();
     }
-    if (p_args == null)
+    if (isEmpty(p_args))
     {
         return p_string;
     }
@@ -24,10 +34,11 @@ String.format = function(p_string, p_args)
     var result = null;
     var key = null;
     var value = null;
-    if (typeof (p_args) == "number")
+    var i = 0;
+    if (typeof (p_args) === "number")
     {
-        result = new Array(p_args);
-        for (var i = 0; i < result.length; i++)
+        result = [];
+        for (i = 0; i < p_args; i++)
         {
             result[i] = p_string;
         }
@@ -35,19 +46,20 @@ String.format = function(p_string, p_args)
     }
 
     result = p_string;
-    if (p_string.indexOf("{") != -1 && p_string.indexOf("}") != -1)
+    var gropus = null;
+    if (p_string.indexOf("{") !== -1 && p_string.indexOf("}") !== -1)
     {
         if (isObject(p_args) && !isArray(p_args))
         {
-            var groups = p_string.match(/(\{[a-z][a-z$_0-9]*\})/gi);
-            if (groups != null)
+            groups = p_string.match(/(\{[a-z][a-z$_0-9]*\})/gi);
+            if (notEmpty(groups))
             {
-                for (var i = 0; i < groups.length; i++)
+                for (i = 0; i < groups.length; i++)
                 {
                     key = groups[i].substr(1);
                     key = key.substr(0, key.length - 1);
                     value = p_args[key];
-                    if (value == null)
+                    if (isEmpty(value))
                     {
                         value = "";
                     }
@@ -57,15 +69,15 @@ String.format = function(p_string, p_args)
         }
         else if (isArray(p_args))
         {
-            var groups = p_string.match(/(\{[0-9]+\})/gi);
-            if (groups != null)
+            groups = p_string.match(/(\{[0-9]+\})/gi);
+            if (notEmpty(groups))
             {
-                for (var i = 0; i < groups.length; i++)
+                for (i = 0; i < groups.length; i++)
                 {
                     var index = groups[i].substr(1);
                     index = index.substr(0, index.length - 1);
-                    value = p_args[parseInt(index)];
-                    if (value == null)
+                    value = p_args[parseInt(index, 0)];
+                    if (isEmpty(value))
                     {
                         value = "";
                     }
@@ -80,12 +92,12 @@ String.format = function(p_string, p_args)
 String.newGuid = function(p_toLowerCase, p_length)
 {
     var toLowerCase = false;
-    if (p_toLowerCase != null)
+    if (notEmpty(p_toLowerCase))
     {
         toLowerCase = p_toLowerCase;
     }
     var length = 32;
-    if (p_length != null)
+    if (notEmpty(p_length))
     {
         length = p_length;
     }
@@ -97,31 +109,31 @@ String.newGuid = function(p_toLowerCase, p_length)
         {
             result += n;
         }
-        else if (n == 10)
+        else if (n === 10)
         {
             result += "a";
         }
-        else if (n == 11)
+        else if (n === 11)
         {
             result += "b";
         }
-        else if (n == 12)
+        else if (n === 12)
         {
             result += "c";
         }
-        else if (n == 13)
+        else if (n === 13)
         {
             result += "d";
         }
-        else if (n == 14)
+        else if (n === 14)
         {
             result += "e";
         }
-        else if (n == 15)
+        else if (n === 15)
         {
             result += "f";
         }
-        if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
+        if ((i === 8) || (i === 12) || (i === 16) || (i === 20))
         {
             result += "-";
         }
@@ -140,17 +152,17 @@ String.newGuid = function(p_toLowerCase, p_length)
 
 String.prototype.contains = function(p_subString)
 {
-    return this.indexOf(p_subString) != -1;
+    return this.indexOf(p_subString) !== -1;
 };
 
 String.prototype.startsWith = function(p_string)
 {
-    return this.substring(0, p_string.length) == p_string;
+    return this.substring(0, p_string.length) === p_string;
 };
 
 String.prototype.endsWith = function(p_string)
 {
-    return this.substring(this.length - p_string.length) == p_string;
+    return this.substring(this.length - p_string.length) === p_string;
 };
 
 String.prototype.trimLeft = function()
@@ -190,11 +202,11 @@ String.prototype.toUpperCamelCase = function()
 
 Number.format = function(p_value, p_formatString)
 {
-    if (p_value == null)
+    if (isEmpty(p_value))
     {
         return "";
     }
-    if (typeof (p_formatString) == "undefiend")
+    if (typeof (p_formatString) === "undefiend")
     {
         return p_value + "";
     }
@@ -212,7 +224,7 @@ Number.format = function(p_value, p_formatString)
     }
 
     var string = p_value + "";
-    if (p_formatString != null && p_formatString != "")
+    if (notEmpty(p_formatString) && p_formatString !== "")
     {
         var stringParts = string.split('.');
         var formatParts = p_formatString.split('.');
@@ -227,7 +239,7 @@ Number.format = function(p_value, p_formatString)
             stringParts[0] = stringParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        if (formatParts.length == 1)
+        if (formatParts.length === 1)
         {
             return stringParts[0] + percentage;
         }
@@ -252,14 +264,14 @@ Date.today = new Date();
 Date.today = new Date(Date.today.getFullYear(), Date.today.getMonth(), Date.today.getDate());
 Date.format = function(p_value, p_formatString)
 {
-    if (p_value != null)
+    if (notEmpty(p_value))
     {
         var text;
         if (!p_formatString)
         {
             text = "yyyy-MM-dd HH:mm:ss";
         }
-        else if (p_formatString == "smart")
+        else if (p_formatString === "smart")
         {
             var result = null;
             var now = new Date();
@@ -276,7 +288,7 @@ Date.format = function(p_value, p_formatString)
             {
                 result = deltaMin + " 分钟前";
             }
-            else if (deltaMin == 60)
+            else if (deltaMin === 60)
             {
                 result = "1 小时前";
             }
@@ -287,7 +299,7 @@ Date.format = function(p_value, p_formatString)
                 {
                     result = deltaHour + " 小时前";
                 }
-                else if (deltaHour == 24)
+                else if (deltaHour === 24)
                 {
                     result = "1 天前";
                 }
@@ -300,7 +312,7 @@ Date.format = function(p_value, p_formatString)
                     }
                 }
             }
-            if (result != null)
+            if (notEmpty(result))
             {
                 return result;
             }
@@ -352,7 +364,7 @@ Date.getDaysInMonth = function(p_year, p_month)
     switch (p_month + 1)
     {
         case 2:
-            if ((p_year % 400 == 0) || (p_year % 4 == 0) && (p_year % 100 != 0))
+            if ((p_year % 400 === 0) || (p_year % 4 === 0) && (p_year % 100 !== 0))
             {
                 return 29;
             }
@@ -441,17 +453,17 @@ Date.prototype.addYears = function(p_years)
 
 Date.prototype.equals = function(p_date)
 {
-    return this.compare(p_date) == 0;
+    return this.compare(p_date) === 0;
 };
 
 Date.prototype.compare = function(p_date)
 {
-    if (p_date == null)
+    if (isEmpty(p_date))
     {
         return -1;
     }
 
-    if (p_date.constructor != Date)
+    if (p_date.constructor !== Date)
     {
         return -1;
     }
@@ -476,7 +488,7 @@ Array.prototype.enqueue = function(item)
 
 Array.prototype.dequeue = function()
 {
-    if (this.length == 0)
+    if (this.length === 0)
     {
         return undefined;
     }
@@ -495,7 +507,7 @@ Array.prototype.indexOf = function(p_item)
 {
     for (var i = 0; i < this.length; i++)
     {
-        if (this[i] == p_item)
+        if (this[i] === p_item)
         {
             return i;
         }
@@ -505,12 +517,12 @@ Array.prototype.indexOf = function(p_item)
 
 Array.prototype.first = function(i)
 {
-    if (this.length == 0)
+    if (this.length === 0)
     {
         return undefined;
     }
 
-    if (typeof (i) != "number")
+    if (typeof (i) !== "number")
     {
         i = 0;
     }
@@ -523,12 +535,12 @@ Array.prototype.first = function(i)
 
 Array.prototype.last = function(i)
 {
-    if (this.length == 0)
+    if (this.length === 0)
     {
         return undefined;
     }
 
-    if (typeof (i) != "number")
+    if (typeof (i) !== "number")
     {
         i = 0;
     }
@@ -544,7 +556,7 @@ Array.prototype.last = function(i)
 
 Array.prototype.contains = function(p_item)
 {
-    return this.indexOf(p_item) != -1;
+    return this.indexOf(p_item) !== -1;
 };
 
 Array.prototype.add = function(p_item)
@@ -573,7 +585,7 @@ Array.prototype.insert = function(p_startIndex, p_item)
 Array.prototype.insertBefore = function(p_item, p_beforeItem)
 {
     var index = this.indexOf(p_beforeItem);
-    if (index == -1)
+    if (index === -1)
     {
         return false;
     }
@@ -585,11 +597,11 @@ Array.prototype.insertBefore = function(p_item, p_beforeItem)
 Array.prototype.insertAfter = function(p_item, p_afterItem)
 {
     var index = this.indexOf(p_afterItem);
-    if (index == -1)
+    if (index === -1)
     {
         return false;
     }
-    else if (index == this.length)
+    else if (index === this.length)
     {
         this.add(p_item);
         return true;
@@ -621,12 +633,12 @@ Array.prototype.removeAt = function(p_index)
 
 Array.prototype.removeLast = function(p_index)
 {
-    if (this.length == 0)
+    if (this.length === 0)
     {
         return;
     }
 
-    if (typeof (p_index) != "number")
+    if (typeof (p_index) !== "number")
     {
         p_index = 0;
     }
@@ -701,7 +713,7 @@ Array.prototype.findLast = function(p_judgeFunction, p_context)
 
 Array.prototype.min = function(p_iterator, p_context)
 {
-    var min = undefined;
+    var min;
     for (var i = 0; i < this.length; i++)
     {
         var value;
@@ -731,7 +743,7 @@ Array.prototype.min = function(p_iterator, p_context)
 
 Array.prototype.max = function(p_iterator, p_context)
 {
-    var max = undefined;
+    var max;
     for (var i = 0; i < this.length; i++)
     {
         var value;

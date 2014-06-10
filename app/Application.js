@@ -13,17 +13,17 @@ mx.app.Application = function()
     base.init = me.init;
     me.init = function(p_options)
     {
-        if (me.$element == null)
+        if (isEmpty(me.$element))
         {
             me.$element = $(document.body);
         }
 
-        if (me.id == null)
+        if (isEmpty(me.id))
         {
             me.id = me.appId;
         }
         base.init(p_options);
-        if (me.appDisplayName != null)
+        if (notEmpty(me.appDisplayName))
         {
             document.title = me.appDisplayName;
         }

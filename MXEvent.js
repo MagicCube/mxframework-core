@@ -8,12 +8,12 @@ MXEvent = function()
 
     me.addEventListener = function(p_listener, p_once)
     {
-        if (typeof (p_listener) == "function" && !me.listeners.contains(p_listener))
+        if (typeof (p_listener) === "function" && !me.listeners.contains(p_listener))
         {
             me.listeners.add(p_listener);
             if (p_once === true)
             {
-                if (_onceListeners == null)
+                if (isEmpty(_onceListeners))
                 {
                     _onceListeners = [];
                 }
@@ -24,12 +24,12 @@ MXEvent = function()
 
     me.insertEventListener = function(p_index, p_listener, p_once)
     {
-        if (typeof (p_listener) == "function" && !me.listeners.contains(p_listener))
+        if (typeof (p_listener) === "function" && !me.listeners.contains(p_listener))
         {
             me.listeners.insert(p_index, p_listener);
             if (p_once === true)
             {
-                if (_onceListeners == null)
+                if (isEmpty(_onceListeners))
                 {
                     _onceListeners = [];
                 }
@@ -40,7 +40,7 @@ MXEvent = function()
 
     me.removeEventListener = function(p_listener)
     {
-        if (_onceListeners != null)
+        if (notEmpty(_onceListeners))
         {
             _onceListeners.remove(p_listener);
         }
@@ -49,7 +49,7 @@ MXEvent = function()
 
     me.clear = function()
     {
-        if (_onceListeners != null)
+        if (notEmpty(_onceListeners))
         {
             _onceListeners.clear();
             _onceListeners = null;
@@ -59,26 +59,27 @@ MXEvent = function()
 
     me.fire = function(e)
     {
-        if (me.listeners != null && me.listeners.length > 0)
+        if (notEmpty(me.listeners) && me.listeners.length > 0)
         {
             var listeners = me.listeners.clone();
             var toBeRemoved = [];
-            for (var i = 0; i < listeners.length; i++)
+            var i = 0;
+            for (i = 0; i < listeners.length; i++)
             {
                 var listener = listeners[i];
                 listener(e);
 
-                if (_onceListeners != null && _onceListeners.contains(listener))
+                if (notEmpty(_onceListeners) && _onceListeners.contains(listener))
                 {
                     toBeRemoved.add(listener);
                     _onceListeners.remove(listener);
-                    if (_onceListeners.length == 0)
+                    if (_onceListeners.length === 0)
                     {
                         _onceListeners = null;
                     }
                 }
             }
-            for (var i = 0; i < toBeRemoved.length; i++)
+            for (i = 0; i < toBeRemoved.length; i++)
             {
                 me.listeners.remove(toBeRemoved[i]);
             }

@@ -36,7 +36,7 @@ MX = function()
 
     me.mappath = function(p_url)
     {
-        if (typeof (p_url) != "string")
+        if (typeof (p_url) !== "string")
         {
             return null;
         }
@@ -46,15 +46,15 @@ MX = function()
         {
             url = url.replace(/\$language/g, mx.language);
         }
-        if (url.indexOf("~/") == 0)
+        if (url.indexOf("~/") === 0)
         {
             url = me.webContentPath + url.substr(1);
         }
-        else if (url.indexOf("$/") == 0)
+        else if (url.indexOf("$/") === 0)
         {
             url = me.scriptPath + url.substr(1);
         }
-        else if (url.indexOf("$lib/") == 0)
+        else if (url.indexOf("$lib/") === 0)
         {
             url = me.libraryPath + url.substr(4);
         }
@@ -65,22 +65,22 @@ MX = function()
     me.getMessage = function(p_context, p_key, p_params)
     {
         var module = null;
-        if (typeof (p_context) == "string")
+        if (typeof (p_context) === "string")
         {
             module = p_context;
         }
-        else if (typeof (p_context.getModuleName) == "function")
+        else if (typeof (p_context.getModuleName) === "function")
         {
             module = p_context.getModuleName();
         }
 
-        if (module != null)
+        if (notEmpty(module))
         {
             var locale = me.locales[module];
-            if (locale != null && locale[p_key] != null)
+            if (notEmpty(locale) && notEmpty(locale[p_key]))
             {
                 var text = locale[p_key];
-                if (p_params != null && typeof (p_params) == "object")
+                if (notEmpty(p_params) && typeof (p_params) === "object")
                 {
                     text = $format(text, p_params);
                 }
@@ -102,15 +102,15 @@ MX = function()
         var ingList = null;
         var edList = null;
         var type = null;
-        if (path.indexOf(".js") == path.length - 3)
+        if (path.indexOf(".js") === path.length - 3)
         {
             ingList = me.loadingScripts;
             edList = me.loadedScripts;
             type = "js";
         }
-        else if (path.indexOf(".css") == path.length - 4)
+        else if (path.indexOf(".css") === path.length - 4)
         {
-            if (path.indexOf("/") == -1)
+            if (path.indexOf("/") === -1)
             {
                 path = me.getResourcePath(path.substr(0, path.length - 4), "css");
             }
@@ -119,31 +119,31 @@ MX = function()
             type = "css";
         }
 
-        if (ingList[path] != null)
+        if (notEmpty(ingList[path]))
         {
-            if (typeof (p_callback) == "function")
+            if (typeof (p_callback) === "function")
             {
                 ingList[path].push(p_callback);
             }
         }
-        else if (edList[path] != null)
+        else if (notEmpty(edList[path]))
         {
-            if (typeof (p_callback) == "function")
+            if (typeof (p_callback) === "function")
             {
                 p_callback();
             }
         }
         else
         {
-            _add(ingList, path, ((typeof (p_callback) == "function") ? [p_callback] : []));
-            if (document.body != null)
+            _add(ingList, path, ((typeof (p_callback) === "function") ? [p_callback] : []));
+            if (document.body !== null)
             {
                 var element = null;
-                if (type == "js")
+                if (type === "js")
                 {
                     element = document.createElement("script");
                 }
-                else if (type == "css")
+                else if (type === "css")
                 {
                     element = document.createElement("link");
                     element.rel = "stylesheet";
@@ -159,11 +159,11 @@ MX = function()
                 element.dynamic = true;
                 document.body.appendChild(element);
 
-                if (type == "js")
+                if (type === "js")
                 {
                     element.src = path + (me.debugMode ? ("?nocache=" + Math.random()) : "");
                 }
-                else if (type == "css")
+                else if (type === "css")
                 {
                     element.href = path + (me.debugMode ? ("?nocache=" + Math.random()) : "");
                 }
@@ -171,11 +171,11 @@ MX = function()
             else
             {
                 var tag = null;
-                if (type == "js")
+                if (type === "js")
                 {
                     tag = "<script src='" + path + (me.debugMode ? ("?nocache=" + Math.random()) : "") + "'";
                 }
-                else if (type == "css")
+                else if (type === "css")
                 {
                     tag = "<link rel='stylesheet' href='" + path + (me.debugMode ? ("?nocache=" + Math.random()) : "") + "'";
                 }
@@ -187,7 +187,7 @@ MX = function()
 
     me._include_onload = function(e)
     {
-        e = (e != null ? e : event);
+        e = (notEmpty(e) ? e : event);
         _element_onload(e);
         _checkStylesLoadingStatus();
         _checkScriptLoadingStatus();
@@ -199,12 +199,12 @@ MX = function()
     {
         setTimeout(function()
         {
-            if (typeof (p_callback) != "function")
+            if (typeof (p_callback) !== "function")
             {
                 return;
             }
 
-            if (me.loadingStyles.length == 0 && me.loadingScripts.length == 0)
+            if (me.loadingStyles.length === 0 && me.loadingScripts.length === 0)
             {
                 p_callback();
             }
@@ -220,12 +220,12 @@ MX = function()
     {
         setTimeout(function()
         {
-            if (typeof (p_callback) != "function")
+            if (typeof (p_callback) !== "function")
             {
                 return;
             }
 
-            if (me.loadingStyles.length == 0)
+            if (me.loadingStyles.length === 0)
             {
                 p_callback();
             }
@@ -241,12 +241,12 @@ MX = function()
     {
         setTimeout(function()
         {
-            if (typeof (p_callback) != "function")
+            if (typeof (p_callback) !== "function")
             {
                 return;
             }
 
-            if (me.loadingScripts.length == 0)
+            if (me.loadingScripts.length === 0)
             {
                 p_callback();
             }
@@ -263,11 +263,11 @@ MX = function()
         if (me.debugMode)
         {
             path = me.getClassPath(p_fullClassName);
-            if (path != null)
+            if (path !== null)
             {
                 me.include(path, function()
                 {
-                    if (typeof (p_callback) == "function")
+                    if (typeof (p_callback) === "function")
                     {
                         p_callback();
                     }
@@ -278,7 +278,7 @@ MX = function()
         {
             if (p_fullClassName.startsWith("mx."))
             {
-                if (typeof (p_callback) == "function")
+                if (typeof (p_callback) === "function")
                 {
                     p_callback();
                 }
@@ -288,7 +288,7 @@ MX = function()
             if (p_fullClassName.startsWith("lib."))
             {
                 path = me.getClassPath(p_fullClassName);
-                if (path != null)
+                if (notEmpty(path))
                 {
                     me.include(path, p_callback);
                 }
@@ -296,7 +296,7 @@ MX = function()
             else
             {
                 var index = p_fullClassName.indexOf(".");
-                if (index != -1)
+                if (index !== -1)
                 {
                     var moduleName = p_fullClassName.substr(0, index);
                     me.include("$/" + moduleName + "/min.js", p_callback);
@@ -315,11 +315,11 @@ MX = function()
     me.importMessageBundle = function(p_namespace)
     {
         var lan = me.language.replace("-", "_");
-        if (lan == "zh_cn")
+        if (lan === "zh_cn")
         {
             lan = "zh_CN";
         }
-        else if (lan == "zh_tw")
+        else if (lan === "zh_tw")
         {
             lan = "zh_TW";
         }
@@ -330,7 +330,7 @@ MX = function()
         }).done(function(p_result)
         {
             var lines = p_result.split("\n");
-            if (me.locales[p_namespace] == null)
+            if (isEmpty(me.locales[p_namespace]))
             {
                 me.locales[p_namespace] = {};
             }
@@ -372,9 +372,9 @@ MX = function()
         }
 
         var ext = null;
-        if (p_auto2x == true && (p_ext == "png" || p_ext == "jpg"))
+        if (p_auto2x === true && (p_ext === "png" || p_ext === "jpg"))
         {
-            if (window.devicePixelRatio == 2)
+            if (window.devicePixelRatio === 2)
             {
                 ext = "@2x" + "." + p_ext;
             }
@@ -390,17 +390,17 @@ MX = function()
 
         var parts = p_fullClassName.split(".", 1);
         var path = null;
-        if (parts.length == 1)
+        if (parts.length === 1)
         {
-            if (!me.debugMode && (parts[0] != "lib" && ext == ".css"))
+            if (!me.debugMode && (parts[0] !== "lib" && ext === ".css"))
             {
                 path = $mappath("$/" + parts[0] + "/res/min.css");
             }
 
-            if (path == null)
+            if (isEmpty(path))
             {
                 var classPath = p_fullClassName.replace(/\./g, "/");
-                if (eval("typeof($mx_" + parts[0] + "_path)") != "undefined")
+                if (eval("typeof($mx_" + parts[0] + "_path)") !== "undefined")
                 {
                     path = $mappath(eval("$mx_" + parts[0] + "_path") + classPath.substr(parts[0].length) + ext);
                 }
@@ -419,7 +419,7 @@ MX = function()
 
     me.log = function(p_message)
     {
-        if (typeof (console) != "undefined")
+        if (typeof (console) !== "undefined")
         {
             console.log("[MX] " + p_message);
         }
@@ -427,7 +427,7 @@ MX = function()
 
     me.warn = function(p_message)
     {
-        if (typeof (console) != "undefined")
+        if (typeof (console) !== "undefined")
         {
             console.warn("[MX] " + p_message);
         }
@@ -435,7 +435,7 @@ MX = function()
 
     me.error = function(p_message)
     {
-        if (typeof (console) != "undefined")
+        if (typeof (console) !== "undefined")
         {
             console.error("[MX] " + p_message);
         }
@@ -444,7 +444,7 @@ MX = function()
     function _resolveUrlParams()
     {
         var search = location.search.substring(1);
-        me.urlParams = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function(key, value)
+        me.urlParams = search ? JSON.parse('{"' + search.replace(/&/g, '","').replace(/\=/g, '":"') + '"}', function(key, value)
         {
             return key === "" ? value : decodeURIComponent(value);
         }) : {};
@@ -452,15 +452,15 @@ MX = function()
 
     function _resolveLangauge()
     {
-        if (me.urlParams.lang != null)
+        if (notEmpty(me.urlParams.lang))
         {
             me.language = me.urlParams.lang.replace("/", "");
         }
-        else if (me.urlParams.language != null)
+        else if (notEmpty(me.urlParams.language))
         {
             me.language = me.urlParams.language.replace("/", "");
         }
-        else if (typeof ($mx_language) == "undefined")
+        else if (typeof ($mx_language) === "undefined")
         {
             me.language = (navigator.language || navigator.userLanguage).toString().toLowerCase();
             if (me.language.startsWith("en-"))
@@ -498,7 +498,7 @@ MX = function()
         if (src.endsWith(mxPath))
         {
             me.debugMode = true;
-            if (typeof ($mx_script_path) == "undefined")
+            if (typeof ($mx_script_path) === "undefined")
             {
                 me.scriptPath = src.substr(0, src.length - mxPath.length);
             }
@@ -507,7 +507,7 @@ MX = function()
                 me.scriptPath = $mx_script_path;
             }
 
-            if (typeof ($mx_web_content_path) == "undefined")
+            if (typeof ($mx_web_content_path) === "undefined")
             {
                 pos = me.scriptPath.lastIndexOf("/");
                 me.webContentPath = me.scriptPath.substr(0, pos);
@@ -528,7 +528,7 @@ MX = function()
             mxPath = "/mx/min.js";
             if (src.endsWith(mxPath))
             {
-                if (typeof ($mx_script_path) == "undefined")
+                if (typeof ($mx_script_path) === "undefined")
                 {
                     me.scriptPath = src.substr(0, src.length - mxPath.length);
                 }
@@ -537,7 +537,7 @@ MX = function()
                     me.scriptPath = $mx_script_path;
                 }
 
-                if (typeof ($mx_web_content_path) == "undefined")
+                if (typeof ($mx_web_content_path) === "undefined")
                 {
                     pos = me.scriptPath.lastIndexOf("/");
                     me.webContentPath = me.scriptPath.substr(0, pos);
@@ -556,7 +556,7 @@ MX = function()
 
     function _resolveLibraryPath()
     {
-        if (typeof ($mx_library_path) == "undefined")
+        if (typeof ($mx_library_path) === "undefined")
         {
             me.libraryPath = me.scriptPath + "/lib";
         }
@@ -576,7 +576,7 @@ MX = function()
     function _element_onload(e)
     {
         var element = null;
-        if (e.srcElement != null)
+        if (notEmpty(e.srcElement))
         {
             element = e.srcElement;
         }
@@ -585,7 +585,7 @@ MX = function()
             element = e.target;
         }
 
-        if (element.readyState != null && (typeof (element.times) == "undefined" && element.readyState != "complete"))
+        if (notEmpty(element.readyState) && (typeof (element.times) === "undefined" && element.readyState !== "complete"))
         {
             element.times = 1;
             return;
@@ -600,14 +600,14 @@ MX = function()
 
         var path = null;
         var callbacks = [];
-        if (element.tagName == "SCRIPT")
+        if (element.tagName === "SCRIPT")
         {
             path = element.src;
             if (me.debugMode)
             {
                 path = path.substring(0, path.lastIndexOf("?"));
             }
-            if (e.type != "error")
+            if (e.type !== "error")
             {
                 _add(me.loadedScripts, path, path);
                 callbacks = me.loadingScripts[path];
@@ -618,14 +618,14 @@ MX = function()
                 mx.error("Fail to load '" + path + "'.");
             }
         }
-        else if (element.tagName == "LINK")
+        else if (element.tagName === "LINK")
         {
             path = element.href;
             if (me.debugMode)
             {
                 path = path.substring(0, path.lastIndexOf("?"));
             }
-            if (e.type != "error")
+            if (e.type !== "error")
             {
                 _add(me.loadedStyles, path, path);
                 callbacks = me.loadingStyles[path];
@@ -649,7 +649,7 @@ MX = function()
 
     function _checkStylesLoadingStatus()
     {
-        if (me.loadingStyles.length == 0 && me._styleReady_callbacks.length > 0)
+        if (me.loadingStyles.length === 0 && me._styleReady_callbacks.length > 0)
         {
             var readyFunc = null;
             while (me._styleReady_callbacks.length > 0)
@@ -667,7 +667,7 @@ MX = function()
 
     function _checkScriptLoadingStatus()
     {
-        if (me.loadingScripts.length == 0 && me._scriptReady_callbacks.length > 0)
+        if (me.loadingScripts.length === 0 && me._scriptReady_callbacks.length > 0)
         {
             var readyFunc = null;
             while (me._scriptReady_callbacks.length > 0)
@@ -685,12 +685,12 @@ MX = function()
 
     function _checkAllLoadingStatus()
     {
-        if (me._ready_callbacks.length == 0)
+        if (me._ready_callbacks.length === 0)
         {
             return;
         }
-        var loaded = (me.loadingStyles.length == 0 && me.loadingScripts.length == 0);
-        var androidLoaded = (me.osType == "android" && me.loadingScripts.length == 0);
+        var loaded = (me.loadingStyles.length === 0 && me.loadingScripts.length === 0);
+        var androidLoaded = (me.osType === "android" && me.loadingScripts.length === 0);
         if (loaded || androidLoaded)
         {
             var readyFunc = null;
@@ -698,7 +698,7 @@ MX = function()
             {
                 if (me.loadingScripts.length > 0)
                 {
-                    if ((me.osType != "android" && me.loadingStyles.length > 0) || (me.osType == "android"))
+                    if ((me.osType !== "android" && me.loadingStyles.length > 0) || (me.osType === "android"))
                     {
                         break;
                     }
@@ -720,7 +720,7 @@ MX = function()
     {
         for (var i = 0; i < p_collection.length; i++)
         {
-            if (p_collection[i] == p_key)
+            if (p_collection[i] === p_key)
             {
                 p_collection.splice(i, 1);
                 break;

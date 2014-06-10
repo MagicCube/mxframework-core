@@ -27,11 +27,11 @@ MXComponent = function()
     me.bind = function(p_eventType, p_function, p_once)
     {
         var eventType = "on" + p_eventType;
-        if (typeof (me[eventType]) == "undefined")
+        if (typeof (me[eventType]) === "undefined")
         {
             return me;
         }
-        if (me[eventType] == null)
+        if (isEmpty(me[eventType]))
         {
             me[eventType] = new MXEvent();
         }
@@ -49,11 +49,11 @@ MXComponent = function()
 
     me.unbind = function(p_eventType, p_function)
     {
-        if (p_eventType == null && p_function == null)
+        if (isEmpty(p_eventType) && isEmpty(p_function))
         {
             for ( var name in me)
             {
-                if (me[name] != null && me[name].constructor == MXEvent)
+                if (notEmpty(me[name]) && me[name].constructor === MXEvent)
                 {
                     me[name].clear();
                     me[name] = null;
@@ -63,14 +63,14 @@ MXComponent = function()
         else
         {
             var eventType = "on" + p_eventType;
-            if (typeof (me[eventType]) == "undefined")
+            if (typeof (me[eventType]) === "undefined")
             {
                 return me;
             }
 
-            if (me[eventType] != null)
+            if (notEmpty(me[eventType]))
             {
-                if (p_function != null)
+                if (notEmpty(p_function))
                 {
                     me[eventType].removeEventListener(p_function);
                 }
@@ -87,11 +87,11 @@ MXComponent = function()
     me.hasBound = function(p_eventType)
     {
         var eventType = "on" + p_eventType;
-        if (typeof (me[eventType]) == "undefined")
+        if (typeof (me[eventType]) === "undefined")
         {
             return false;
         }
-        if (me[eventType] != null)
+        if (notEmpty(me[eventType]))
         {
             return me[eventType].listeners.length > 0;
         }
@@ -104,14 +104,14 @@ MXComponent = function()
     me.trigger = function(p_eventType, p_args)
     {
         var eventType = "on" + p_eventType;
-        if (typeof (me[eventType]) == "undefined")
+        if (typeof (me[eventType]) === "undefined")
         {
             return me;
         }
-        if (me[eventType] != null)
+        if (notEmpty(me[eventType]))
         {
             var e = null;
-            if (p_args != null)
+            if (notEmpty(p_args))
             {
                 e = p_args;
             }
@@ -131,7 +131,7 @@ MXComponent = function()
     base.instanceOf = me.instanceOf;
     me.instanceOf = function(p_class)
     {
-        if (p_class == MXComponent)
+        if (p_class === MXComponent)
         {
             return true;
         }

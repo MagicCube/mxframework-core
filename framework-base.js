@@ -1,32 +1,40 @@
 // 判断类型
+
 function isBoolean(p_value)
 {
-    return typeof (p_value) == "boolean";
+    return typeof (p_value) === "boolean";
 }
 
 function isString(p_value)
 {
-    return typeof (p_value) == "string";
+    return typeof (p_value) === "string";
 }
 
 function isNumber(p_value)
 {
-    return typeof (p_value) == "number";
+    return typeof (p_value) === "number";
 }
 
 function isDate(p_value)
 {
-    return p_value != null && p_value.constructor == Date;
+    return notEmpty(p_value) && p_value.constructor === Date;
 }
 
 function isArray(p_value)
 {
-    return p_value != null && (typeof (p_value) == "object" && typeof (p_value.length) == "number" && typeof (p_value.swap) == "function");
+    if (typeof(Array.isArray) === "function")
+    {
+        return Array.isArray(p_value);
+    }
+    else
+    {
+        return notEmpty(p_value) && (typeof (p_value) === "object" && typeof (p_value.length) === "number");
+    }
 }
 
 function isObject(p_value)
 {
-    return p_value != null && typeof (p_value) == "object";
+    return notEmpty(p_value) && typeof (p_value) === "object";
 }
 
 function isPlainObject(p_value)
@@ -36,102 +44,30 @@ function isPlainObject(p_value)
 
 function isFunction(p_value)
 {
-    return typeof (p_value) == "function";
+    return typeof (p_value) === "function";
 }
 
 function isClass(p_value)
 {
-    return typeof (p_value) == "function";
-}
-
-function isEmpty(p_value)
-{
-    return p_value == null || (typeof (p_value) == "string" && p_value.trim() == "");
-}
-
-function notEmpty(p_value)
-{
-    return !isEmpty(p_value);
+    return typeof (p_value) === "function";
 }
 
 // 类型转换
 function parseBoolean(p_text)
 {
-    if (typeof (p_text) == "boolean")
+    if (typeof (p_text) === "boolean")
     {
         return p_text;
     }
-    t = p_text.toLowerCase();
-    return (t == "true") || (t == "t");
-}
-
-function parseDate(p_text)
-{
-    if (p_text == null || (typeof (p_text) == "string" && p_text.trim() == ""))
+    else if (typeof(p_text) === "number")
     {
-        return null;
+        return p_text !== 0;
     }
-    if (isDate(p_text))
+    else if (typeof(p_text) === "string")
     {
-        return p_text;
+        var t = p_text.toLowerCase();
+        return (t === "true") || (t === "t");
     }
-
-    var parts = null;
-    var datePart = null;
-    var timePart = null;
-    p_text = p_text.trim();
-    if (p_text.indexOf(" ") != -1)
-    {
-        parts = p_text.split(" ");
-    }
-    else if (p_text.indexOf("T") != -1)
-    {
-        parts = p_text.split("T");
-    }
-
-    if (parts == null)
-    {
-        parts = [p_text];
-    }
-
-    if (parts.length == 1)
-    {
-        if (parts[0].indexOf(":") != -1)
-        {
-            timePart = parts[0];
-        }
-        else
-        {
-            datePart = parts[0];
-        }
-    }
-    else if (parts.length == 2)
-    {
-        datePart = parts[0];
-        timePart = parts[1];
-    }
-
-    var dateValue = {
-        year : 1900,
-        month : 0,
-        date : 1
-    };
-    if (datePart != null)
-    {
-        dateValue = parseDateString(datePart);
-    }
-
-    var timeValue = {
-        hours : 0,
-        minutes : 0,
-        seconds : 0
-    };
-    if (timePart != null)
-    {
-        timeValue = parseTimeString(timePart);
-    }
-
-    return new Date(dateValue.year, dateValue.month, dateValue.date, timeValue.hours, timeValue.minutes, timeValue.seconds);
 }
 
 var __regex_Hms = /^(\S*):(\S*):(\S*)$/;
@@ -145,10 +81,10 @@ function parseTimeString(p_timeString)
     };
 
     var matches = p_timeString.match(__regex_Hms);
-    if (matches == null)
+    if (isEmpty(matches))
     {
         matches = p_timeString.match(__regex_Hm);
-        if (matches == null)
+        if (isEmpty(matches))
         {
             matches = [p_timeString, p_timeString];
         }
@@ -195,15 +131,15 @@ function parseDateString(p_dateString)
     };
 
     var matches = p_dateString.match(__regex_yyyyMD);
-    if (matches == null)
+    if (isEmpty(matches))
     {
         matches = p_dateString.match(__regex_yyyyM);
-        if (matches == null)
+        if (isEmpty(matches))
         {
             matches = [p_dateString, p_dateString];
         }
     }
-    if (matches != null)
+    if (notEmpty(matches))
     {
         if (matches.length >= 2)
         {
@@ -241,11 +177,80 @@ function parseDateString(p_dateString)
     return value;
 }
 
+function parseDate(p_text)
+{
+    if (isEmpty(p_text))
+    {
+        return null;
+    }
+    if (isDate(p_text))
+    {
+        return p_text;
+    }
+
+    var parts = null;
+    var datePart = null;
+    var timePart = null;
+    p_text = p_text.trim();
+    if (p_text.indexOf(" ") !== -1)
+    {
+        parts = p_text.split(" ");
+    }
+    else if (p_text.indexOf("T") !== -1)
+    {
+        parts = p_text.split("T");
+    }
+
+    if (isEmpty(parts))
+    {
+        parts = [p_text];
+    }
+
+    if (parts.length === 1)
+    {
+        if (parts[0].indexOf(":") !== -1)
+        {
+            timePart = parts[0];
+        }
+        else
+        {
+            datePart = parts[0];
+        }
+    }
+    else if (parts.length === 2)
+    {
+        datePart = parts[0];
+        timePart = parts[1];
+    }
+
+    var dateValue = {
+        year : 1900,
+        month : 0,
+        date : 1
+    };
+    if (notEmpty(datePart))
+    {
+        dateValue = parseDateString(datePart);
+    }
+
+    var timeValue = {
+        hours : 0,
+        minutes : 0,
+        seconds : 0
+    };
+    if (notEmpty(timePart))
+    {
+        timeValue = parseTimeString(timePart);
+    }
+
+    return new Date(dateValue.year, dateValue.month, dateValue.date, timeValue.hours, timeValue.minutes, timeValue.seconds);
+}
+
 // 命名空间
 function $namespace(p_namespace)
 {
     var parts = p_namespace.split(".");
-    if (parts.length == 0)
+    if (parts.length === 0)
     {
         return null;
     }
@@ -253,7 +258,7 @@ function $namespace(p_namespace)
     var space = null;
     for (var i = 0; i < parts.length; i++)
     {
-        if (i == 0)
+        if (i === 0)
         {
             space = parts[0];
             try
@@ -281,11 +286,11 @@ $ns = $namespace;
 // 继承
 function $extend(p_baseClass)
 {
-    if (typeof (p_baseClass) == "function")
+    if (typeof (p_baseClass) === "function")
     {
         var inst = new p_baseClass();
         inst.__class__ = $extend.caller;
-        if (p_baseClass != MXObject && p_baseClass != MXComponent)
+        if (p_baseClass !== MXObject && p_baseClass !== MXComponent)
         {
             inst.__superClasses__.push(p_baseClass);
         }
@@ -296,7 +301,7 @@ function $extend(p_baseClass)
 // 获取实例的类型。
 function $getclass(p_inst)
 {
-    if (p_inst == null)
+    if (isEmpty(p_inst))
     {
         return null;
     }
@@ -315,7 +320,7 @@ function $getclass(p_inst)
             return Function;
 
         case "object":
-            if (typeof (p_inst.getClass) == "function")
+            if (typeof (p_inst.getClass) === "function")
             {
                 return p_inst.getClass();
             }
@@ -331,6 +336,7 @@ function $getclass(p_inst)
             {
                 return Object;
             }
+            break;
         default:
             return null;
     }
@@ -339,41 +345,42 @@ function $getclass(p_inst)
 // 判断 p_inst 是否是 p_class 的实例。
 function $instanceof(p_inst, p_class)
 {
-    if (p_inst == null)
+    if (isEmpty(p_inst))
     {
         return false;
     }
     switch (typeof (p_inst))
     {
         case "boolean":
-            return p_class == Boolean;
+            return p_class === Boolean;
 
         case "number":
-            return p_class == Number;
+            return p_class === Number;
 
         case "string":
-            return p_class == String;
+            return p_class === String;
 
         case "function":
-            return p_class == Function;
+            return p_class === Function;
 
         case "object":
-            if (typeof (p_inst.instanceOf) == "function")
+            if (typeof (p_inst.instanceOf) === "function")
             {
                 return p_inst.instanceOf(p_class);
             }
             else if (isDate(p_inst))
             {
-                return p_class == Date;
+                return p_class === Date;
             }
             else if (isArray(p_inst))
             {
-                return p_class == Array;
+                return p_class === Array;
             }
             else
             {
                 return true;
             }
+            break;
         default:
             return false;
     }
@@ -396,6 +403,6 @@ function $format(p_value, p_format)
     }
     else
     {
-        return p_value != null ? p_value.toString() : "";
+        return notEmpty(p_value) ? p_value.toString() : "";
     }
 }
