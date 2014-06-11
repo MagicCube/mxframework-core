@@ -1,6 +1,6 @@
 /*!
- * MXFramework v6.0
- * - A lightweight Object-Oriented JavaScript Framework
+ * MXFramework v6.5
+ * - A super lightweight Object-Oriented JavaScript Framework
  *
  * Copyright 2005-2013. All rights reserved.
  *
@@ -696,12 +696,10 @@ MX = function()
             var readyFunc = null;
             while (me._ready_callbacks.length > 0)
             {
-                if (me.loadingScripts.length > 0)
+                var isNotAndroid = (me.osType !== "android") && (me.loadingStyles.length > 0);
+                if (me.loadingScripts.length > 0 && (isNotAndroid || (me.osType === "android")))
                 {
-                    if ((me.osType !== "android" && me.loadingStyles.length > 0) || (me.osType === "android"))
-                    {
-                        break;
-                    }
+                    break;
                 }
                 readyFunc = me._ready_callbacks.pop();
                 readyFunc();

@@ -13,9 +13,7 @@
     var scripts = document.getElementsByTagName("script");
     var src = scripts[scripts.length - 1].src;
     var srcPath = src.substr(0, src.lastIndexOf("/mx/") + 1);
-    
-    
-    
+
     function include(p_src)
     {
         document.write("<script type='text/javascript' src='" + srcPath + p_src + "'></script>");

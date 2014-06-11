@@ -38,12 +38,9 @@ mx.util.ObjectPool = function()
 
     me.returnObject = function(p_object)
     {
-        if (notEmpty(p_object))
+        if (notEmpty(p_object) && (me.maxSize === 0 || me.stack.length < me.maxSize))
         {
-            if (me.maxSize === 0 || me.stack.length < me.maxSize)
-            {
-                me.addObject(p_object);
-            }
+            me.addObject(p_object);
         }
     };
 
