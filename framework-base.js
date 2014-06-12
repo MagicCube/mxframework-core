@@ -249,37 +249,28 @@ function parseDate(p_text)
 // 命名空间
 function $namespace(p_namespace)
 {
+    if (!/^[a-z]+[a-z0-9\._\$]*[a-z0-9]$/.test(p_namespace))
+    {
+        throw new Error("Invalid namespace '" + p_namespace + "'.");
+    }
     var parts = p_namespace.split(".");
     if (parts.length === 0)
     {
         return null;
     }
 
-    var space = null;
+    var partialNS = null;
+    var context = window;
     for (var i = 0; i < parts.length; i++)
     {
-        if (i === 0)
+        partialNS = parts[i];
+        if (isEmpty(context[partialNS]))
         {
-            space = parts[0];
-            try
-            {
-                eval(space);
-            }
-            catch (e)
-            {
-                eval(space + " = {}");
-            }
+            context[partialNS] = {};
         }
-        else
-        {
-            space += "." + parts[i];
-            if (!eval(space))
-            {
-                eval(space + " = {};");
-            }
-        }
+        context = context[partialNS];
     }
-    return eval(p_namespace);
+    return context;
 }
 $ns = $namespace;
 
