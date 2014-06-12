@@ -46,7 +46,7 @@ String.format = function(p_string, p_args)
     }
 
     result = p_string;
-    var gropus = null;
+    var groups = null;
     if (p_string.indexOf("{") !== -1 && p_string.indexOf("}") !== -1)
     {
         if (isObject(p_args) && !isArray(p_args))
