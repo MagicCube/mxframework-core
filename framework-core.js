@@ -1,6 +1,6 @@
 /*!
- * MXFramework v6.5
- * - A super lightweight Object-Oriented JavaScript Framework
+ * MXFramework v6.0
+ * - A lightweight Object-Oriented JavaScript Framework
  *
  * Copyright 2005-2013. All rights reserved.
  *
@@ -400,9 +400,9 @@ MX = function()
             if (isEmpty(path))
             {
                 var classPath = p_fullClassName.replace(/\./g, "/");
-                if (eval("typeof($mx_" + parts[0] + "_path)") !== "undefined")
+                if (notEmpty(window["$mx_" + parts[0] + "_path"]))
                 {
-                    path = $mappath(eval("$mx_" + parts[0] + "_path") + classPath.substr(parts[0].length) + ext);
+                    path = $mappath(window["$mx_" + parts[0] + "_path"] + classPath.substr(parts[0].length) + ext);
                 }
                 else if (classPath.startsWith("lib/"))
                 {
