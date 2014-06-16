@@ -176,6 +176,7 @@ alert(tomCat.sayHi());
 ```
 
 # Source Code Repository
+The source is available for download from GitHub
 https://github.com/MagicCube/mxframework-core
 
 # Documents
