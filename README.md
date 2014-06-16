@@ -96,6 +96,7 @@ my.namespace.Animal = function()
 
 $ns("your.namespace");
 
+// Import the super class.
 $import("my.namespace.Animal");
 
 /**
