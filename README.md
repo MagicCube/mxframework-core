@@ -146,7 +146,7 @@ your.namespace.Cat = function()
 Now we need to instantialize the class.
 ```JavaScript
 // Import Cat class. The Animal class will be automatically imported with Cat.
-$import("your.namespace.Cat")；
+$import("your.namespace.Cat");
 
 // Create a new instance with default values.
 var cat = new Cat();
