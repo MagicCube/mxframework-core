@@ -175,6 +175,12 @@ var tomCat = new your.namespace.Cat({
 alert(tomCat.sayHi());
 ```
 
+Finally, build the code with mxbuild or mxtool to generate min.js and min.css
+```
+jar mxbuild.jar yournamespace;mynamespace
+```
+
+
 # Source Code Repository
 The source is available for download from GitHub
 https://github.com/MagicCube/mxframework-core
