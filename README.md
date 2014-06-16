@@ -7,6 +7,11 @@ In this quick example, we will demonstrate how to define classes using MXFramewo
 
 Firstly, let's create a new class named Animal.
 
+# Related Projects
+* [mxframework-node](https://github.com/MagicCube/mxframework-node) - MagicCube MXFramework for Node.js
+* [mxtool](https://github.com/MagicCube/mxtool) - Development tools for MagicCube MXFramework
+* [g3d](https://github.com/MagicCube/g3d) - A web GIS library for 3D visualization using WebGL technology
+
 
 ```javascript
 scripts/my/namespace/Animal.js
