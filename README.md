@@ -175,5 +175,8 @@ var tomCat = new your.namespace.Cat({
 alert(tomCat.sayHi());
 ```
 
+# Source Code Repository
+https://github.com/MagicCube/mxframework-core
+
 # Documents
 For documents, see https://github.com/MagicCube/mxframework-core/wiki
