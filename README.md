@@ -10,9 +10,12 @@ Cat > Animal
 ```
 
 
-/scripts/my/namespace/Animal.js
 ```javascript
-// Define a namespace.
+// ~/scripts/my/namespace/Animal.js
+
+/* 
+ * Define a namespace.
+ */
 $ns("my.namespace");
 
 /**
@@ -88,8 +91,9 @@ my.namespace.Animal = function()
 ```
 
 
-/scripts/your/namespace/Cat.js
 ```javascript
+// ~/scripts/your/namespace/Cat.js
+
 $ns("your.namespace");
 
 $import("my.namespace.Animal");
