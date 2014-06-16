@@ -1,9 +1,16 @@
 # MXFramework
 MagicCube MXFramework is a lightweight Object-Oriented JavaScript framework.
 
-# Examples
-Class: my.namespace.Animal
-File:  /scripts/my/namespace/Animal.js
+# Quick Example
+Like many other JavaScript frameworks, MXFramework has its own way to define namespace, class and component.
+In this quick example, we will demonstrate how to define classes using MXFramework.
+
+```
+Cat > Animal
+```
+
+
+/scripts/my/namespace/Animal.js
 ```javascript
 // Define a namespace.
 $ns("my.namespace");
@@ -76,6 +83,50 @@ my.namespace.Animal = function()
 	/**
 	 * This is the end of class.
 	 */
+	return me.endOfClass(arguments);
+};
+```
+
+
+/scripts/your/namespace/Cat.js
+```javascript
+$ns("your.namespace");
+
+$import("my.namespace.Animal");
+
+/**
+ * Cat inherits from Animal.
+ */
+your.namespace.Cat = function()
+{
+	var me = $extend(my.namespace.Animal);
+	/*
+	 * Change the initial value of name.
+	 */
+	me.name = "Cat";
+	var base = {};
+
+	me.nickName = "kitty";
+
+	base.init = me.init;
+	me.init = function(p_options)
+	{
+		base.init(p_options);
+		if (isEmptyString(me.nickName) && isString(me.name))
+		{
+			me.nickName = me.name;
+		}
+	};
+
+    /**
+     * Override 'sayHi' method.
+     */
+    base.sayHi = me.sayHi;
+	me.sayHi = function()
+	{
+		return base.sayHi() + $format(" You can call me {0}", [ me.nickName ]);
+	};
+
 	return me.endOfClass(arguments);
 };
 ```
