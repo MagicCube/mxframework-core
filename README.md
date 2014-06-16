@@ -1,7 +1,7 @@
 # MXFramework
 MagicCube MXFramework is a lightweight Object-Oriented JavaScript framework.
 
-# Quick Examples
+## Quick Examples
 Like many other JavaScript frameworks, MXFramework has its own way to define namespace, class and component.
 In this quick example, we will demonstrate how to define classes using MXFramework.
 
@@ -179,11 +179,11 @@ jar mxbuild.jar your;my
 ```
 
 
-# Source Code Repository
+## Source Code Repository
 The source is available for download from GitHub
 https://github.com/MagicCube/mxframework-core
 
-# Documents
+## Documents
 For documents, see https://github.com/MagicCube/mxframework-core/wiki
 
 # Related Projects
