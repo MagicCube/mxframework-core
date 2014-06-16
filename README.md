@@ -11,7 +11,7 @@ Cat > Animal
 
 
 ```javascript
-// ~/scripts/my/namespace/Animal.js
+~/scripts/my/namespace/Animal.js
 
 /* 
  * Define a namespace.
