@@ -177,7 +177,7 @@ alert(tomCat.sayHi());
 
 Finally, build the code with mxbuild or mxtool to generate min.js and min.css
 ```
-jar mxbuild.jar yournamespace;mynamespace
+jar mxbuild.jar your;my
 ```
 
 
