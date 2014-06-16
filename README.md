@@ -67,6 +67,14 @@ my.namespace.Animal = function()
 	{
 		if (_canSayHi())
 		{
+			/* 
+			  $format is the shortcut for String.format.
+			  String.format provides ability to substitute string with JSON object or array.
+			  In MXFramework you can use the following format methods.
+			  - String.format    String.format("Hi, {name}!", { name: "Henry" }); String.format("Hi, {0}", [ "Henry" ])
+			  - Date.format      Date.format(new Date(), "yyyy-MM-dd HH:mm:ss"); Date.format(new Date(), "yy年M月d日");
+			  - Number.format    Number.format(12.53212, "0.00"); Number.format(123, "00000000");
+			 */
 			return $format("Hi, I'm a {name}", { name: me.name });
 		}
 	};
@@ -75,9 +83,10 @@ my.namespace.Animal = function()
 	/**
 	 * Define a private function.
 	 */
-	function _beforeSayHi()
+	function _canSayHi()
 	{
-		return notEmpty(me.name);
+		// MXFramework has a series of methods for type assertions.
+		return isString(me.name);
 	}
 
 
