@@ -96,7 +96,7 @@ my.namespace.Animal = function()
 };
 ```
 
-And now we have a class inherits from Animal.
+Let's have a class inherits from Animal.
 ```javascript
 scripts/your/namespace/Cat.js
 
