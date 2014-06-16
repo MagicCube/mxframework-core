@@ -11,7 +11,7 @@ Cat > Animal
 
 
 ```javascript
-~/scripts/my/namespace/Animal.js
+scripts/my/namespace/Animal.js
 
 /* 
  * Define a namespace.
@@ -92,7 +92,7 @@ my.namespace.Animal = function()
 
 
 ```javascript
-// ~/scripts/your/namespace/Cat.js
+scripts/your/namespace/Cat.js
 
 $ns("your.namespace");
 
