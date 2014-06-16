@@ -96,7 +96,16 @@ my.namespace.Animal = function()
 };
 ```
 
+
+
+
+
+
+
+
+
 Let's have a class inherits from Animal.
+
 ```javascript
 scripts/your/namespace/Cat.js
 
@@ -129,10 +138,10 @@ your.namespace.Cat = function()
 		}
 	};
 
-    /**
-     * Override 'sayHi' method.
-     */
-    base.sayHi = me.sayHi;
+	/**
+	 * Override 'sayHi' method.
+	 */
+	base.sayHi = me.sayHi;
 	me.sayHi = function()
 	{
 		// $format is a shortcut to String.format, Date.format and Number.format.
@@ -143,18 +152,24 @@ your.namespace.Cat = function()
 };
 ```
 
+
+
+
+
+
+
 Now we need to instantialize the class.
 ```JavaScript
 // Import Cat class. The Animal class will be automatically imported with Cat.
 $import("your.namespace.Cat");
 
 // Create a new instance with default values.
-var cat = new Cat();
+var cat = new your.namespace.Cat();
 alert(cat.sayHi());
 
 // Create a new instance with initial values using JSON.
 // In MXFramework, class only accepts JSON object as constructure parameter.
-var tomCat = new Cat({
+var tomCat = new your.namespace.Cat({
     nickName: "Tom"
 });
 alert(tomCat.sayHi());
