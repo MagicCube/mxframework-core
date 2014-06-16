@@ -143,5 +143,22 @@ your.namespace.Cat = function()
 };
 ```
 
+Now we need to instantialize the class.
+```JavaScript
+// Import Cat class. The Animal class will be automatically imported with Cat.
+$import("your.namespace.Cat")；
+
+// Create a new instance with default values.
+var cat = new Cat();
+alert(cat.sayHi());
+
+// Create a new instance with initial values using JSON.
+// In MXFramework, class only accepts JSON object as constructure parameter.
+var tomCat = new Cat({
+    nickName: "Tom"
+});
+alert(tomCat.sayHi());
+```
+
 # Documents
 For documents, see https://github.com/MagicCube/mxframework-core/wiki
