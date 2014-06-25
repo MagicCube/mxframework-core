@@ -3,11 +3,6 @@ body
     padding-top: 50px;
 }
 
-.navbar
-{
-    
-}
-
 .navbar-brand
 {
     line-height: 50px;
@@ -17,7 +12,6 @@ body
 
 .jumbotron
 {
-    height: 450px;
     color: white;
     background: #3192d2;
 }
