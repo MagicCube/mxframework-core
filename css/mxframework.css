@@ -13,6 +13,7 @@ body
 .jumbotron
 {
     color: white;
+    height: 480px;
     background: #3192d2;
 }
 
@@ -25,13 +26,11 @@ body
 
 .footer
 {
+    margin-top: 80px;
+    padding-top: 15px;
+    border-top: 1px solid #efefef;
     font-size: smaller;
     color: #999;
-}
-
-.footer .container p
-{
-    
 }
 
 .footer-links
