@@ -1,0 +1,29 @@
+body
+{
+    padding-top: 50px;
+}
+
+.navbar
+{
+    
+}
+
+.navbar-brand
+{
+    line-height: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.jumbotron
+{
+    height: 320px;
+    color: white;
+    background: #3192d2;
+}
+
+.jumbotron .btn-primary
+{
+    border-color: #efefef;
+    margin-right: 20px;
+}
