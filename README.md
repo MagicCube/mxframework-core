@@ -186,7 +186,7 @@ The source is available for download from GitHub
 https://github.com/MagicCube/mxframework-core
 
 ## Documents
-For documents, see https://github.com/MagicCube/mxframework-core/wiki
+[Visit MXFramework Home Page to learn more.](http://magiccube.github.io/mxframework-core)
 
 ## Related Projects
 * [mxframework-node](https://github.com/MagicCube/mxframework-node) - MagicCube MXFramework for Node.js
