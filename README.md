@@ -1,4 +1,4 @@
-# MXFramework
+# ![](https://raw.githubusercontent.com/MagicCube/mxframework-core/master/res/images/mx-logo-32.png)MXFramework
 MagicCube MXFramework is a lightweight Object-Oriented JavaScript framework.
 
 ## Quick Examples
