@@ -17,7 +17,7 @@ body
 
 .jumbotron
 {
-    height: 320px;
+    height: 450px;
     color: white;
     background: #3192d2;
 }
@@ -25,5 +25,28 @@ body
 .jumbotron .btn-primary
 {
     border-color: #efefef;
+    margin-top: 10px;
     margin-right: 20px;
+}
+
+.footer
+{
+    font-size: smaller;
+    color: #999;
+}
+
+.footer .container p
+{
+    
+}
+
+.footer-links
+{
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-links li
+{
+    display: inline-block;
 }
