@@ -41,5 +41,6 @@ body
 
 .footer-links li
 {
-    display: inline-block;
+    display: inline;
+    padding: 0 2px;
 }
