@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>{{ page.title }} - {{ site.title }}</title>
+{% if page.description %}
+<meta name="description" content="{{ page.description }}">
+{% endif %}
+<meta name="author" content="{{ site.author.name }}">
+
+<!-- Enable responsive viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Bootstrap styles -->
+<link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Sticky Footer -->
+<link href="{{ ASSET_PATH }}/css/sticky-footer.css" rel="stylesheet">
+
+<!-- Custom styles -->
+<link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+{% if page.stylesheet %}
+<link href="{{ ASSET_PATH }}/css/{{ page.stylesheet }}" rel="stylesheet" type="text/css" media="all">
+{% endif %}
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="http://www.bootcss.com/assets/js/html5shiv.min.js?v=c5f6978b39"></script>
+    <script src="http://www.bootcss.com/assets/js/respond.min.js?v=c5f6978b39"></script>
+<![endif]-->
+
+<!-- Fav and touch icons -->
+<!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+-->
+
+<!-- atom & rss feed -->
+<link href="{{ BASE_PATH }}{{ site.JB.atom_path }}" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+<link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+</head>
+
+<body>
+    <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ HOME_PATH }}"><img src="{{ BASE_PATH }}/assets/images/mx-logo-120x32.png" width="120" height="32" /></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    {% assign pages_list = site.pages %} {% assign group = 'navigation' %} {% include JB/pages_list %}
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div id="wrap">
+        {{ content }}
+    </div>
+
+    <footer id="footer">
+        <div class="container">
+            <p>&copy 2006-2014 MagicCube. All rights reserved.
+               Created by <a href="mailto:henry1943@136.com">Henry Li</a>. All code licensed under MIT, documentation under CC BY 3.0.</p>
+            <ul class="footer-links">
+                <li><a href="https://github.com/magiccube/mxframework-core">GitHub </a></li>
+                <li>&middot;</li>
+                <li><a>Documents</a></li>
+                <li>&middot;</li>
+                <li><a>Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script src="{{ ASSET_PATH }}/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+body
+{
+    padding-top: 50px;
+}
+
+.navbar-brand
+{
+    line-height: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.footer-links
+{
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-links li
+{
+    display: inline;
+    padding: 0 2px;
+}
