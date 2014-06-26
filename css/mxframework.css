@@ -17,7 +17,7 @@ body
     background: #3192d2;
 }
 
-.jumbotron .btn-primary
+.jumbotron .btn-primary, .jumbotron .btn-success
 {
     border-color: #efefef;
     margin-top: 10px;
