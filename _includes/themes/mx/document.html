@@ -6,12 +6,14 @@
         {% endif %}
     </div>
 </div>
-<div id="document-content" class="container">
+<div id="mx-doc-container" class="container">
     <div class="row">
-        <div class="col-xs-9">
+        <article class="col-xs-9 mx-doc markdown-body">
             {{ content }}
-        </div>
-
-        <div class="col-xs-3"></div>
+        </article>
+        
+        <aside class="col-xs-3 mx-doc-sidebar">
+            <ul class="nav mx-doc-nav"></ul>
+        </aside>
     </div>
 </div>

@@ -1,4 +1,51 @@
-#document-content
+#mx-doc-container
 {
     margin-bottom: 50px;
+}
+
+.mx-doc-nav
+{
+    margin-top: 50px;
+}
+
+.mx-doc-nav > li > a
+{
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.mx-doc-nav a
+{
+    color: #999;
+    border-left: 2px solid white;
+}
+
+.mx-doc-nav > li > .nav
+{
+    margin-bottom: 12px;
+}
+
+.mx-doc-nav > li > .nav > li > a
+{
+    padding-left: 38px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.mx-doc-nav li.active > a
+{
+    color: #563d7c;
+    border-left: 2px solid #563d7c;
+    font-weight: bold;
+}
+
+.mx-doc-nav li:hover > a 
+{
+    color: #563d7c;
+}
+
+.mx-doc-nav > li > ul > li.active > a
+{
+    background: #d8f2ff;
 }
