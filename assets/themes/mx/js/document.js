@@ -29,7 +29,6 @@ $(function()
     
     $("body").scrollspy({ target: ".mx-doc-nav" });
     $docNav.pin({
-        containerSelector: "#mx-doc-container",
-        minWidth: 940
+        containerSelector: "#mx-doc-container"
     });
 });
