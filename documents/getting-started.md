@@ -64,7 +64,7 @@ https://raw.githubusercontent.com/MagicCube/mxtool/master/mxtool-eclipse-updates
 * Click *Next*, and complete the following installation. 
 * After the installation completes, restart Eclipse.
 
-> For the convenience of the beginner, in this document we'll only discuss how to setup your environment by using the plugins.
+> For the convenience of the beginner, in the following document we'll only discuss how to setup your environment by using the plugins.
 
 # Write your first MX application
 ## Create a project
