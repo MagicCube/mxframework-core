@@ -20,6 +20,7 @@
 
 <!-- Custom styles -->
 <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+<link href="{{ ASSET_PATH }}/css/animate.css" rel="stylesheet" type="text/css" media="all">
 {% if page.stylesheet %}
 <link href="{{ ASSET_PATH }}/css/{{ page.stylesheet }}" rel="stylesheet" type="text/css" media="all">
 {% endif %}
@@ -46,7 +47,7 @@
 </head>
 
 <body>
-    <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <header class="navbar navbar-inverse navbar-fixed-top" role="navigation" {% if page.headerOffset %}data-offset={{ page.headerOffset }}{% endif %}>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -88,5 +89,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <script src="{{ ASSET_PATH }}/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ ASSET_PATH }}/bootstrap/js/headroom.min.js"></script>
+    <script src="{{ ASSET_PATH }}/js/default.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 body
 {
-    padding-top: 50px;
+    
 }
 
 .navbar-brand
@@ -12,6 +12,7 @@ body
 
 .jumbotron
 {
+    padding-top: 100px;
     color: white;
     background: #3192d2;
 }
