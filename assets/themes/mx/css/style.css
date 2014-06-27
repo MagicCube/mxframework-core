@@ -39,7 +39,12 @@ body
 
 
 
-
+code
+{
+    color: #666666;
+    background: #f8f8f8;
+    border: 1px solid #eee;
+}
 
 .markdown-body p, .markdown-body blockquote, .markdown-body ul, .markdown-body ol, .markdown-body dl, .markdown-body table, .markdown-body pre
 {
