@@ -48,7 +48,7 @@ body
 
 .markdown-body
 {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.7;
     overflow: hidden;
     word-wrap: break-word;
@@ -77,7 +77,6 @@ body
 {
     margin: 1em 0 14px;
     padding: 0;
-    font-weight: bold;
     line-height: 1.7;
     cursor: text;
     position: relative;
@@ -93,4 +92,9 @@ body
 {
     font-size: 2em;
     border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3
+{
+    font-size: 1.5em;
 }
