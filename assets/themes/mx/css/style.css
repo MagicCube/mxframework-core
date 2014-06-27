@@ -10,6 +10,19 @@ body
     padding-bottom: 0;
 }
 
+.jumbotron
+{
+    color: white;
+    background: #3192d2;
+}
+
+.jumbotron .btn-primary, .jumbotron .btn-success
+{
+    border-color: #efefef;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
 .footer-links
 {
     list-style: none;

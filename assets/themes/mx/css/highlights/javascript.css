@@ -1,0 +1,19 @@
+.language-javascript .k, .language-javascript .kd
+{
+    color: blue;
+}
+
+.language-javascript .nb
+{
+    color: gray;
+}
+
+.language-javascript .s1, .language-javascript .s2
+{
+    color: darkred;
+}
+
+.language-javascript .c1, .language-javascript .cm
+{
+    color: green;
+} 
