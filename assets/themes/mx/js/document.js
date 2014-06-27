@@ -32,6 +32,7 @@ $(function()
         $docNav.pin({
             containerSelector: "#mx-doc-container"
         });
+        $(window).on("hashchange", function(){ $("body").scrollspy("refresh"); })
     }
     else
     {
