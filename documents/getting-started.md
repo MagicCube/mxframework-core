@@ -80,4 +80,8 @@ https://raw.githubusercontent.com/MagicCube/mxtool/master/mxtool-eclipse-updates
 I bet you already know how to setup the development environment and some basic concept in MXFramework.
 Now you may jump to the [Documents](./) page to find out more interesting contents.
 
-> Continue reading how to Write a master-detail application. 
+Continue reading:
+ 
++ Write a master-detail applicatio
++ MXFramework cheat sheet
++ Other Documents

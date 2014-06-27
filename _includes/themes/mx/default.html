@@ -82,9 +82,9 @@
             <ul class="footer-links">
                 <li><a target="_blank" href="https://github.com/magiccube/mxframework-core">GitHub </a></li>
                 <li>&middot;</li>
-                <li><a>Documents</a></li>
+                <li><a href="{{ BASE_PATH }}/documents">Documents</a></li>
                 <li>&middot;</li>
-                <li><a>Contact</a></li>
+                <li><a href="mailto:henry1943@163.com">Contact</a></li>
             </ul>
         </div>
     </footer>
@@ -95,6 +95,7 @@
     <script src="{{ ASSET_PATH }}/bootstrap/js/jquery.pin.min.js"></script>
     <script src="{{ ASSET_PATH }}/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{ ASSET_PATH }}/bootstrap/js/headroom.min.js"></script>
+    <script src="{{ ASSET_PATH }}/js/default.js"></script>
     {% if page.scripts %}
     {% for script in page.scripts %}
     <script src="{{ ASSET_PATH }}/{{ script }}"></script>
