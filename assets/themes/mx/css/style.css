@@ -107,3 +107,24 @@ code
 {
     font-size: 1.5em;
 }
+
+
+h2
+{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+ul.link-list
+{
+    margin: 0;
+    padding-left: 20px;
+}
+
+ul.link-list li
+{
+    font-size: 16px;
+    line-height: 26px;
+    margin: 0;
+    padding: 0;
+}

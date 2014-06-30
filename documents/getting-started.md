@@ -2,7 +2,7 @@
 layout: document
 title: Getting started
 description: Setup development environment, and write your first application with MXFramework.
-group: navigation
+group: navigation document
 weight: 1
 ---
 {% include JB/setup %}
@@ -106,18 +106,18 @@ In the next couple of minutes, we are going to make a simple application which d
 >
 >  Alternatively, you can use other name for the script folder, and basically the folder could be put in anywhere as you like. But remember to change the `Script path` in the project properties dialog accordingly.
 
-## Create a simple view
+## Create a view
 Now you're going to write your first class based MXFramework.
 
 1. Right click on the project, and select `MXFramework > New MX View` in the pop-up menu.
--  In the wizard, fill in the `Namespace` field with `my.first.view` and `Class name` with `DateTimeView`. ![](images/create-date-time-view.jpg)
+-  In the wizard, fill in the `Namespace` field with `my.first.view` and `Class name` with `DateTimeView`, then click `Finish`. ![](images/create-date-time-view.jpg)
    Four things we have to learn here are
    - The `Namespace` is the same concept as package in Java, and is always in lower case.
-   - The first part of Namespace (here is `my`) is also regarded as the module name in MXFramework. Please read [Object Oriented Programming Guide](object-oriented-programming-guide.html) for further information.
+   - The first part of Namespace (here is `my`) is also regarded as the module name in MXFramework. .It is recommended that use 2 or 3 letters for the module name. Please read [Object Oriented Programming Guide](object-oriented-programming-guide.html) for further information.
    - A `View` in MXFramework represents an individual UI component, and the class name must end with 'View'. Please read [UI Programming Guide](ui-programming-guide.html) for further information.
    - There will be two files generated
-     - `scripts/my/first/view/DateTimeView.js` - Where to put your logical code of view. 
-     - `scripts/my/res/DateTimeView.css` - Where you can embellish your view.
+     - `WebContent/scripts/my/first/view/DateTimeView.js` - Where to put your logical code of view. 
+     - `WebContent/scripts/my/res/DateTimeView.css` - Where you can embellish your view.
 -  Open the `DateTimeView.js`, override with the following code.
 
 ```javascript
@@ -246,6 +246,14 @@ Please also modify the `DateTimeView.css`.
 ## Create an application
 Now we need a runnable application to contain and display the DateTimeView.
 
+1. Right click on the project again, and select `MXFramework > New MX Application` in the pop-up menu.
+-  In the `New MXApp Class` dialog, type 'my.first' for the `Namespace` and `App` for the `Class name`.![](images/create-my-first-app.jpg) 
+-  Click `Finish` button. You're going to have 3 new files.
+    - `WebContent/scripts/my/first/App.js`
+    - `WebContent/scripts/my/res/App.css`
+    - `WebContent/App-debug.html`
+-  Change the `App.js` to the following code.
+
 ```javascript
 $ns("my.first");
 
@@ -297,12 +305,16 @@ my.first.App = function()
 my.first.App.className = "my.first.App";
 ```
 
-## What's next
-I bet you already know how to setup the development environment and some basic concept in MXFramework.
+## Run in debug mode
+
+## Run in production mode
+
+# What's next
+I bet you already know some basic concept in MXFramework and how to setup the development environment.
 Now you may jump to the [Documents](./) page to find out more interesting contents.
 
 Continue reading:
  
-+ Write a master-detail applicatio
-+ MXFramework cheat sheet
-+ Other Documents
++ [Write a master-detail-view application](write-a-master-detail-view-application.html)
++ [Cheat sheet](cheat-sheet.html)
++ [Other Documents](./)

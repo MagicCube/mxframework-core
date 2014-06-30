@@ -1,0 +1,39 @@
+---
+layout: page
+title: Documents
+description: Always your best way to start the journey with MXFramework
+group: navigation
+weight: 2
+---
+{% include JB/setup %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-5">
+            <h2>Learning MXFramework</h2> 
+            <ul class="link-list">
+            {% assign pages_list = site.pages %}
+            {% assign group = "document" %}
+            {% include JB/pages_list %}
+            </ul>
+        </div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-5">
+            <h2>References</h2>
+            <ul class="link-list">
+                <li><a href="../api/">API documents</a></li>
+                <li><a href="cheat-sheet.html">Cheat Sheet</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <h2>Deep dive in MXFramework</h2>
+            <ul class="link-list">
+                <li><a href="write-a-master-detail-view-application.html">Write a master-detail-view application</a></li>
+            </ul>
+            <div class="col-xs-2"></div>
+            <div class="col-xs-5"></div>
+        </div>
+    </div>
+</div>
