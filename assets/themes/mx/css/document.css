@@ -3,6 +3,13 @@
     margin-bottom: 50px;
 }
 
+.mx-doc li img
+{
+    display: block;
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
 .mx-doc-nav
 {
     margin-top: 50px;

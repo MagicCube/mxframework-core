@@ -8,8 +8,9 @@ weight: 1
 {% include JB/setup %}
 
 # Setup Development Environment
+
 ## Download
-The latest build of MXFramework is hosted on GitHub.
+The latest build of MXFramework is hosted on GitHub. Click on the following link to download the source code from GitHub.
 > [https://github.com/MagicCube/mxframework-core/archive/master.zip](https://github.com/MagicCube/mxframework-core/archive/master.zip)
 
 
@@ -53,21 +54,31 @@ MXFramework only requires [jQuery](http://jquery.com) library at the run time. I
 Although you can complete the following setup steps all by your hands, it is still the best way to start your MXFramework journey by installing the MXFramework Plugins for [Eclipse](http://eclipse.org/).
 
 ### Install
-- Start your Eclipse, choose `Help > Install New Software` in the menu bar.
-- Click `Add`, in the top-right corner.
+1. Start your Eclipse, choose `Help > Install New Software` in the menu bar.
+- Click `Add`, in the top-right corner.![](images/add-repository.jpg)
 - In the `Add Repository` dialog that appears, enter `MXFramework Plugin` for the `Name` and the following URL for the `Location`:
 ```
 https://raw.githubusercontent.com/MagicCube/mxtool/master/mxtool-eclipse-updatesite/site.xml
 ```
 - Click `OK`.
-- In the `Available Software` dialog, select the checkbox next to `MagicCube MXFramework Plugins` and click `Next`.
+- In the `Available Software` dialog, select the checkbox next to `MagicCube MXFramework Plugins` and click `Next`.![](images/install-plugins.jpg)
 - Click `Next`, and complete the following installation. 
 - After the installation completes, restart Eclipse.
 
 > For the convenience of the beginner, in the following sections we'll only discuss how to setup your environment by using the plugins.
 
 # Write your first MX application
-## Create a project
+In the next couple of minutes, we'll demonstrate how to quickly create a web application based on MXFramework. 
+
+## Create a web project
+1. Launch the New Project Wizard through `File > Project...`.
+- Select `Web > Static Web Project` and click `Next`.![](images/create-web-project.jpg)
+- Give a name to the project then click `Finish`.
+- Now you create a standard web project with the root content path named `WebContent`, in which you can store your publishable resources.
+- If you have a local web server like [IIS](http://www.iis.net/learn/install/installing-iis-7/installing-iis-on-windows-vista-and-windows-7) or [Apache](http://httpd.apache.org/docs/2.2/platform/windows.html), you may point the root web path to the `WebContent` folder for local testing.  
+
+> In practice, you can create any type of web project instead, or even use MXFramework in a non-web project.
+
 
 
 ## Enable MXFramework
