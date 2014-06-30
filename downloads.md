@@ -1,11 +1,12 @@
 ---
 layout: document
 title: Downloads
+description: Get the latest source codes and builds from GitHub.
 group: navigation
 weight: 8
 ---
 
-# Download from Github
+# Download from GitHub
 The latest build of MXFramework is hosted on GitHub. Click on the following link to download the latest source code from GitHub.
 
 [https://github.com/MagicCube/mxframework-core/archive/master.zip](https://github.com/MagicCube/mxframework-core/archive/master.zip)

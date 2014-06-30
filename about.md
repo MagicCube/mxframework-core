@@ -19,7 +19,7 @@ In the middle of 2012, it is said there were over 1,000 developers in [State Gri
 In version 2, it changed its name to MXFramework. Most of framework codes were refactored, and it finally supported most of the modern browsers using jQuery.
 A JavaScript compressor along with document generator was introduced in this version. 
 
-## MXFramework 3 <small>open source on Github in 2014</small>
+## MXFramework 3 <small>open source on GitHub in 2014</small>
 In the third version which is the latest, the totally redesigned MXFramework is now aiming to be a simple, lightweight, well-structured, Object-Oriented JavaScript framework.
 MXFramework 3 gives up all its UI libraries and uncommonly used utilities, and brings the developers an all-in-one Eclipse plugin including a brand new module-based compiler.
 
