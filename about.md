@@ -1,7 +1,7 @@
 ---
 layout: document
 title: About
-description: About MXFramework and me
+description: About MXFramework and me.
 group: navigation
 weight: 9
 ---

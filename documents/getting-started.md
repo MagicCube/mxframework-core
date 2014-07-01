@@ -319,6 +319,6 @@ Now you may jump to the [Documents](./) page to find out more interesting conten
 
 Continue reading:
  
-+ [Write a master-detail-view application](write-a-master-detail-view-application.html)
++ [Build a master-detail-view application](build-a-master-detail-view-application.html)
 + [Cheat sheet](cheat-sheet.html)
 + [Other Documents](./)
