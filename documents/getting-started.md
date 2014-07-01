@@ -3,7 +3,7 @@ layout: document
 title: Getting started
 description: Setup development environment, and write your first application with MXFramework.
 group: navigation document
-weight: 1
+weight: 3
 ---
 {% include JB/setup %}
 
@@ -306,6 +306,10 @@ my.first.App.className = "my.first.App";
 ```
 
 ## Run in debug mode
+
+# Dive deeper
+
+## Compile and build
 
 ## Run in production mode
 

@@ -3,7 +3,7 @@ layout: document
 title: Downloads
 description: Get the latest source codes and builds from GitHub.
 group: navigation
-weight: 8
+weight: 2
 ---
 
 # Download from GitHub
