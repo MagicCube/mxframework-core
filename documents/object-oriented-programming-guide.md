@@ -2,7 +2,7 @@
 layout: document
 title: Object Oriented Programming Guide
 description: Let's talk about modules, namespaces, classes, events, inheritance and polymorphism in MXFramework.
-group: document
+group: document learning
 weight: 3
 ---
 

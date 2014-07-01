@@ -3,7 +3,7 @@ layout: page
 title: Documents
 description: Always your best way to start the journey with MXFramework.
 group: navigation
-weight: 4
+weight: 2
 ---
 {% include JB/setup %}
 
@@ -13,7 +13,7 @@ weight: 4
             <h2>Learning MXFramework</h2> 
             <ul class="link-list">
             {% assign pages_list = site.pages %}
-            {% assign group = "document" %}
+            {% assign group = "document learning" %}
             {% include JB/pages_list %}
             </ul>
         </div>
@@ -21,8 +21,9 @@ weight: 4
         <div class="col-xs-5">
             <h2>References</h2>
             <ul class="link-list">
-                <li><a href="../api/">MXFramework API documents</a></li>
-                <li><a href="cheat-sheet.html">MXFramework Cheat Sheet</a></li>
+            {% assign pages_list = site.pages %}
+            {% assign group = "document references" %}
+            {% include JB/pages_list %}
             </ul>
         </div>
     </div>
@@ -30,7 +31,9 @@ weight: 4
         <div class="col-xs-5">
             <h2>Deep dive in MXFramework</h2>
             <ul class="link-list">
-                <li><a href="build-a-master-detail-view.html">Build A Master-Detail View</a></li>
+                {% assign pages_list = site.pages %}
+                {% assign group = "document deep-dive" %}
+                {% include JB/pages_list %}
             </ul>
             <div class="col-xs-2"></div>
             <div class="col-xs-5"></div>

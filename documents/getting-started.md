@@ -2,8 +2,8 @@
 layout: document
 title: Getting started
 description: Setup development environment, and write your first application with MXFramework.
-group: navigation document
-weight: 3
+group: navigation document learning
+weight: 1
 ---
 {% include JB/setup %}
 
