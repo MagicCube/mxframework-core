@@ -50,3 +50,18 @@ mx
 
 # Dependencies
 MXFramework only requires [jQuery](http://jquery.com) library at the run time. It is recommended to use jQuery 1.10 or later version.
+
+
+
+# Install Eclipse Plugins
+
+1. Start your Eclipse, choose `Help > Install New Software` in the menu bar.
+-  Click `Add`, in the top-right corner.![](documents/images/add-repository.jpg)
+-  In the `Add Repository` dialog that appears, enter `MXFramework Plugin` for the `Name` and the following URL for the `Location`:
+```
+https://raw.githubusercontent.com/MagicCube/mxtool/master/mxtool-eclipse-updatesite/site.xml
+```
+-  Click `OK`.
+-  In the `Available Software` dialog, select the checkbox next to `MagicCube MXFramework Plugins` and click `Next`.![](documents/images/install-plugins.jpg)
+-  Click `Next`, and complete the following installation. 
+-  After the installation completes, restart Eclipse.

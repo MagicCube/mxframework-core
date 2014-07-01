@@ -70,8 +70,115 @@ https://raw.githubusercontent.com/MagicCube/mxtool/master/mxtool-eclipse-updates
 >
 >  For the convenience of the beginner, in the following sections we'll only discuss how to setup your environment by using the plugins.
 
+# Basic concepts
+Before writing code, there are some basic concepts about MXFramework you should learn first.
+
+## Project with MXFramework
+The same concept as a Eclipse project, and usually it's a Web Project.
+
+## Modules in MXFramework
+You can define several modules in an MX project.
+The module name is recommended to be short and in lower-case like "sys", "fs" or "g3d".
+Every module has its own folder which has the same name as the module.
+For example, the codes of module `MODULE_NAME` should be put into the folder `scripts/MODULE_NAME`, and all its resources like CSSs, images and localization files should be stored under the `scripts/MODULE_NAME/res` folder.
+
+A common folder structure is look like this
+
+```
+scripts
+├── mx
+│   ├── res
+│   │   └── locales
+│   │       ├── en
+│   │       │   └── language.js
+│   │       └── zh-cn
+│   │           └── language.js
+│   ├── debug.js
+│   ├── framework-base.js
+│   ├── framework-core.js
+│   └── ...
+├── mod1
+│   ├── res
+│   │   ├── images
+│   │   ├── locales
+│   │   │   ├── en
+│   │   │   │   └── language.js
+│   │   │   └── zh-cn
+│   │   │       └── language.js
+│   │   └── AClassView.css
+│   │   └── BClassView.css
+│   ├── logic
+│   │   ├── XClass.js
+│   │   └── YClass.js
+│   └── view
+│       ├── AClassView.js
+│       └── BClassView.js
+├── mod2
+│   ├── res
+│   │   ├── images
+│   │   └── CClassView.css
+│   │   └── DClassView.css
+│   └── view
+│       ├── CClassView.js
+│       └── DClassView.js
+└── ...
+```
+
+Unlike the [AMD(Asynchronous Module Definition)](http://requirejs.org/docs/whyamd.html) and many other modularized frameworks, there's no explicit definition for the module dependencies in MXFramework.
+Both static and dynamic module loading are handled by the framework. When you import a class from "A module" for the first time, the framework will automatically asynchronously or synchronously load the module before you go. 
+
+Concerning the performance and efficiency, in the `production mode`, after running a building process using `MXBuild`, all the JavaScript codes inside the module will be compiled into one file named `min.js` under the `scripts/MODULE_NAME` folder, while CSS will be compressed into a `min.css` file under `scripts/MODULE_NAME/res`.
+
+The folder structure in production mode should look like this
+
+```
+scripts
+├── mx
+│   ├── res
+│   │   └── locales
+│   │       ├── en
+│   │       │   └── language.js
+│   │       └── zh-cn
+│   │           └── language.js
+│   └── min.js
+├── mod1
+│   ├── res
+│   │   ├── images
+│   │   ├── locales
+│   │   │   ├── en
+│   │   │   │   └── language.js
+│   │   │   └── zh-cn
+│   │   │       └── language.js
+│   │   └── min.css
+│   └── min.js
+├── mod2
+│   ├── res
+│   │   ├── images
+│   │   └── min.css
+│   └── min.js
+└── ...
+```
+
+By default, there's always a framework-level module named `mx` stored in `scripts/mx`.
+
+Please read [Object Oriented Programming Guide](object-oriented-programming-guide.html) for further information.
+
+## Applications in MXFramework
+There could be several applications inside one module. Basically you could regard the applications as the traditional web pages.
+Every application class should inherit from `mx.app.Application` which has a `run(options)` function.
+After initialization, you call the `run` function directly to start the application with specific `options`.
+
+## Views in MXFramewrok
+A View in MXFramework represents a UI component which can display informations and interact with the users.
+View often comes with a JavaScript and a CSS file, both of the file share the same name but different extensions.
+Usually a View is related to a HTML element, and View has a `$container` field which is pointed to a jQuery object of the HTML element.
+Every View class should inherit from `mx.view.View`.
+
+Views can also be nested, which means a View can have some sub views (their parent is called parentView), and the `mx.app.Application` class itself inherits `from mx.view.View` as well.
+
+Please read [UI Programming Guide](ui-programming-guide.html) for further information.
+
 # Write your first MX application
-## Before writing code
 In the next couple of minutes, we are going to make a simple application which display the current time in the following way.
 
 ![](images/date-time-view.png)
@@ -102,7 +209,7 @@ In the next couple of minutes, we are going to make a simple application which d
 
 > **Tips**
 >
->  Of course you can also build the MXFramework project manually, please strickly follow the script folder structure like what you see here.
+>  ou can also build the MXFramework project manually, please strickly follow the script folder structure like what you see here.
 >
 >  Alternatively, you can use other name for the script folder, and basically the folder could be put in anywhere as you like. But remember to change the `Script path` in the project properties dialog accordingly.
 
@@ -111,13 +218,9 @@ Now you're going to write your first class based MXFramework.
 
 1. Right click on the project, and select `MXFramework > New MX View` in the pop-up menu.
 -  In the wizard, fill in the `Namespace` field with `my.first.view` and `Class name` with `DateTimeView`, then click `Finish`. ![](images/create-date-time-view.jpg)
-   Four things we have to learn here are
-   - The `Namespace` is the same concept as package in Java, and is always in lower case.
-   - The first part of Namespace (here is `my`) is also regarded as the module name in MXFramework. .It is recommended that use 2 or 3 letters for the module name. Please read [Object Oriented Programming Guide](object-oriented-programming-guide.html) for further information.
-   - A `View` in MXFramework represents an individual UI component, and the class name must end with 'View'. Please read [UI Programming Guide](ui-programming-guide.html) for further information.
-   - There will be two files generated
-     - `WebContent/scripts/my/first/view/DateTimeView.js` - Where to put your logical code of view. 
-     - `WebContent/scripts/my/res/DateTimeView.css` - Where you can embellish your view.
+   There will be two files generated
+   - `WebContent/scripts/my/first/view/DateTimeView.js` - Where to put your logical code of view. 
+   - `WebContent/scripts/my/res/DateTimeView.css` - Where you can embellish your view.
 -  Open the `DateTimeView.js`, override with the following code.
 
 ```javascript
