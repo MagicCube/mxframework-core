@@ -3,6 +3,11 @@ MagicCube MXFramework is yet another simple, lightweight, modularized, Object-Or
 
 [Visit MXFramework Home Page to learn more.](http://magiccube.github.io/mxframework-core)
 
+## Install via Bower
+```console
+bower install mxframework
+```
+
 ## Quick Examples
 Like many other JavaScript frameworks, MXFramework has its own way to define namespace, class and component.
 In this quick example, we will demonstrate how to define classes using MXFramework.
