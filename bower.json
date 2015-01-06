@@ -1,0 +1,25 @@
+{
+    "name": "mxframework-core",
+    "version": "3.0.0",
+    "homepage": "magiccube.github.io/mxframework-core",
+    "authors": [
+        "MagicCube <henry.li03@sap.com>"
+    ],
+    "description": "Yet another simple, lightweight, modularized and object-oriented JavaScript framework.",
+    "keywords": [
+        "mxframework",
+        "magiccube",
+        "object-oriented",
+        "class",
+        "inheritance",
+        "polymorphic",
+        "dynamic import",
+        "dynamic load"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+    ]
+}
