@@ -1,0 +1,28 @@
+{
+    "name": "mxframework-core",
+    "version": "3.0.0",
+    "description": "MXFramework is a light-weight Object Oriented JavaScript framework.",
+    "author": {
+        "name": "Henry Li",
+        "email": "henry1943@163.com"
+    },
+    "maintainers": [
+        {
+            "name": "Henry Li",
+            "email": "henry1943@163.com"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/MagicCube/mxframework-core.git"
+    },
+    "license": "MIT",
+    "keywords": [
+        "mxframework",
+        "framework",
+        "object-oriented",
+        "object oriented",
+        "oo",
+        "light-weight"
+    ]
+}
