@@ -1,11 +1,12 @@
 /*!
- * MXFramework v6.0
+ * MXFramework v6.1
  * - A lightweight Object-Oriented JavaScript Framework
  *
- * Copyright 2005-2013. All rights reserved.
+ * Copyright 2005-2015. All rights reserved.
  *
+ * Created by Henry Li (henry1943@163.com).
  * Create Date: 2012-09-23 20:46
- * First Created by Henry Li (henry1943@163.com).
+ * Last Modified: 2015-05-05 13:15
  */
 
 MX = function()
@@ -24,6 +25,9 @@ MX = function()
     me.libraryPath = null;
 
     me.urlParams = null;
+    
+    var _modules = [];
+    var _moduleNames = [];
 
     me.init = function()
     {
@@ -32,6 +36,15 @@ MX = function()
         _resolveUserAgent();
         _resolveScriptPath();
         _resolveLibraryPath();
+    };
+    
+    me.registerModule = function(p_module)
+    {
+        _modules[p_module.name] = p_module;
+        _modules.push(p_module);
+        
+        _moduleNames.push(p_module.name);
+        _moduleNames = _moduleNames.sort().reverse();
     };
 
     me.mappath = function(p_url)
@@ -299,7 +312,7 @@ MX = function()
                 if (index !== -1)
                 {
                     var moduleName = p_fullClassName.substr(0, index);
-                    me.include("$/" + moduleName + "/min.js", p_callback);
+                    me.include(me.getResourcePath(moduleName + ".min", "js"), p_callback);
                 }
             }
         }
@@ -386,6 +399,17 @@ MX = function()
         else
         {
             ext = "." + p_ext;
+        }
+
+
+        for (var i = 0; i < _moduleNames.length; i++)
+        {
+            var name = _moduleNames[i];
+            if (p_fullClassName.startsWith(name))
+            {
+                p_fullClassName = p_fullClassName.replace(name, _modules[name].path);
+                break;
+            }
         }
 
         var parts = p_fullClassName.split(".", 1);
