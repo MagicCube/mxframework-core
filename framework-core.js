@@ -42,6 +42,10 @@ MX = function()
     {
         _modules[p_module.name] = p_module;
         _modules.push(p_module);
+        if (p_module.path && p_module.path.startsWith("/"))
+        {
+            p_module.path = p_module.path.substr(1);
+        }
         
         _moduleNames.push(p_module.name);
         _moduleNames = _moduleNames.sort().reverse();
@@ -424,11 +428,7 @@ MX = function()
             if (isEmpty(path))
             {
                 var classPath = p_fullClassName.replace(/\./g, "/");
-                if (notEmpty(window["$mx_" + parts[0] + "_path"]))
-                {
-                    path = $mappath(window["$mx_" + parts[0] + "_path"] + classPath.substr(parts[0].length) + ext);
-                }
-                else if (classPath.startsWith("lib/"))
+                if (classPath.startsWith("lib/"))
                 {
                     path = $mappath("$lib/" + classPath.substr(4) + ext);
                 }
