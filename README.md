@@ -1,3 +1,5 @@
+> MXFramework v6 has been released in 100% pure ES6 code! [Check it out now!](https://github.com/MagicCube/mx6)
+
 # ![](https://raw.githubusercontent.com/MagicCube/mxframework-core/master/res/images/mx-logo-32.png) MXFramework
 MagicCube MXFramework is yet another simple, lightweight, modularized, Object-Oriented JavaScript framework.
 
